@@ -28,6 +28,15 @@ jobs:
       - name: Build Nuxt
         run: npm run build
 
+      # Prepare deploy dir (gabungkan .output + node_modules + package.json)
+      - name: Prepare deploy folder
+        run: |
+          mkdir deploy
+          cp -r .output deploy/.output
+          cp -r node_modules deploy/node_modules
+          cp package.json deploy/package.json
+          cp package-lock.json deploy/package-lock.json
+
       # Deploy via FTP
       - name: Upload build via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -37,6 +46,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
           protocol: ftp
-          local-dir: ".output/"
+          local-dir: "deploy/"
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}
-
