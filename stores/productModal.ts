@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 // Definisikan tipe data untuk produk
-export interface Product {
+interface Product {
   id: number
   name: string
   price: number

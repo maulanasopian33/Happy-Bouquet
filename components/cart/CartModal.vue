@@ -1,116 +1,192 @@
 <template>
   <ClientOnly>
     <Teleport to="body">
-      <!-- Backdrop -->
-      <transition
-        enter-active-class="transition-opacity ease-out duration-300"
+      <!-- Overlay / Backdrop -->
+      <Transition
+        enter-active-class="transition-opacity ease-out duration-500"
         enter-from-class="opacity-0"
         enter-to-class="opacity-100"
-        leave-active-class="transition-opacity ease-in duration-200"
+        leave-active-class="transition-opacity ease-in duration-300"
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <div v-if="cart.isOpen" @click="cart.showCart(false)" class="fixed inset-0 z-50 bg-gray-900/60 backdrop-blur-sm" aria-hidden="true"></div>
-      </transition>
+        <div 
+          v-if="cart.isOpen" 
+          @click="cart.showCart(false)" 
+          class="fixed inset-0 z-100 bg-slate-900/40 backdrop-blur-md" 
+          aria-hidden="true"
+        ></div>
+      </Transition>
 
-      <!-- Modal Panel -->
-      <transition
-        enter-active-class="transition-transform ease-out duration-300"
-        enter-from-class="sm:opacity-0 sm:scale-95 translate-y-full sm:translate-y-0"
-        enter-to-class="sm:opacity-100 sm:scale-100 translate-y-0"
-        leave-active-class="transition-transform ease-in duration-200"
-        leave-from-class="sm:opacity-100 sm:scale-100 translate-y-0"
-        leave-to-class="sm:opacity-0 sm:scale-95 translate-y-full sm:translate-y-0"
+      <!-- Cart Drawer -->
+      <Transition
+        enter-active-class="transition-transform ease-out duration-600 delay-100"
+        enter-from-class="translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition-transform ease-in duration-400"
+        leave-from-class="translate-x-0"
+        leave-to-class="translate-x-full"
       >
-        <div v-if="cart.isOpen" class="fixed inset-0 z-50 flex sm:items-center sm:justify-center items-end" @click.self="cart.showCart(false)">
-          <div class="relative w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] bg-white sm:rounded-2xl rounded-t-2xl shadow-xl flex flex-col">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between p-4 sm:p-5 border-b shrink-0">
-              <h3 class="text-xl font-semibold text-gray-900">
-                Keranjang Belanja
-              </h3>
-              <button @click="cart.showCart(false)" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-2 ml-auto inline-flex items-center">
-                <Icon name="ph:x-bold" class="w-5 h-5" />
-                <span class="sr-only">Tutup modal</span>
+        <div 
+          v-if="cart.isOpen" 
+          class="fixed top-0 right-0 bottom-0 z-101 w-full max-w-lg bg-(--bg-main) shadow-2xl flex flex-col border-l border-(--border-color) transition-colors duration-500"
+        >
+          <!-- ======= DRAWER HEADER ======= -->
+          <div class="px-6 py-8 flex items-center justify-between bg-(--bg-card) border-b border-(--border-color) relative overflow-hidden">
+            <Icon name="ph:shopping-cart-fill" class="absolute -bottom-4 -right-4 w-24 h-24 text-rose-500/5 rotate-12" />
+            <div class="relative">
+              <h3 class="text-2xl font-black text-primary tracking-tight">Keranjang Belanja</h3>
+              <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest mt-1">
+                {{ cart.totalItems }} Item Terpilih
+              </p>
+            </div>
+            <button 
+              @click="cart.showCart(false)"
+              class="w-10 h-10 rounded-full flex items-center justify-center bg-(--bg-section) text-secondary hover:text-rose-600 hover:rotate-90 transition-all duration-500"
+            >
+              <Icon name="ph:x-bold" class="w-5 h-5" />
+            </button>
+          </div>
+
+          <!-- ======= DRAWER BODY ======= -->
+          <div class="flex-1 overflow-y-auto px-6 py-8 space-y-6 scroll-hide">
+            <div v-if="cart.totalItems > 0" class="space-y-4">
+              <div 
+                v-for="item in cart.items" 
+                :key="item.cartItemId" 
+                class="group p-4 bg-(--bg-card) border border-(--border-color) rounded-3xl hover:border-rose-300 dark:hover:border-rose-900 transition-all duration-300 hover:shadow-xl hover:shadow-rose-500/5"
+              >
+                <div class="flex gap-5">
+                  <!-- Product Image -->
+                  <div class="w-24 h-24 rounded-2xl overflow-hidden shrink-0 bg-(--bg-section) border border-(--border-color)">
+                    <img :src="item.image" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  
+                  <!-- Info -->
+                  <div class="flex-1 min-w-0 flex flex-col justify-between py-1">
+                    <div>
+                      <div class="flex justify-between gap-3">
+                        <h4 class="text-sm font-black text-primary line-clamp-1 group-hover:text-rose-600 transition-colors">
+                          {{ item.name }}
+                        </h4>
+                        <button 
+                          @click="cart.removeItem(item.id)"
+                          class="p-1 text-muted hover:text-rose-600 transition-colors"
+                        >
+                          <Icon name="ph:trash-bold" class="w-4 h-4" />
+                        </button>
+                      </div>
+                      
+                      <div v-if="item.variants" class="flex flex-wrap gap-1.5 mt-2">
+                        <span 
+                          v-for="(val, key) in item.variants" 
+                          :key="key"
+                          class="px-2 py-0.5 bg-(--bg-section) text-[9px] font-bold text-secondary uppercase tracking-widest rounded-md"
+                        >
+                          {{ val }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-end justify-between gap-4 mt-4">
+                      <p class="text-base font-black text-rose-600">{{ formatCurrency(item.price) }}</p>
+                      
+                      <!-- Qty Control -->
+                      <div class="flex items-center bg-(--bg-section) rounded-xl p-0.5 border border-(--border-color)">
+                        <button 
+                          @click="cart.decrease(item.id)"
+                          class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-rose-900 text-rose-600 transition-all"
+                        >
+                          <Icon name="ph:minus-bold" class="w-3 h-3" />
+                        </button>
+                        <span class="w-8 text-center text-xs font-black text-primary">{{ item.quantity }}</span>
+                        <button 
+                          @click="cart.increase(item.id)"
+                          class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-rose-900 text-rose-600 transition-all"
+                        >
+                          <Icon name="ph:plus-bold" class="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State -->
+            <div v-else class="h-full flex flex-col items-center justify-center text-center space-y-6 py-20 px-10">
+              <div class="relative">
+                <div class="w-24 h-24 rounded-full bg-rose-50 dark:bg-rose-950/30 flex items-center justify-center text-rose-300">
+                  <Icon name="ph:shopping-bag-open-duotone" class="w-12 h-12" />
+                </div>
+                <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-white dark:bg-slate-900 border-2 border-rose-100 flex items-center justify-center">
+                  <Icon name="ph:question-bold" class="w-4 h-4 text-rose-600" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <h3 class="text-xl font-black text-primary">Keranjang Kosong?</h3>
+                <p class="text-xs text-secondary font-medium leading-relaxed">Sepertinya Anda belum memilih buket spesial. Mari telusuri koleksi terbaik kami.</p>
+              </div>
+              <button 
+                @click="cart.showCart(false)"
+                class="btn-premium px-8"
+              >
+                Mulai Belanja
               </button>
             </div>
+          </div>
 
-            <!-- Modal Body -->
-            <div class="p-4 sm:p-6 flex-1 overflow-y-auto">
-              <!-- Daftar Item -->
-              <ul v-if="cart.totalItems > 0" role="list" class="divide-y divide-gray-200">
-                <li v-for="item in cart.items" :key="item.cartItemId" class="flex py-6">
-                  <div class="h-24 w-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
-                    <img :src="item.image" :alt="item.name" class="h-full w-full object-cover object-center">
-                  </div>
-                  <div class="ml-4 flex flex-1 flex-col justify-between">
-                    <div>
-                      <div class="flex justify-between text-base font-medium text-gray-900">
-                        <h3>{{ item.name }}</h3>
-                        <p class="ml-4 shrink-0">{{ formatCurrency(item.price * item.quantity) }}</p>
-                      </div>
-                      <p class="mt-1 text-sm text-gray-500">{{ formatCurrency(item.price) }}</p>
-                      <!-- Tampilkan Varian -->
-                      <div v-if="item.variants" class="mt-1 text-xs text-gray-500 space-x-2">
-                        <span v-for="(value, key) in item.variants" :key="key" class="capitalize">{{ key.replace('_', ' ') }}: <strong>{{ value }}</strong></span>
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                      <div class="flex items-center border rounded-lg">
-                        <button @click="cart.decrease(item.id)" class="px-2 py-1 text-gray-600 hover:text-pink-600 rounded-l-lg transition">-</button>
-                        <p class="px-3 text-gray-900 font-medium">{{ item.quantity }}</p>
-                        <button @click="cart.increase(item.id)" class="px-2 py-1 text-gray-600 hover:text-pink-600 rounded-r-lg transition">+</button>
-                      </div>
-                      <div class="flex">
-                        <button @click="cart.removeItem(item.id)" type="button" class="font-medium text-pink-600 hover:text-pink-500 transition">Hapus</button>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-
-              <!-- Status Keranjang Kosong -->
-              <div v-else class="text-center py-10 px-4 flex flex-col items-center justify-center h-full">
-                <div class="w-20 h-20 bg-pink-50 rounded-full flex items-center justify-center mb-4">
-                  <Icon name="ph:shopping-cart-simple-bold" class="h-10 w-10 text-pink-400" />
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900">Keranjang Anda masih kosong</h3>
-                <p class="mt-1 text-sm text-gray-500 max-w-xs">Sepertinya Anda belum menambahkan apa pun. Mari kita cari sesuatu yang indah!</p>
-                <button @click="cart.showCart(false)" type="button" class="mt-6 px-5 py-2.5 text-sm font-medium text-white bg-pink-600 rounded-lg hover:bg-pink-700 shadow-sm transition">
-                  Mulai Belanja
-                </button>
+          <!-- ======= DRAWER FOOTER ======= -->
+          <div v-if="cart.totalItems > 0" class="p-8 bg-(--bg-card) border-t border-(--border-color) space-y-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between text-xs font-bold text-muted uppercase tracking-widest">
+                <span>Subtotal Pesanan</span>
+                <span class="text-primary tracking-normal">{{ formatCurrency(cart.totalPrice) }}</span>
+              </div>
+              <div class="flex items-center justify-between text-xs font-bold text-muted uppercase tracking-widest">
+                <span>Estimasi Pajak (Included)</span>
+                <span class="text-emerald-500 tracking-normal">Rp 0</span>
+              </div>
+              <div class="pt-4 flex items-center justify-between border-t border-dashed border-(--border-color)">
+                <span class="text-sm font-black text-primary uppercase tracking-widest">Total Pembayaran</span>
+                <span class="text-3xl font-black text-rose-600 tracking-tight">{{ cart.formattedTotalPrice }}</span>
               </div>
             </div>
 
-            <!-- Modal Footer -->
-            <div v-if="cart.totalItems > 0" class="p-4 sm:p-6 border-t bg-gray-50/80 shrink-0">
-              <div class="flex items-center justify-between mb-4">
-                <p class="text-base font-medium text-gray-900">Subtotal</p>
-                <p class="text-xl font-bold text-gray-900">{{ cart.formattedTotalPrice }}</p>
-              </div>
-              <div class="flex flex-col sm:flex-row gap-3">
-                <button @click="cart.showCart(false)" type="button" class="w-full px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition">
-                  Lanjut Belanja
-                </button>
-                <NuxtLink to="/checkout" @click="cart.showCart(false)" class="w-full flex items-center justify-center px-6 py-3 text-sm font-medium text-center text-white bg-pink-600 rounded-lg hover:bg-pink-700 shadow-sm transition">
-                  Checkout
-                </NuxtLink>
-              </div>
+            <div class="flex flex-col gap-3">
+              <button 
+                @click="cart.showCart(false)"
+                class="btn-premium-outline w-full py-4.5 rounded-2xl"
+              >
+                Lanjut Belanja
+              </button>
+              <NuxtLink 
+                to="/checkout" 
+                @click="cart.showCart(false)"
+                class="btn-premium w-full flex items-center justify-center gap-3 py-4.5 rounded-2xl shadow-xl shadow-rose-500/20"
+              >
+                <Icon name="ph:credit-card-fill" class="w-5 h-5 text-amber-300" />
+                Selesaikan Pembayaran
+              </NuxtLink>
             </div>
+            
+            <p class="text-center text-[10px] text-muted font-bold uppercase tracking-widest">
+              Dikelola Dengan <Icon name="ph:heart-fill" class="text-rose-500 inline mx-0.5" /> HappyBouquet Official
+            </p>
           </div>
         </div>
-      </transition>
+      </Transition>
     </Teleport>
   </ClientOnly>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
+
 const cart = useCartStore()
 
-const formatCurrency = (value) => {
-  if (typeof value !== 'number') {
-    return ''
-  }
+const formatCurrency = (value: number) => {
+  if (typeof value !== 'number') return ''
   return value.toLocaleString('id-ID', {
     style: 'currency',
     currency: 'IDR',
@@ -118,16 +194,26 @@ const formatCurrency = (value) => {
   })
 }
 
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && cart.isOpen) cart.showCart(false)
+}
+
 // Menutup modal dengan tombol Escape
 onMounted(() => {
-  const handleKeydown = (e) => {
-    if (e.key === 'Escape' && cart.isOpen) {
-      cart.showCart(false)
-    }
-  }
   document.addEventListener('keydown', handleKeydown)
-  onBeforeUnmount(() => {
-    document.removeEventListener('keydown', handleKeydown)
-  })
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
 })
 </script>
+
+<style scoped>
+.scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+</style>

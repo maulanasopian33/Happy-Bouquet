@@ -13,7 +13,7 @@ export interface CartItem  {
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: useLocalStorage<CartItem[]>('hb_cart_items', []),
+    items: [] as CartItem[],
     isOpen: false
   }),
 
@@ -45,13 +45,13 @@ export const useCartStore = defineStore('cart', {
       const exist = this.items.find((i) => i.cartItemId === cartItemId)
       
       if (exist) {
-        exist.quantity++
+        exist.quantity += product.quantity || 1
       } else {
         this.items.push({
           ...product,
           price: Number(product.price), // Pastikan harga adalah angka
           cartItemId: cartItemId,
-          quantity: 1
+          quantity: product.quantity || 1
         })
       }
 

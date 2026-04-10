@@ -1,0 +1,210 @@
+LATEST UPDATES - 18 Maret 2026
+==============================
+
+1. FIX AVATAR 404 ERROR PADA SLIDER TESTIMONI
+   - Mengubah parameter `avatar` yang mulanya berisi inisial nama ("RN", "DD") menjadi URL dari layanan `ui-avatars.com`.
+   - Mengatasi error 404 `Page not found: /RN` dan `/DD` yang sebelumnya terjadi saat avatar gagal me-render image src.
+   - File yang disentuh: `pages/index.vue`
+
+Timestamp: 2026-03-18 15:00:00
+
+LATEST UPDATES - 31 Maret 2026
+==============================
+
+2. REDESIGN UI/UX MODERN & LUXURY
+   - Implementasi sistem desain baru dengan warna "Deep Rose" (#E11D48) dan typography "Outfit" & "Playfair Display".
+   - Integrasi Dark Mode penuh dengan toggle pada Header dan deteksi preferensi sistem secara otomatis.
+   - Redesign Layout Beranda (index.vue): Mengubah layout menjadi full-width, menghapus sidebar untuk meningkatkan visual impact, dan menambahkan section "Trust Badges".
+   - Redesign Header & Footer: Menggunakan efek glassmorphism, navigasi mobile baru, dan layout premium responsif.
+   - Redesign Komponen Utama: Memperbarui HeroSlider dengan animasi fade & zoom, serta ProductCard dengan hover effect interaktif.
+   - Perbaikan Linting: Mengganti `process.client` menjadi `import.meta.client` dan memperbaiki syntax CSS untuk kompatibilitas modern.
+   - File yang disentuh: `assets/css/main.css`, `composables/useTheme.ts`, `components/header/HeaderMain.vue`, `components/footer/FooterMain.vue`, `components/home/hero/HeroSlider.vue`, `components/product/ProductCard.vue`, `pages/index.vue`, `components/home/hero/FlashSaleSmall.vue`.
+
+Timestamp: 2026-03-31 16:55:00
+
+LATEST UPDATES - 1 April 2026
+==============================
+
+3. PERBAIKAN UI/UX MENYELURUH BERBASIS AUDIT SENIOR FRONTEND
+   - REDESIGN TestimonialSlider.vue: Penulisan ulang total — tidak lagi menggunakan hardcode warna Tailwind (gray-*). Sekarang fully menggunakan CSS design tokens (--bg-card, --text-primary, dll), mendukung dark mode dengan benar, menampilkan star rating (5 bintang), quote icon dekoratif, dan layout grid 3 kolom di desktop / swiper slider di mobile beserta custom pagination.
+   - HAPUS Font Awesome CDN: Menghapus import Font Awesome (~80KB) dari nuxt.config.ts karena tidak digunakan — semua ikon menggunakan Phosphor (@nuxt/icon). Berdampak positif pada LCP/FCP.
+   - FIX SEO — h1 Logo: Mengganti <h1> pada logo brand di HeaderMain.vue menjadi <span> agar tidak merusak hierarki heading SEO (satu h1 per halaman hanya untuk konten utama).
+   - TAMBAH useHead() & Open Graph: Menambahkan meta tags di pages/index.vue mencakup title, description, og:title, og:description, og:type, og:locale, dan twitter:card untuk optimasi share ke WhatsApp/Instagram.
+   - TAMBAH prefers-reduced-motion: Menambahkan media query aksesibilitas di assets/css/main.css untuk menghentikan semua animasi bagi pengguna dengan sensitivitas vestibular (standar WCAG).
+   - REORDER SECTIONS HOMEPAGE: Memindahkan Flash Sale ke posisi lebih atas (setelah Trust Badges, sebelum Quick Categories) untuk memaksimalkan urgensi dan meningkatkan konversi promo. Urutan baru: Hero > Trust Badges > Flash Sale > Quick Categories > Featured > Product Grid > Testimonials > CTA.
+   - BUAT MobileBottomBar.vue: Komponen baru Fixed Bottom Navigation Bar khusus mobile — standar e-commerce modern (Tokopedia, Shopee). Menampilkan 5 aksi: Beranda, Cari, Keranjang (menonjol + badge), Wishlist, Akun. Mendukung safe-area-inset untuk iPhone notch.
+   - INTEGRASI MobileBottomBar ke layouts/default.vue: Ditambahkan di layout utama. Background layout diperbaiki dari hardcode #f0f2f5 ke var(--bg-main) agar mendukung dark mode. Tambah pb-16 pada main di mobile agar konten tidak tertutup bottom bar.
+   - TAMBAH HARGA CORET (originalPrice) di ProductCard.vue: Prop originalPrice baru dengan tampilan strikethrough harga asli di atas harga diskon — meningkatkan kepercayaan terhadap badge "Diskon".
+   - PERBAIKAN QUICK VIEW MOBILE di ProductCard.vue: Quick View button sekarang selalu terlihat di mobile (tidak perlu hover). Di desktop tetap muncul saat hover.
+   - TAMBAH width/height pada <img> di ProductCard.vue untuk mencegah Cumulative Layout Shift (CLS) dan meningkatkan Core Web Vitals.
+   - TAMBAH prop showFilter di ProductGrid.vue: Filter dan sort tabs dapat disembunyikan via prop :show-filter="false" — untuk menghindari duplikasi dengan QuickCategories di homepage.
+   - TAMBAH Skeleton Loading di ProductGrid.vue: Menampilkan 8 skeleton card saat data belum tersedia — menggunakan class .skeleton yang sudah ada di main.css.
+   - File yang disentuh: `components/testimonial/TestimonialSlider.vue`, `nuxt.config.ts`, `components/header/HeaderMain.vue`, `pages/index.vue`, `assets/css/main.css`, `components/header/MobileBottomBar.vue` (baru), `layouts/default.vue`, `components/product/ProductCard.vue`, `components/product/ProductGrid.vue`.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+4. REDESIGN HALAMAN PRODUK (PRODUCTS INDEX)
+   - Implementasi layout baru yang senada dengan beranda menggunakan "section-wrapper" dan desain "Premium & Luxury".
+   - Penambahan Page Hero Section dengan breadcrumbs bergaya glassmorphism dan tipografi Playfair Display.
+   - Redesign Sidebar Kategor: Menggunakan sticky sidebar kustom dengan card-premium, category icons, dan banner CTA custom order.
+   - Integrasi Komponen Modern: Mengganti grid manual dengan `<ProductGrid />` yang mendukung filter, sorting, dan view mode (grid/list).
+   - Penambahan Product Carousel untuk seksi "Hot Choice" (Featured Products) guna meningkatkan estetika dan pengalaman belanja.
+   - Optimasi SEO: Implementasi `useHead()` dengan meta tags title dan description yang dinamis untuk halaman produk.
+   - Peningkatan Aksesibilitas & Responsivitas: Transisi halus pada filter kategori dan penyesuaian layout grid yang optimal di semua ukuran layar.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+5. REDESIGN PRODUCT DETAIL & PIVOT SINGLE-TENANT
+   - Transformasi Halaman Detail Produk (`[id].vue`): Redesign total menggunakan layout 12-kolom (desktop) yang progresif dengan breadcrumbs dan tipografi premium.
+   - Pivot Single-Tenant: Menghapus `ProductSellerInfo.vue` (struktur marketplace) dan menggantinya dengan `ProductTrustPromise.vue` yang menyoroti jaminan kualitas brand HappyBouquet.
+   - Optimasi Konversi Mobile: Implementasi `StickyPurchaseBar.vue` — bar pembelian melayang di bagian bawah layar saat scroll untuk memudahkan transaksi di perangkat seluler.
+   - Peningkatan Keamanan & Kepercayaan: Penambahan `SecurePaymentCard.vue` untuk menampilkan metode pembayaran aman (QRIS, Bank Transfer, COD).
+   - Redesign Galeri & Tab Konten: Implementasi `ProductGallery.vue` dengan efek fade-zoom dan sistem Tab baru (Deskripsi, Spesifikasi, Ulasan) yang lebih rapi dan informatif.
+   - Konsistensi Visual: Pembaruan `ProductInfo.vue`, `ProductPriceBox.vue`, dan `ProductDescription.vue` agar fully compatible dengan design tokens baru dan Dark Mode.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+6. PERBAIKAN NAMA PRODUK & REDESIGN KERANJANG (CART)
+   - Perbaikan UI Product Detail: Menambahkan kembali komponen `ProductInfo` di bagian atas halaman detail untuk memastikan Nama Produk dan Harga Utama terlihat jelas dan profesional.
+   - Redesign Keranjang (CartModal): Mengubah modal keranjang menjadi sistem **Side-Drawer** yang lebih modern dan premium.
+   - Implementasi Glassmorphism: Backdrop keranjang kini menggunakan efek blur tingkat tinggi (`backdrop-blur-md`) untuk kedalaman visual yang lebih baik.
+   - Kartu Item Premium: Redesign daftar item di keranjang dengan gaya `card-premium`, gambar yang lebih besar, dan kontrol kuantitas yang lebih intuitif.
+   - Footer & Checkout: Redesign area subtotal dan tombol checkout menggunakan gaya `btn-premium` dengan bayangan dinamis (shadow-rose).
+   - Fix Lifecycle Hooks: Memperbaiki import `onMounted` dan `onUnmounted` serta penempatan event listener untuk performa dan stabilitas aplikasi yang lebih baik.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+7. REDESIGN HALAMAN CHECKOUT (LUXURY)
+   - Transformasi Halaman Checkout (`checkout/index.vue`): Redesign total menggunakan sistem grid 12-kolom dengan sidebar ringkasan pesanan yang *sticky*.
+   - Seksi Form Premium: Seluruh bagian formulir (Kontak, Alamat, Metode) kini dibungkus dalam `card-premium` dengan padding yang luas dan bayangan halus.
+   - Tipografi & Branding: Implementasi `section-tag` dan `section-title` dengan gradien warna brand untuk konsistensi visual yang mewah.
+   - Refinement Input: Pembaruan seluruh elemen input dan textarea dengan radius `rounded-2xl` dan warna latar belakang seksi yang lembut.
+   - Visualisasi Opsi: Redesign pilihan Metode Pengiriman dan Pembayaran menggunakan kartu seleksi interaktif dengan status aktif yang jelas (Rose accent).
+   - Ringkasan Pesanan Modern: Daftar item di ringkasan pesanan kini menggunakan kartu produk mini dengan indikator kuantitas yang diletakkan secara presisi.
+   - Action Button: Tombol penyelesaian pesanan menggunakan gaya `btn-premium` dengan bayangan dinamis dan ikon konfirmasi.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+8. IMPLEMENTASI HALAMAN WISHLIST & AKUN
+   - Fitur Wishlist: Pembuatan `stores/wishlist.ts` dengan persistensi `LocalStorage` untuk menyimpan produk favorit pengguna secara client-side.
+   - Halaman Wishlist (`pages/wishlist.vue`): Implementasi grid produk favorit dengan layout premium dan empty state yang artistik.
+   - Integrasi Komponen: Update `ProductCard.vue` dan `ProductGallery.vue` untuk mendukung fungsionalitas toggle wishlist (ikon hati) secara real-time.
+   - Fitur Akun: Pembuatan `stores/user.ts` dengan data profil mock dan riwayat pesanan untuk demonstrasi UI.
+   - Halaman Akun (`pages/account.vue`): Implementasi dashboard pengguna dengan interface berbasis tab (Pesanan, Alamat, Keamanan) dan kartu profil mewah.
+   - UI Refinement: Penambahan animasi `reveal` pada elemen halaman baru dan penyesuaian gaya agar konsisten dengan tema Deep Rose dan Dark Mode.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+9. PENINGKATAN PROFESIONAL HALAMAN AKUN
+   - Pelacakan Pesanan Visual: Penambahan komponen `OrderTimeline.vue` yang menampilkan status pengiriman secara real-time (Timeline).
+   - Dashboard Loyalitas: Implementasi sistem poin, status member (Tier), dan manajemen voucher menggunakan komponen `VoucherCard.vue` yang didesain eksklusif.
+   - Manajemen Alamat Lanjutan: Dukungan untuk banyak alamat pengiriman dengan label khusus dan status Alamat Utama.
+   - Dashboard Keamanan: Penambahan log sesi login terakhir dan indikator kekuatan keamanan akun.
+   - Integrasi Bantuan: Penambahan `SupportSection.vue` yang mengintegrasikan FAQ dan akses cepat ke bantuan pelanggan (WhatsApp).
+   - Rekomendasi Pintar: Penambahan slider produk "Mungkin Anda Suka" di bagian bawah halaman akun untuk meningkatkan retensi.
+   - Mock Data Update: Pembaruan `stores/user.ts` dengan data yang lebih mendalam untuk mensimulasikan fitur-fitur profesional di atas.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+10. IMPLEMENTASI HALAMAN INFORMASI (TRACKING, SHIPPING, RETURNS)
+   - Halaman Tracking (`pages/tracking.vue`): Implementasi pencarian ID Pesanan interaktif dengan visualisasi perjalanan bunga menggunakan `OrderTimeline`.
+   - Halaman Shipping (`pages/shipping.vue`): Pembuatan informasi metode pengiriman premium, standar pengemasan (Hydration Pack, Hard-Box), dan FAQ logistik.
+   - Halaman Returns (`pages/returns.vue`): Implementasi panduan prosedur pengembalian bunga, kriteria kelayakan klaim, dan metode pengembalian dana (Refund).
+   - SEO & Navigasi: Optimasi meta tags untuk setiap halaman baru dan integrasi link pada bagian Footer aplikasi.
+   - Bug Fix: Perbaikan runtime error `v-if` vs `v-for` pada halaman akun untuk memastikan kestabilan rendering data pelacakan.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+11. IMPLEMENTASI HALAMAN BRAND (ABOUT & CONTACT)
+   - Halaman About Us (`pages/about.vue`): Implementasi narasi merek dengan hero section "Slow Zoom", statistik pencapaian, dan filosofi "Seni di Balik Setiap Kelopak".
+   - Halaman Contact (`pages/contact.vue`): Pembuatan formulir kontak interaktif dengan validasi sukses, info grid layanan pelanggan, dan visualisasi peta lokasi (Mock Map) yang mewah.
+   - Design Continuity: Penggunaan elemen visual yang konsisten (glassmorphism, animai reveal, dan tipografi premium) di seluruh halaman baru untuk memperkuat identitas brand.
+   - Integrasi Navigasi: Memastikan semua tautan di Header dan Footer sinkron dengan halaman-halaman baru.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+12. IMPLEMENTASI HALAMAN KEPATUHAN & BANTUAN (PRIVACY, TERMS, FAQ)
+   - Halaman Privacy Policy (`pages/privacy.vue`): Penyusunan kebijakan data pribadi dengan tata letak terstruktur dan ikonografi modern.
+   - Halaman Terms of Service (`pages/terms.vue`): Implementasi ketentuan penggunaan layanan dengan desain poin-per-poin yang mudah dipahami.
+   - Halaman FAQ (`pages/faq.vue`): Pembuatan sistem bantuan interaktif dengan fitur pencarian *real-time* dan kategorisasi pertanyaan (*Pemesanan, Pembayaran, Perawatan Bunga*).
+   - Readability Audit: Optimasi tipografi, jarak baris, dan kontras warna untuk meningkatkan kenyamanan membaca dokumen legal di mode terang maupun gelap.
+   - Full Footer Activation: Memastikan seluruh tautan di bagian bawah aplikasi kini aktif dan mengarah ke konten yang relevan.
+
+
+LATEST UPDATES - 2 April 2026
+==============================
+
+13. IMPLEMENTASI HALAMAN LINK-IN-BIO (INSTAGRAM)
+   - Halaman Khusus Media Sosial (`pages/links.vue`): Pembuatan halaman tujuan (*landing page*) minimalis bergaya Linktree yang dioptimalkan untuk perangkat mobile.
+   - UI Standalone: Menonaktifkan layout standar (Header/Footer) untuk memberikan pengalaman aplikasi yang murni fokus pada tautan navigasi.
+   - Elemen Interaktif: Penambahan daftar tombol navigasi cepat (Belanja, Lacak, WhatsApp) dan kartu promo "Weekly Deals" yang dinamis.
+   - Branding Sosial: Integrasi logo terverifikasi, handle media sosial, dan ikon koneksi sosial pada bagian bawah halaman.
+
+Timestamp: 2026-04-02 17:12:15
+
+LATEST UPDATES - 10 April 2026
+==============================
+
+14. PERBAIKAN BUILD ERROR & WARNING CSS
+   - Memperbaiki urutan @import pada main.css agar font Google diimpor sebelum Tailwind (penting untuk PostCSS di Tailwind v4).
+   - Menyelesaikan crash 'html.replace is not a function' yang dipicu oleh kegagalan build CSS.
+   - Membersihkan residu warning router terkait service worker.
+   - File yang disentuh: assets/css/main.css
+
+Timestamp: 2026-04-10 09:30:00
+
+LATEST UPDATES - 10 April 2026
+==============================
+
+15. IMPLEMENTASI MAINTENANCE MODE & DEVELOPER BYPASS
+   - Pembuatan halaman Under Construction luxury (`maintenance.vue`) dengan tema Premium Deep Rose.
+   - Implementasi Nitro Server Middleware untuk pengalihan otomatis pelanggan ke halaman maintenance.
+   - Fitur Developer Bypass: Menggunakan query `?dev_mode=happy-dev` untuk akses penuh, tersimpan di `localStorage` dan tersinkronisasi dengan cookie.
+   - Proteksi SEO: Injeksi otomatis meta tag `noindex, nofollow` dan Header X-Robots-Tag saat mode perbaikan aktif.
+   - UI Developer: Penambahan floating 'Testing Badge' yang hanya muncul saat developer sedang mem-bypass maintenance mode.
+   - File yang disentuh: `nuxt.config.ts`, `pages/maintenance.vue`, `components/common/TestingBadge.vue`, `middleware/bypass.global.ts`, `server/middleware/maintenance.ts`, `app.vue`.
+
+Timestamp: 2026-04-10 09:40:00
+
+LATEST UPDATES - 10 April 2026
+==============================
+
+16. PERBAIKAN VUE WARNINGS & HALAMAN PLACEHOLDER
+   - Perbaikan Prop Type Warning: Menambahkan casting `Number` pada data harga produk (`price` & `originalPrice`) di `ProductCard.vue`, `pages/index.vue`, dan `pages/products/index.vue`.
+   - Perbaikan Resolusi Komponen: Memindahkan `TestingBadge.vue` ke root `components/` untuk perbaikan auto-import Nuxt 4.
+   - Penambahan Halaman Placeholder: Pembuatan halaman `blog.vue` (Inspirasi Bunga) dan `promo.vue` (Penawaran Spesial) untuk menghilangkan warning navigasi router.
+   - Update Dependency: Instalasi `@iconify-json/ph` untuk koleksi icon Phosphor lokal yang lebih stabil.
+   - File yang disentuh: `components/product/ProductCard.vue`, `pages/index.vue`, `pages/products/index.vue`, `app.vue`, `pages/blog.vue` (baru), `pages/promo.vue` (baru).
+
+Timestamp: 2026-04-10 09:45:00
+
+LATEST UPDATES - 10 April 2026
+==============================
+
+17. PENSTABILAN DEV SERVER & PENANGANAN ZOMBIE SW
+   - Resolusi Error 'html.replace is not a function': Mengatasi crash overlay error developer yang disebabkan oleh request service worker yang gagal.
+   - Penanganan Zombie Service Worker: Menambahkan route handler `/dev-sw.js` yang bersifat silent untuk menghentikan loop request dari browser.
+   - Pengerasan Middleware: Memperbarui logika skip pada maintenance middleware agar tidak mengganggu route sistem dan error handler bawaan Nuxt.
+   - Pembersihan Build: Menghapus direktori `.nuxt` untuk memastikan konsistensi state build setelah perubahan konfigurasi lingkungan (.env).
+   - Pengaturan Typescript: Instalasi `@types/node` dan konfigurasi `tsconfig.json` untuk dukungan global `process.env`.
+   - File yang disentuh: `server/routes/dev-sw.js.ts` (baru), `server/middleware/maintenance.ts`, `tsconfig.json`, `package.json`.
+
+Timestamp: 2026-04-10 09:52:00
