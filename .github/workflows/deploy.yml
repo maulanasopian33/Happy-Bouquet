@@ -29,6 +29,7 @@ jobs:
         run: npm run build
         env:
           NUXT_MAINTENANCE_ENABLED: true
+          NUXT_API_URL: ${{ secrets.NUXT_API_URL }}
 
       # Prepare deploy dir (gabungkan .output + node_modules + package.json)
       - name: Prepare deploy folder

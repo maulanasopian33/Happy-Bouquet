@@ -20,7 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gaId: 'G-1H48JGPPD8',
-      apiUrl: 'http://localhost:5000/api',
+      apiUrl: process.env.NUXT_API_URL || 'http://localhost:5000/api',
       maintenance: {
         enabled: process.env.NUXT_MAINTENANCE_ENABLED === 'true',
         secret: 'happy-dev'
