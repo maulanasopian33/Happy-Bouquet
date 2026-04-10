@@ -27,6 +27,8 @@ jobs:
       # Build Nuxt in production
       - name: Build Nuxt
         run: npm run build
+        env:
+          NUXT_MAINTENANCE_ENABLED: true
 
       # Prepare deploy dir (gabungkan .output + node_modules + package.json)
       - name: Prepare deploy folder
