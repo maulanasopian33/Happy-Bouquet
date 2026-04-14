@@ -31,11 +31,14 @@ jobs:
           NUXT_MAINTENANCE_ENABLED: true
           NUXT_API_URL: ${{ secrets.NUXT_API_URL }}
 
-      # Prepare deploy dir (Hanya .output karena Full Bundling aktif)
+      # Prepare deploy dir (gabungkan .output + node_modules + package.json)
       - name: Prepare deploy folder
         run: |
           mkdir deploy
           cp -r .output deploy/.output
+          # Optimasi: Hapus devDependencies agar node_modules lebih ringan
+          npm prune --production
+          cp -r node_modules deploy/node_modules
           cp package.json deploy/package.json
           cp package-lock.json deploy/package-lock.json
 
@@ -50,6 +53,13 @@ jobs:
           protocol: ftp
           local-dir: "deploy/"
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}
+          # Override default ignore agar node_modules tetap di-upload
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*
+            **/.github*/**
+            **/node_modules/**/.git*
 
       # ===== AUTO RESTART NODE.JS APP =====
       - name: Generate restart trigger

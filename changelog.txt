@@ -219,3 +219,14 @@ LATEST UPDATES - 14 April 2026
    - File yang disentuh: `package.json`, `nuxt.config.ts`, `.github/workflows/deploy.yml`.
 
 Timestamp: 2026-04-14 16:17:00
+
+LATEST UPDATES - 14 April 2026
+==============================
+
+19. PEMULIHAN UPLOAD NODE_MODULES & OPTIMASI FTP
+   - Restore node_modules: Mengaktifkan kembali proses penyalinan `node_modules` ke folder deploy dalam workflow GitHub Actions.
+   - Optimasi Ukuran: Menambahkan perintah `npm prune --production` sebelum proses upload untuk menghapus devDependencies, sehingga ukuran transfer lebih ringan namun tetap fungsional di server.
+   - Konfigurasi FTP: Menambahkan opsi `exclude` pada `SamKirkland/FTP-Deploy-Action` untuk memastikan `node_modules` tidak terabaikan oleh file `.gitignore` standar repository.
+   - File yang disentuh: `.github/workflows/deploy.yml`
+
+Timestamp: 2026-04-14 17:08:00

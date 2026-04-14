@@ -38,9 +38,4 @@ export default defineNuxtConfig({
       tailwindcss()
     ]
   },
-  nitro: {
-    externals: {
-      external: []
-    }
-  }
 })
