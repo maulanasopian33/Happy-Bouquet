@@ -212,9 +212,9 @@ Timestamp: 2026-04-10 09:52:00
 LATEST UPDATES - 14 April 2026
 ==============================
 
-18. PERBAIKAN ERR_MODULE_NOT_FOUND @ICONIFY/UTILS DI CPANEL
-   - Migrasi Dependensi: Memindahkan @iconify-json/ph dari devDependencies ke dependencies dan menambahkan @iconify/utils ke produksi untuk memastikan ketersediaan saat runtime.
-   - Konfigurasi Nitro Bundling: Menambahkan instruksi nitro.externals.inline untuk @iconify/utils agar paket tersebut digabungkan langsung ke dalam build server (.output), menghindari ketergantungan pada node_modules eksternal di lingkungan hosting.
+18. PERBAIKAN ERR_MODULE_NOT_FOUND (ICONIFY & CONSOLA) DI CPANEL
+   - Migrasi Dependensi: Memindahkan @iconify-json/ph dari devDependencies ke dependencies serta menambahkan @iconify/utils dan consola ke produksi untuk memastikan ketersediaan saat runtime.
+   - Konfigurasi Nitro Bundling: Menambahkan instruksi nitro.externals.inline untuk @iconify/utils dan consola agar paket-paket tersebut digabungkan langsung ke dalam build server (.output).
    - Optimasi Deployment: Memastikan aplikasi dapat berjalan stabil di enviroment cPanel/Passenger tanpa error modul tidak ditemukan.
    - File yang disentuh: package.json, nuxt.config.ts.
 
