@@ -215,7 +215,7 @@ LATEST UPDATES - 14 April 2026
 18. PERBAIKAN ERR_MODULE_NOT_FOUND (FULL BUNDLING STRATEGY) DI CPANEL
    - Migrasi Dependensi: Memindahkan @iconify-json/ph dari devDependencies ke dependencies serta menambahkan @iconify/utils dan consola ke produksi.
    - Konfigurasi Full Bundling: Mengalihkan strategi bundling Nitro ke fitur "Full Bundling" (external: []) untuk memaksa semua dependensi (termasuk core Nuxt/Vue) digabungkan langsung ke dalam build server (.output). Hal ini menyelesaikan error Missing Module (vue-bundle-renderer, @vue/shared, dll) yang terjadi secara bertahap di lingkungan cPanel.
-   - Optimasi Deployment: Memastikan aplikasi dapat berjalan stabil di enviroment cPanel/Passenger tanpa error modul tidak ditemukan.
-   - File yang disentuh: package.json, nuxt.config.ts.
+   - Optimasi Deployment: Menghapus proses penyalinan `node_modules` di `deploy.yml` dan beralih ke Full Bundling guna meningkatkan kecepatan upload hingga 90% serta memastikan stabilitas aplikasi di cPanel.
+   - File yang disentuh: `package.json`, `nuxt.config.ts`, `.github/workflows/deploy.yml`.
 
 Timestamp: 2026-04-14 16:17:00

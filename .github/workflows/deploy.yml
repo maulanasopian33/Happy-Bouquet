@@ -31,12 +31,11 @@ jobs:
           NUXT_MAINTENANCE_ENABLED: true
           NUXT_API_URL: ${{ secrets.NUXT_API_URL }}
 
-      # Prepare deploy dir (gabungkan .output + node_modules + package.json)
+      # Prepare deploy dir (Hanya .output karena Full Bundling aktif)
       - name: Prepare deploy folder
         run: |
           mkdir deploy
           cp -r .output deploy/.output
-          cp -r node_modules deploy/node_modules
           cp package.json deploy/package.json
           cp package-lock.json deploy/package-lock.json
 
