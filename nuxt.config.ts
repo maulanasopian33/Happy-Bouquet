@@ -40,7 +40,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     externals: {
-      inline: ['@iconify/utils', 'consola']
+      external: []
     }
   }
 })
