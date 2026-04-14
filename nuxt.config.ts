@@ -38,4 +38,9 @@ export default defineNuxtConfig({
       tailwindcss()
     ]
   },
+  nitro: {
+    externals: {
+      inline: ['@iconify/utils']
+    }
+  }
 })
