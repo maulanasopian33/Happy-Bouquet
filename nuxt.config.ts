@@ -74,13 +74,18 @@ export default defineNuxtConfig({
     storage: {
       // Mengganti backend cache Nitro dari RAM → Redis Upstash
       cache: {
-        driver: 'redis',
+        driver: 'upstash',
         url: process.env.UPSTASH_REDIS_REST_URL,
         token: process.env.UPSTASH_REDIS_REST_TOKEN,
         // Prefix key di Redis agar mudah didentifikasi
         base: 'happybouquet:cache:',
       },
     },
+    devStorage: {
+      cache: {
+        driver: 'memory'
+      }
+    }
   },
 
   runtimeConfig: {
