@@ -30,6 +30,8 @@ jobs:
         env:
           NUXT_MAINTENANCE_ENABLED: true
           NUXT_API_URL: ${{ secrets.NUXT_API_URL }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
 
       # Prepare deploy dir (gabungkan .output + node_modules + package.json)
       - name: Prepare deploy folder
