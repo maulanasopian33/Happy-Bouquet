@@ -230,3 +230,18 @@ LATEST UPDATES - 14 April 2026
    - File yang disentuh: `.github/workflows/deploy.yml`
 
 Timestamp: 2026-04-14 17:08:00
+
+LATEST UPDATES - 15 April 2026
+==============================
+
+20. IMPLEMENTASI ROUTE CACHING (SWR) & KONFIGURASI NITRO STORAGE REDIS UPSTASH
+   - Penambahan `routeRules` di `nuxt.config.ts` dengan strategi SWR (Stale-While-Revalidate) untuk mengoptimalkan penggunaan RAM di shared hosting.
+   - Landing page (`/`) di-cache selama 24 jam (86400 detik) — konten statis, sangat jarang berubah.
+   - Semua halaman produk (`/produk`, `/produk/**`) di-cache selama 1 jam (3600 detik) — cukup fresh untuk e-commerce.
+   - Halaman statis brand (`/about`, `/shipping`, `/privacy`, `/terms`, `/faq`) di-cache selama 7 hari (604800 detik).
+   - Halaman dinamis (`/api/**`, `/checkout/**`, `/account/**`, `/tracking`, `/maintenance`) dikecualikan dari cache (`cache: false`).
+   - Penambahan blok `nitro.storage` (dalam bentuk komentar siap-aktifkan) menggunakan driver Redis via Upstash sebagai pengganti penyimpanan cache di RAM lokal.
+   - Panduan setup Upstash (env: UPSTASH_REDIS_REST_URL & UPSTASH_REDIS_REST_TOKEN) sudah disertakan langsung di dalam file konfigurasi sebagai komentar instruksi.
+   - File yang disentuh: `nuxt.config.ts`
+
+Timestamp: 2026-04-15 11:29:47
