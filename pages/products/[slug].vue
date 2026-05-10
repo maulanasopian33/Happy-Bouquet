@@ -14,7 +14,7 @@
 
     <!-- ======= MAIN CONTENT ======= -->
     <div class="section-wrapper pb-24 lg:pb-32">
-      <ProductDetailPage :slug="productId.value" />
+      <ProductDetailPage :slug="productSlug" />
     </div>
 
   </div>
@@ -24,7 +24,7 @@
 import ProductDetailPage from '~/components/product/ProductDetailPage.vue'
 
 const route = useRoute()
-const productId = computed(() => parseInt(route.params.id as string, 10))
+const productSlug = computed(() => route.params.slug as string)
 
 // ===== SEO =====
 useHead({

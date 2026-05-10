@@ -17,7 +17,7 @@
           :name="isActive('/') ? 'ph:house-fill' : 'ph:house-bold'"
           class="w-5 h-5 transition-transform group-active:scale-90"
         />
-        <span class="text-[10px] font-bold leading-none">Beranda</span>
+        <span class="text-xs font-bold leading-none">Beranda</span>
       </NuxtLink>
 
       <!-- Cari -->
@@ -26,7 +26,7 @@
         class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 text-(--text-muted) hover:text-rose-500 group"
       >
         <Icon name="ph:magnifying-glass-bold" class="w-5 h-5 transition-transform group-active:scale-90" />
-        <span class="text-[10px] font-bold leading-none">Cari</span>
+        <span class="text-xs font-bold leading-none">Cari</span>
       </button>
 
       <!-- Keranjang (CTA utama) -->
@@ -47,7 +47,7 @@
             </span>
           </ClientOnly>
         </div>
-        <span class="text-[10px] font-bold text-rose-600 leading-none mt-1">Keranjang</span>
+        <span class="text-xs font-bold text-rose-600 leading-none mt-1">Keranjang</span>
       </button>
 
       <!-- Wishlist -->
@@ -60,7 +60,7 @@
           :name="isActive('/wishlist') ? 'ph:heart-fill' : 'ph:heart-bold'"
           class="w-5 h-5 transition-transform group-active:scale-90"
         />
-        <span class="text-[10px] font-bold leading-none">Wishlist</span>
+        <span class="text-xs font-bold leading-none">Wishlist</span>
       </NuxtLink>
 
       <!-- Akun -->
@@ -73,7 +73,7 @@
           :name="isActive('/account') ? 'ph:user-circle-fill' : 'ph:user-circle-bold'"
           class="w-5 h-5 transition-transform group-active:scale-90"
         />
-        <span class="text-[10px] font-bold leading-none">Akun</span>
+        <span class="text-xs font-bold leading-none">Akun</span>
       </NuxtLink>
 
     </div>

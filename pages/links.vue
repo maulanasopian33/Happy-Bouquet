@@ -53,13 +53,13 @@
         <div class="p-4 bg-linear-to-br from-rose-600 to-rose-700 rounded-2xl text-white shadow-xl shadow-rose-500/30 space-y-4 group cursor-pointer hover:scale-[1.02] transition-all">
            <div class="flex items-center gap-3">
               <Icon name="ph:sparkle-fill" class="w-5 h-5 animate-pulse" />
-              <p class="text-[10px] font-black uppercase tracking-widest opacity-80">Promo Minggu Ini</p>
+              <p class="text-xs font-black uppercase tracking-widest opacity-80">Promo Minggu Ini</p>
            </div>
            <div class="flex gap-4 items-center">
               <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?q=80&w=200&fit=crop" class="w-16 h-16 rounded-xl object-cover border border-white/20" alt="Promo Bouquet" />
               <div class="flex-1">
                  <h4 class="text-sm font-black leading-tight">Bundle "Spring Love"</h4>
-                 <p class="text-[10px] font-medium opacity-80 mt-1">Diskon 15% + Gratis Kartu Ucapan Premium</p>
+                 <p class="text-xs font-medium opacity-80 mt-1">Diskon 15% + Gratis Kartu Ucapan Premium</p>
               </div>
               <div class="p-2 bg-white/20 rounded-lg">
                  <Icon name="ph:arrow-right-bold" class="w-4 h-4" />
@@ -85,8 +85,8 @@
 
          <div class="flex flex-col items-center gap-1 opacity-50">
             <NuxtLink to="/" class="flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/20 transition-all">
-               <div class="w-4 h-4 rounded-sm bg-rose-600 flex items-center justify-center text-[10px] text-white font-black">HB</div>
-               <span class="text-[10px] font-black uppercase tracking-widest text-primary">HappyBouquet.id</span>
+               <div class="w-4 h-4 rounded-sm bg-rose-600 flex items-center justify-center text-xs text-white font-black">HB</div>
+               <span class="text-xs font-black uppercase tracking-widest text-primary">HappyBouquet.id</span>
             </NuxtLink>
          </div>
       </footer>

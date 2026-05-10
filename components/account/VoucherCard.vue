@@ -10,7 +10,7 @@
       <div class="absolute -bottom-10 -right-10 w-20 h-20 bg-rose-400/20 rounded-full"></div>
       
       <span class="text-3xl font-black tracking-tighter leading-none">{{ voucher.discount }}</span>
-      <span class="text-[10px] font-black uppercase tracking-widest mt-1 opacity-80">OFF</span>
+      <span class="text-xs font-black uppercase tracking-widest mt-1 opacity-80">OFF</span>
       
       <Icon name="ph:ticket-fill" class="absolute -bottom-4 -left-4 w-16 h-16 opacity-10 -rotate-12" />
     </div>
@@ -32,7 +32,7 @@
             Aktif
           </span>
         </div>
-        <p class="text-[11px] font-medium text-secondary leading-relaxed">Berlaku hingga {{ voucher.expiryDate }}</p>
+        <p class="text-xs font-medium text-secondary leading-relaxed">Berlaku hingga {{ voucher.expiryDate }}</p>
       </div>
 
       <div class="mt-8 flex flex-col sm:flex-row items-center gap-4">

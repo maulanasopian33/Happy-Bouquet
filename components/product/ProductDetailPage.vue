@@ -131,10 +131,10 @@ import ProductRelatedList from './ProductRelatedList.vue'
 import ProductDescription from './ProductDescription.vue'
 import StickyPurchaseBar from './StickyPurchaseBar.vue'
 
-const props = defineProps<{ id: number }>()
+const props = defineProps<{ slug: string }>()
 
 // Fetching Logic
-const { product, related, loading, error } = useProductDetail(computed(() => props.id))
+const { product, related, loading, error } = useProductDetail(computed(() => props.slug))
 
 const activeImage = ref(0)
 const activeTab = ref('Deskripsi')
@@ -145,7 +145,7 @@ const onAddToCart = (payload: any) => {
     // Map Product to CartItem structure
     const item = {
       ...product.value,
-      name: product.value.title,
+      name: product.value.name,
       quantity: payload.qty,
       variants: payload.selections
     }
@@ -163,7 +163,7 @@ watch(
   () => product.value,
   (p) => {
     if (p) {
-      useHead({ title: p.title })
+      useHead({ title: p.name })
     }
   },
   { immediate: true }

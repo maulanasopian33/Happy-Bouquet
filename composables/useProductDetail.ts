@@ -1,8 +1,8 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, type Ref } from 'vue'
 import type { Product } from './useProducts'
 
-export const useProductDetail = (productId: Ref<number>) => {
-  const { findProduct, getRelatedProducts } = useProducts()
+export const useProductDetail = (productSlug: Ref<string>) => {
+  const { findProductBySlug, getRelatedProducts } = useProducts()
 
   const product = ref<Product | null>(null)
   const related = ref<Product[]>([])
@@ -16,13 +16,16 @@ export const useProductDetail = (productId: Ref<number>) => {
     related.value = []
 
     try {
-      const foundProduct = await findProduct(productId.value)
+      if (!productSlug.value || productSlug.value === 'undefined') {
+        throw new Error('Slug produk tidak valid.')
+      }
+      const foundProduct = await findProductBySlug(productSlug.value)
       if (foundProduct) {
         product.value = foundProduct
         // Fetch related products after main product is found
         related.value = await getRelatedProducts(foundProduct)
       } else {
-        throw new Error(`Product with ID ${productId.value} not found.`)
+        throw new Error(`Product with slug "${productSlug.value}" not found.`)
       }
     } catch (e: any) {
       error.value = e.message || 'Failed to fetch product details.'

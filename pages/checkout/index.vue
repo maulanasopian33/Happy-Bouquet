@@ -146,7 +146,7 @@
 
                 <div class="flex-1">
                   <span class="block text-sm font-black text-primary uppercase tracking-widest">{{ method.name }}</span>
-                  <p class="text-[10px] text-muted font-bold mt-0.5" v-if="method.rate < 1 && method.rate > 0">Cicil Sekarang, Lunas Kemudian</p>
+                  <p class="text-xs text-muted font-bold mt-0.5" v-if="method.rate < 1 && method.rate > 0">Cicil Sekarang, Lunas Kemudian</p>
                 </div>
                 
                 <div v-if="selectedPayment?.id === method.id" class="w-6 h-6 rounded-full bg-rose-600 flex items-center justify-center text-white">
@@ -211,7 +211,7 @@
                   </dt>
                   <dd class="text-base font-black">{{ formatCurrency(paymentSummary.amountToPay) }}</dd>
                 </div>
-                <div class="pt-2 border-t border-emerald-100/50 dark:border-emerald-900/50 flex items-center justify-between text-[10px] font-bold text-emerald-600/70 dark:text-emerald-500/70 uppercase">
+                <div class="pt-2 border-t border-emerald-100/50 dark:border-emerald-900/50 flex items-center justify-between text-xs font-bold text-emerald-600/70 dark:text-emerald-500/70 uppercase">
                   <dt>Sisa Pelunasan</dt>
                   <dd>{{ formatCurrency(paymentSummary.remainingAmount) }}</dd>
                 </div>
@@ -228,7 +228,7 @@
               </button>
             </div>
             
-            <div class="flex items-center justify-center gap-2 text-[10px] font-bold text-muted uppercase tracking-widest">
+            <div class="flex items-center justify-center gap-2 text-xs font-bold text-muted uppercase tracking-widest">
               <Icon name="ph:lock-key-fill" class="text-emerald-500" />
               Transaksi Terenkripsi & Aman
             </div>

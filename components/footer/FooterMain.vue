@@ -120,12 +120,12 @@
       <!-- Payment Methods -->
       <div class="py-8 border-t border-[var(--border-color)] flex flex-col sm:flex-row items-center justify-between gap-6">
         <div class="flex items-center gap-3">
-          <p class="text-[10px] font-bold text-muted uppercase tracking-widest shrink-0">Pembayaran:</p>
+          <p class="text-xs font-bold text-muted uppercase tracking-widest shrink-0">Pembayaran:</p>
           <div class="flex items-center gap-2 flex-wrap">
             <span
               v-for="method in paymentMethods"
               :key="method"
-              class="px-2.5 py-1 bg-[var(--bg-section)] border border-[var(--border-color)] rounded-lg text-[10px] font-bold text-secondary"
+              class="px-2.5 py-1 bg-[var(--bg-section)] border border-[var(--border-color)] rounded-lg text-xs font-bold text-secondary"
             >
               {{ method }}
             </span>

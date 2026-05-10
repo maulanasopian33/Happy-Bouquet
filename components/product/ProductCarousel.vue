@@ -57,14 +57,8 @@ const props = defineProps({
 
 defineEmits(['view'])
 
-const dummyProducts = [
-  { id: 1, name: 'Buket Mawar Premium', price: 185000, rating: 4.8, reviewCount: 127, badge: 'Terlaris', category: 'Mawar', image: 'https://images.unsplash.com/photo-1487530811015-780d4d5af7d8?q=80&w=600&fit=crop' },
-  { id: 2, name: 'Buket Wisuda Elegance', price: 250000, rating: 4.9, reviewCount: 89, badge: 'Baru', category: 'Wisuda', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=600&fit=crop' },
-  { id: 3, name: 'Mini Bouquet Anniversary', price: 120000, rating: 4.7, reviewCount: 54, badge: 'Diskon', category: 'Anniversary', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&fit=crop' },
-  { id: 4, name: 'Buket Snack Unik', price: 150000, rating: 4.6, reviewCount: 38, badge: null, category: 'Snack', image: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=600&fit=crop' },
-]
 
-const displayProducts = computed(() => props.products.length > 0 ? props.products : dummyProducts)
+const displayProducts = computed(() => props.products)
 </script>
 
 <style>

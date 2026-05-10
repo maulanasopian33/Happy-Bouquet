@@ -7,12 +7,12 @@
         class="flex items-center px-8 gap-2.5 shrink-0"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0" />
-        <span class="text-[11px] font-semibold tracking-wide">
+        <span class="text-xs font-semibold tracking-wide">
           <span class="text-rose-200 font-black">{{ promo.name }}:</span>
           {{ promo.description }}
           <span
             v-if="promo.code"
-            class="ml-2 px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded-md text-white font-black border border-white/30 text-[10px] tracking-widest"
+            class="ml-2 px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded-md text-white font-black border border-white/30 text-xs tracking-widest"
           >
             {{ promo.code }}
           </span>

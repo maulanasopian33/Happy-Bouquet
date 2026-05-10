@@ -36,7 +36,7 @@
             <Icon name="ph:shopping-cart-fill" class="absolute -bottom-4 -right-4 w-24 h-24 text-rose-500/5 rotate-12" />
             <div class="relative">
               <h3 class="text-2xl font-black text-primary tracking-tight">Keranjang Belanja</h3>
-              <p class="text-[10px] font-black text-rose-600 uppercase tracking-widest mt-1">
+              <p class="text-xs font-black text-rose-600 uppercase tracking-widest mt-1">
                 {{ cart.totalItems }} Item Terpilih
               </p>
             </div>
@@ -170,7 +170,7 @@
               </NuxtLink>
             </div>
             
-            <p class="text-center text-[10px] text-muted font-bold uppercase tracking-widest">
+            <p class="text-center text-xs text-muted font-bold uppercase tracking-widest">
               Dikelola Dengan <Icon name="ph:heart-fill" class="text-rose-500 inline mx-0.5" /> HappyBouquet Official
             </p>
           </div>

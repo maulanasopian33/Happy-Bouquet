@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32">
       <div class="reveal max-w-3xl">
         <div class="section-tag">Kebijakan & Jaminan</div>
-        <h1 class="section-title text-5xl md:text-6xl text-gradient">Pengembalian & Refund</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl text-gradient">Pengembalian & Refund</h1>
         <p class="text-sm md:text-base text-secondary font-medium mt-6 leading-relaxed">
           Kami berkomitmen untuk memberikan bunga terbaik. Jika ada ketidaksesuaian yang signifikan, kami siap memberikan solusi terbaik demi senyum Anda.
         </p>
@@ -63,7 +63,7 @@
                   />
                   <div>
                     <h4 class="text-sm font-black text-primary tracking-tight">{{ item.reason }}</h4>
-                    <p class="text-[11px] font-bold text-muted uppercase tracking-widest mt-1">{{ item.label }}</p>
+                    <p class="text-xs font-bold text-muted uppercase tracking-widest mt-1">{{ item.label }}</p>
                   </div>
                 </div>
              </div>
@@ -95,7 +95,7 @@
                         <Icon :name="refund.icon" class="w-6 h-6" />
                       </div>
                       <div>
-                        <p class="text-[10px] font-black uppercase tracking-widest opacity-60 mb-1">{{ refund.label }}</p>
+                        <p class="text-xs font-black uppercase tracking-widest opacity-60 mb-1">{{ refund.label }}</p>
                         <p class="text-sm font-black">{{ refund.time }}</p>
                       </div>
                    </div>

@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32 text-center md:text-left">
       <div class="reveal max-w-3xl">
         <div class="section-tag">Bantuan & Informasi</div>
-        <h1 class="section-title text-4xl md:text-6xl text-gradient font-serif">Tanya Jawab (FAQ)</h1>
+        <h1 class="section-title text-3xl md:text-5xl lg:text-6xl text-gradient font-serif">Tanya Jawab (FAQ)</h1>
         <p class="text-sm md:text-base text-secondary font-medium mt-6 leading-relaxed">
           Temukan jawaban cepat untuk pertanyaan umum seputar pesanan, pengiriman, dan perawatan bunga Anda. Kami di sini untuk membantu.
         </p>
@@ -31,7 +31,7 @@
       <!-- Left: Categories Sidebar (Desktop) -->
       <div class="hidden lg:block lg:col-span-3 space-y-4 sticky top-32 h-fit reveal">
          <div class="p-6 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-(--border-color) shadow-sm">
-            <p class="text-[10px] font-black text-muted uppercase tracking-[0.2em] mb-6 pl-4">Kategori Bantuan</p>
+            <p class="text-xs font-black text-muted uppercase tracking-[0.2em] mb-6 pl-4">Kategori Bantuan</p>
             <div class="space-y-2">
                <button 
                  v-for="cat in categories" 
@@ -64,7 +64,7 @@
             >
               <div class="p-6 md:p-8 flex items-start justify-between gap-6">
                  <div class="flex gap-4">
-                    <span class="text-[10px] font-black text-rose-500/40 mt-1 uppercase tracking-tighter">Q{{ i + 1 }}</span>
+                    <span class="text-xs font-black text-rose-500/40 mt-1 uppercase tracking-tighter">Q{{ i + 1 }}</span>
                     <h3 class="text-sm md:text-base font-black text-primary uppercase tracking-tight group-hover:text-rose-600 transition-colors leading-relaxed">{{ faq.q }}</h3>
                  </div>
                  <Icon 

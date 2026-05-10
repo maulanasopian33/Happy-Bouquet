@@ -85,7 +85,7 @@
 
     <!-- Grid View -->
     <div
-      v-else-if="filtered.length > 0 && viewMode === 'grid'"
+      v-else-if="filtered.length > 0 && currentViewMode === 'grid'"
       class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
     >
       <ProductCard
@@ -97,7 +97,7 @@
     </div>
 
     <!-- List View -->
-    <div v-else-if="filtered.length > 0 && viewMode === 'list'" class="flex flex-col gap-4">
+    <div v-else-if="filtered.length > 0 && currentViewMode === 'list'" class="flex flex-col gap-4">
       <div
         v-for="(product, i) in sortedProducts"
         :key="product.id || i"
@@ -111,11 +111,11 @@
           />
         </div>
         <div class="flex-1 min-w-0">
-          <p v-if="product.category" class="text-[10px] font-bold text-rose-500 uppercase tracking-widest mb-0.5">{{ product.category }}</p>
+          <p v-if="product.category" class="text-xs font-bold text-rose-500 uppercase tracking-widest mb-0.5">{{ typeof product.category === 'object' && product.category !== null ? (product.category.NAME || product.category.name) : product.category }}</p>
           <h3 class="text-sm sm:text-base font-bold text-primary group-hover:text-rose-600 transition-colors line-clamp-1">{{ product.name }}</h3>
           <div class="flex items-center gap-1 mt-1">
             <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-3 h-3" :class="s <= Math.round(product.rating || 5) ? 'text-amber-400' : 'text-slate-200 dark:text-slate-700'" />
-            <span class="text-[10px] text-muted ml-1">({{ product.reviewCount || 0 }})</span>
+            <span class="text-xs text-muted ml-1">({{ product.reviewCount || 0 }})</span>
           </div>
         </div>
         <div class="flex flex-col items-end gap-2 shrink-0">
@@ -150,13 +150,14 @@
 <script setup lang="ts">
 import ProductCard from './ProductCard.vue'
 
-const props = defineProps<{ products: any[]; showFilter?: boolean }>()
+const props = defineProps<{ products: any[]; showFilter?: boolean; externalViewMode?: 'grid' | 'list' }>()
 defineEmits(['view'])
 
 const activeSort = ref('latest')
 const activeCategory = ref('Semua')
 const viewMode = ref<'grid' | 'list'>('grid')
-const isLoading = computed(() => props.products.length === 0 && displayProducts.value === dummyProducts ? false : false)
+const currentViewMode = computed(() => props.externalViewMode || viewMode.value)
+const isLoading = computed(() => props.products === undefined)
 // showFilter default true jika tidak di-pass
 const showFilter = computed(() => props.showFilter !== false)
 
@@ -178,17 +179,22 @@ const dummyProducts = [
   { id: 8, name: 'Buket Ulang Tahun Pastel', price: 175000, rating: 4.7, reviewCount: 92, badge: 'Baru', category: 'Birthday', image: 'https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?q=80&w=600&fit=crop' },
 ]
 
-const displayProducts = computed(() => props.products.length > 0 ? props.products : dummyProducts)
+const displayProducts = computed(() => props.products || dummyProducts)
 
 // Dynamic category tabs
 const categoryTabs = computed(() => {
-  const cats = [...new Set(displayProducts.value.map((p: any) => p.category).filter(Boolean))]
-  return ['Semua', ...cats]
+  const cats = displayProducts.value
+    .map((p: any) => typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category)
+    .filter(Boolean)
+  return ['Semua', ...new Set(cats)]
 })
 
 const filtered = computed(() => {
   if (activeCategory.value === 'Semua') return displayProducts.value
-  return displayProducts.value.filter((p: any) => p.category === activeCategory.value)
+  return displayProducts.value.filter((p: any) => {
+    const catName = typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category
+    return catName === activeCategory.value
+  })
 })
 
 const sortedProducts = computed(() => {

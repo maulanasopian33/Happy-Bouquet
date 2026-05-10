@@ -15,7 +15,7 @@ useHead({
       
       <div class="section-wrapper relative z-10 text-center space-y-4 reveal">
         <div class="section-tag mx-auto">Journal</div>
-        <h1 class="section-title text-5xl md:text-6xl">Inspirasi Bunga</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl">Inspirasi Bunga</h1>
         <p class="text-secondary text-sm md:text-base max-w-xl mx-auto">
           Melihat keindahan dari sudut pandang yang berbeda.
         </p>

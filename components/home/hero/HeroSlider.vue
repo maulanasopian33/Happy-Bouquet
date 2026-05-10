@@ -39,7 +39,7 @@
             <div class="max-w-2xl space-y-5">
               <!-- Subtitle Tag -->
               <div class="reveal" style="animation-delay: 0s">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-600/20 backdrop-blur-md border border-rose-500/25 text-rose-300 text-[11px] font-bold uppercase tracking-[0.25em]">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-600/20 backdrop-blur-md border border-rose-500/25 text-rose-300 text-xs font-bold uppercase tracking-[0.25em]">
                   <span class="w-1.5 h-1.5 bg-rose-400 rounded-full animate-pulse" />
                   {{ banner.subtitle || 'Exclusive Collection' }}
                 </span>
@@ -47,7 +47,7 @@
 
               <!-- Main Title -->
               <h2
-                class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] reveal"
+                class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] reveal"
                 style="animation-delay: 0.12s"
               >
                 {{ banner.title }}
@@ -97,7 +97,7 @@
               <p class="text-white text-xs font-black leading-none">500+ pelanggan puas</p>
               <div class="flex items-center gap-1 mt-1">
                 <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-3 h-3 text-amber-400" />
-                <span class="text-white/70 text-[10px] font-bold ml-1">4.9/5</span>
+                <span class="text-white/70 text-xs font-bold ml-1">4.9/5</span>
               </div>
             </div>
           </div>

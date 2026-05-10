@@ -16,7 +16,7 @@
       <div class="relative z-10 section-wrapper text-center space-y-6">
         <div class="reveal">
           <div class="section-tag mx-auto bg-white/10 backdrop-blur-md border-white/20 text-white">Our Story</div>
-          <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter mt-4 leading-none lowercase-italic">
+          <h1 class="text-4xl md:text-6xl lg:text-8xl font-black text-white tracking-tighter mt-4 leading-none lowercase-italic">
             Seni di Balik <br> <span class="text-rose-400">Setiap Kelopak</span>
           </h1>
         </div>
@@ -45,7 +45,7 @@
         <!-- Text Story -->
         <div class="lg:col-span-7 space-y-8 reveal">
           <div class="space-y-4">
-            <h2 class="text-3xl md:text-5xl font-black text-primary tracking-tight">Lebih dari Sekadar <br> Buket Bunga.</h2>
+            <h2 class="text-2xl md:text-5xl font-black text-primary tracking-tight">Lebih dari Sekadar <br> Buket Bunga.</h2>
             <p class="text-sm md:text-lg text-secondary font-medium leading-relaxed">
               Didirikan pada tahun 2020 di jantung kota Jakarta, HappyBouquet lahir dari keinginan untuk mengubah cara kita merayakan momen penting. Kami percaya bahwa setiap bunga memiliki bahasa unik, dan tugas kami adalah merangkainya menjadi sebuah puisi visual yang tak terlupakan.
             </p>

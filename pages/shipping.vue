@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32">
       <div class="reveal max-w-3xl">
         <div class="section-tag">Logistik & Keamanan</div>
-        <h1 class="section-title text-5xl md:text-6xl text-gradient">Layanan Pengiriman</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl text-gradient">Layanan Pengiriman</h1>
         <p class="text-sm md:text-base text-secondary font-medium mt-6 leading-relaxed">
           Setiap buket dirawat dengan cinta, bahkan selama perjalanan. Kami memastikan bunga Anda sampai dalam kondisi segar dan sempurna dengan protokol pengiriman khusus.
         </p>
@@ -28,7 +28,7 @@
             <p class="text-sm text-secondary font-medium leading-relaxed">{{ method.desc }}</p>
           </div>
           <div class="pt-4 border-t border-dashed border-(--border-color) flex items-center justify-between">
-            <span class="text-[10px] font-black text-muted uppercase tracking-widest">{{ method.time }}</span>
+            <span class="text-xs font-black text-muted uppercase tracking-widest">{{ method.time }}</span>
             <span class="text-sm font-black text-rose-600">{{ method.price }}</span>
           </div>
         </div>
@@ -71,7 +71,7 @@
             <div class="absolute -bottom-6 -left-6 z-20 card-premium p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md max-w-[200px] shadow-2xl border-rose-100">
                <div class="flex items-center gap-3">
                  <Icon name="ph:shield-star-fill" class="w-6 h-6 text-amber-500" />
-                 <p class="text-[10px] font-black uppercase tracking-tight text-primary leading-tight">Jaminan 100% Kesegaran Bunga</p>
+                 <p class="text-xs font-black uppercase tracking-tight text-primary leading-tight">Jaminan 100% Kesegaran Bunga</p>
                </div>
             </div>
          </div>

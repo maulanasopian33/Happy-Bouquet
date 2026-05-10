@@ -17,7 +17,7 @@
         >
           <Icon name="ph:squares-four-fill" class="w-7 h-7 text-white" />
         </div>
-        <span class="text-[11px] font-bold text-rose-600 whitespace-nowrap leading-tight">Semua</span>
+        <span class="text-xs font-bold text-rose-600 whitespace-nowrap leading-tight">Semua</span>
       </button>
 
       <!-- Category pills -->
@@ -36,7 +36,7 @@
           <span class="text-2xl sm:text-3xl leading-none">{{ cat.emoji || '🌸' }}</span>
         </div>
         <div class="text-center">
-          <span class="block text-[11px] font-semibold text-secondary group-hover:text-rose-600 transition-colors whitespace-nowrap leading-tight">
+          <span class="block text-xs font-semibold text-secondary group-hover:text-rose-600 transition-colors whitespace-nowrap leading-tight">
             {{ cat.name }}
           </span>
         </div>

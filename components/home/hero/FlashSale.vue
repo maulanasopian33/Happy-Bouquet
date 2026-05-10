@@ -13,17 +13,17 @@
       <div class="flex items-center gap-1">
         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-2.5 py-1.5 text-center min-w-[2.25rem]">
           <p class="text-lg font-bold leading-none">{{ timeLeft.hours }}</p>
-          <p class="text-pink-200 text-[10px] mt-0.5">Jam</p>
+          <p class="text-pink-200 text-xs mt-0.5">Jam</p>
         </div>
         <span class="font-bold text-pink-200 pb-4">:</span>
         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-2.5 py-1.5 text-center min-w-[2.25rem]">
           <p class="text-lg font-bold leading-none">{{ timeLeft.minutes }}</p>
-          <p class="text-pink-200 text-[10px] mt-0.5">Min</p>
+          <p class="text-pink-200 text-xs mt-0.5">Min</p>
         </div>
         <span class="font-bold text-pink-200 pb-4">:</span>
         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-2.5 py-1.5 text-center min-w-[2.25rem]">
           <p class="text-lg font-bold leading-none">{{ timeLeft.seconds }}</p>
-          <p class="text-pink-200 text-[10px] mt-0.5">Det</p>
+          <p class="text-pink-200 text-xs mt-0.5">Det</p>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
           <div class="mt-1 w-full bg-white/20 rounded-full h-1">
             <div class="bg-white rounded-full h-1 w-3/5" />
           </div>
-          <p class="text-pink-100 text-[10px] mt-0.5">Terjual 60%</p>
+          <p class="text-pink-100 text-xs mt-0.5">Terjual 60%</p>
         </div>
         <button class="flex-shrink-0 w-8 h-8 rounded-full bg-white text-pink-500 flex items-center justify-center hover:scale-110 transition-transform duration-200 shadow-md">
           <Icon name="ph:shopping-bag-open-bold" class="h-4 w-4" />

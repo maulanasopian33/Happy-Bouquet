@@ -26,7 +26,7 @@
         </div>
 
         <h4 class="text-sm font-black text-primary">{{ step.label }}</h4>
-        <p class="text-[10px] font-bold text-muted uppercase tracking-widest">{{ step.time }}</p>
+        <p class="text-xs font-bold text-muted uppercase tracking-widest">{{ step.time }}</p>
       </div>
     </div>
   </div>

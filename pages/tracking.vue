@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32 text-center space-y-10">
       <div class="reveal max-w-2xl mx-auto space-y-4">
         <div class="section-tag mx-auto">Real-time Tracking</div>
-        <h1 class="section-title text-5xl md:text-6xl text-gradient">Lacak Pesanan Anda</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl text-gradient">Lacak Pesanan Anda</h1>
         <p class="text-sm md:text-base text-secondary font-medium leading-relaxed">
           Masukkan ID Pesanan Anda untuk melihat status terbaru dan perjalanan buket bunga Anda secara real-time.
         </p>
@@ -57,11 +57,11 @@
 
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div class="p-5 bg-(--bg-section) rounded-3xl border border-(--border-color)">
-                      <p class="text-[10px] font-black text-muted uppercase tracking-widest mb-1">Status Terakhir</p>
+                      <p class="text-xs font-black text-muted uppercase tracking-widest mb-1">Status Terakhir</p>
                       <p class="text-sm font-black text-emerald-600">{{ foundOrder.tracking.status }}</p>
                     </div>
                     <div class="p-5 bg-(--bg-section) rounded-3xl border border-(--border-color)">
-                      <p class="text-[10px] font-black text-muted uppercase tracking-widest mb-1">Terakhir Diperbarui</p>
+                      <p class="text-xs font-black text-muted uppercase tracking-widest mb-1">Terakhir Diperbarui</p>
                       <p class="text-sm font-black text-primary">{{ foundOrder.tracking.updatedAt }}</p>
                     </div>
                   </div>
@@ -89,7 +89,7 @@
                   </div>
                   <div>
                     <h4 class="text-sm font-black uppercase tracking-tight">Butuh Bantuan Mendesak?</h4>
-                    <p class="text-[11px] opacity-90 font-medium">Tim concierge kami siap membantu koordinasi dengan kurir.</p>
+                    <p class="text-xs opacity-90 font-medium">Tim concierge kami siap membantu koordinasi dengan kurir.</p>
                   </div>
                </div>
                <button class="px-8 py-3 rounded-xl bg-white text-rose-600 text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 shadow-lg">Chat WhatsApp</button>

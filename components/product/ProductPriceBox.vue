@@ -6,7 +6,7 @@
     <div class="space-y-6 relative z-10">
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-black uppercase tracking-widest text-primary">Atur Pesanan</h3>
-        <span class="text-[10px] font-bold text-muted uppercase tracking-widest border border-rose-100 dark:border-rose-950 px-2 py-0.5 rounded-md">
+        <span class="text-xs font-bold text-muted uppercase tracking-widest border border-rose-100 dark:border-rose-950 px-2 py-0.5 rounded-md">
           Stok: {{ stock || 999 }} Unit
         </span>
       </div>
@@ -63,7 +63,7 @@
         </button>
       </div>
       
-      <p class="text-center text-[10px] text-muted font-bold uppercase tracking-widest">
+      <p class="text-center text-xs text-muted font-bold uppercase tracking-widest">
         Dapat Dibatalkan Sebelum Pengiriman
       </p>
     </div>

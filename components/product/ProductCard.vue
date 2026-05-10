@@ -25,7 +25,7 @@
         <!-- Badge: always visible -->
         <span
           v-if="badge"
-          class="px-2.5 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider shadow-md"
+          class="px-2.5 py-1 rounded-xl text-xs font-black uppercase tracking-wider shadow-md"
           :class="badgeClass"
         >
           {{ badge }}
@@ -35,7 +35,7 @@
         <!-- Wishlist button: always visible -->
         <button
           @click.prevent="toggleWishlist"
-          class="w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md"
+          class="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md"
           :class="isWishlisted
             ? 'bg-rose-600 text-white shadow-rose-500/30'
             : 'bg-white/85 dark:bg-slate-800/85 text-secondary hover:bg-rose-50 hover:text-rose-600 backdrop-blur-sm'"
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Full link overlay -->
-      <NuxtLink :to="`/products/${id}`" class="absolute inset-0 z-10" :aria-label="`Lihat detail ${name}`" />
+      <NuxtLink :to="`/products/${slug}`" class="absolute inset-0 z-10" :aria-label="`Lihat detail ${name}`" />
     </div>
 
     <!-- Content Section -->
@@ -77,16 +77,16 @@
             :class="i <= Math.round(rating || 5) ? 'text-amber-400' : 'text-slate-200 dark:text-slate-700'"
           />
         </div>
-        <span class="text-[10px] font-bold text-secondary">
+        <span class="text-xs font-bold text-secondary">
           {{ (rating || 5).toFixed(1) }}
         </span>
-        <span class="text-[10px] text-muted">({{ reviewCount || 0 }})</span>
+        <span class="text-xs text-muted">({{ reviewCount || 0 }})</span>
       </div>
 
       <!-- Category + Name -->
       <div class="space-y-0.5">
-        <p v-if="category" class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">
-          {{ category }}
+        <p v-if="category" class="text-xs font-bold text-rose-500 uppercase tracking-widest">
+          {{ typeof category === 'object' && category !== null ? (category.NAME || category.name || '') : category }}
         </p>
         <h3 class="text-sm sm:text-base font-bold text-primary group-hover:text-rose-600 transition-colors line-clamp-2 leading-snug">
           {{ name }}
@@ -98,7 +98,7 @@
         <div>
           <p class="text-[9px] text-muted font-semibold uppercase tracking-widest leading-none mb-0.5">Mulai dari</p>
           <!-- Harga coret jika ada originalPrice -->
-          <p v-if="originalPrice" class="text-[10px] text-muted line-through leading-none mb-0.5">
+          <p v-if="originalPrice" class="text-xs text-muted line-through leading-none mb-0.5">
             {{ originalPriceFormatted }}
           </p>
           <p class="text-base sm:text-lg font-black text-rose-600 tracking-tight leading-none">
@@ -109,7 +109,7 @@
         <!-- Add to Cart Button -->
         <button
           @click.prevent="handleAddToCart"
-          class="shrink-0 w-10 h-10 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-md hover:bg-rose-700 hover:shadow-rose-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
+          class="shrink-0 w-11 h-11 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-md hover:bg-rose-700 hover:shadow-rose-500/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 active:scale-95"
           :class="addedToCart ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-rose-600 hover:bg-rose-700'"
           aria-label="Tambah ke keranjang"
         >
@@ -126,6 +126,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: Number,
+  slug: String,
   name: String,
   price: [Number, String],
   originalPrice: [Number, String],
@@ -135,7 +136,7 @@ const props = defineProps({
   rating: Number,
   reviewCount: Number,
   badge: String,
-  category: String,
+  category: [String, Object],
 })
 
 defineEmits(['view'])

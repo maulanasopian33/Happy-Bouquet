@@ -9,7 +9,7 @@
       </div>
       <div>
         <h3 class="text-sm font-black uppercase tracking-widest text-primary">Janji HappyBouquet</h3>
-        <p class="text-[10px] text-muted font-bold uppercase tracking-wider">Terpercaya & Bergaransi</p>
+        <p class="text-xs text-muted font-bold uppercase tracking-wider">Terpercaya & Bergaransi</p>
       </div>
     </div>
 
@@ -20,7 +20,7 @@
         </div>
         <div class="space-y-1">
           <h4 class="text-xs font-bold text-primary">{{ promise.title }}</h4>
-          <p class="text-[11px] text-secondary leading-relaxed">{{ promise.desc }}</p>
+          <p class="text-xs text-secondary leading-relaxed">{{ promise.desc }}</p>
         </div>
       </div>
     </div>

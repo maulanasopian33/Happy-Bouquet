@@ -15,7 +15,7 @@
       <h4 class="text-white text-sm font-bold truncate mb-1">{{ product.name }}</h4>
       <div class="flex items-baseline gap-2 flex-wrap">
         <span class="text-white font-black text-base">{{ priceFormatted }}</span>
-        <span class="text-rose-200/70 text-[11px] line-through font-medium">{{ product.original }}</span>
+        <span class="text-rose-200/70 text-xs line-through font-medium">{{ product.original }}</span>
       </div>
 
       <!-- Stock Progress Bar -->
@@ -25,13 +25,13 @@
           :style="{ width: `${stockPercent}%` }"
         />
       </div>
-      <p class="text-[10px] text-rose-100/80 mt-1 font-semibold">
+      <p class="text-xs text-rose-100/80 mt-1 font-semibold">
         <span class="text-amber-300 font-black">{{ stockLeft }}</span> tersisa
       </p>
     </div>
 
     <!-- Link Overlay -->
-    <NuxtLink :to="`/products/${product.id}`" class="absolute inset-0 z-10" :aria-label="`Lihat ${product.name}`" />
+    <NuxtLink :to="`/products/${product.slug}`" class="absolute inset-0 z-10" :aria-label="`Lihat ${product.name}`" />
   </div>
 </template>
 

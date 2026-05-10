@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32">
       <div class="reveal max-w-3xl">
         <div class="section-tag">Keamanan & Kepercayaan</div>
-        <h1 class="section-title text-4xl md:text-6xl text-gradient font-serif">Kebijakan Privasi</h1>
+        <h1 class="section-title text-3xl md:text-5xl lg:text-6xl text-gradient font-serif">Kebijakan Privasi</h1>
         <p class="text-xs md:text-sm text-secondary font-black uppercase tracking-[0.2em] mt-6">Terakhir Diperbarui: 02 April 2026</p>
       </div>
     </div>

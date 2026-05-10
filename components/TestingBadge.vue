@@ -14,7 +14,7 @@ onMounted(() => {
     <div v-if="isBypassActive" class="testing-badge shadow-brand animate-pulse-ring">
       <div class="badge-content">
         <Icon name="ph:bug-duotone" size="18" />
-        <span class="badge-text">DEVELOPER TESTING MODE</span>
+        <span class="badge-text">DEV MODE</span>
       </div>
       <div class="badge-subtext">Maintenance Bypassed</div>
     </div>
@@ -24,7 +24,7 @@ onMounted(() => {
 <style scoped>
 .testing-badge {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 2rem;
   right: 1.5rem;
   z-index: 9999;
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);

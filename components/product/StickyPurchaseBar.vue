@@ -8,7 +8,7 @@
         class="glass border-(--border-strong) rounded-2xl p-4 flex items-center justify-between gap-4 shadow-2xl shadow-rose-500/30"
       >
         <div class="space-y-0.5">
-          <p class="text-[10px] font-bold text-muted uppercase tracking-widest">Total Harga</p>
+          <p class="text-xs font-bold text-muted uppercase tracking-widest">Total Harga</p>
           <p class="text-lg font-black text-rose-600">{{ formatPrice(price) }}</p>
         </div>
         

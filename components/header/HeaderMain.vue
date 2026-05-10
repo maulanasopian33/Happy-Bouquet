@@ -104,7 +104,7 @@
             <ClientOnly>
               <span
                 v-if="cartCount > 0"
-                class="absolute -top-2 -right-2 bg-white text-rose-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-rose-600 font-black shadow-sm"
+                class="absolute -top-2 -right-2 bg-white text-rose-600 text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-rose-600 font-black shadow-sm"
               >{{ cartCount }}</span>
             </ClientOnly>
           </button>
@@ -192,7 +192,7 @@
 
         <div class="px-6 py-6 flex flex-col gap-2">
           <!-- Main Nav -->
-          <p class="text-[10px] font-bold text-muted uppercase tracking-widest mb-2">Menu Utama</p>
+          <p class="text-xs font-bold text-muted uppercase tracking-widest mb-2">Menu Utama</p>
           <NuxtLink
             v-for="link in navLinks"
             :key="link.path"
@@ -210,7 +210,7 @@
           <div class="h-px bg-slate-100 dark:bg-slate-800 my-4" />
 
           <!-- Account Links -->
-          <p class="text-[10px] font-bold text-muted uppercase tracking-widest mb-2">Akun & Lainnya</p>
+          <p class="text-xs font-bold text-muted uppercase tracking-widest mb-2">Akun & Lainnya</p>
           <NuxtLink
             to="/account"
             @click="isMobileMenuOpen = false"

@@ -36,7 +36,7 @@ const promos = [
       
       <div class="section-wrapper relative z-10 text-center space-y-4 reveal">
         <div class="section-tag mx-auto">Offers</div>
-        <h1 class="section-title text-5xl md:text-6xl">Penawaran Spesial</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl">Penawaran Spesial</h1>
         <p class="text-secondary text-sm md:text-base max-w-xl mx-auto">
           Momen berharga tidak harus mahal. Temukan promo terbaik kami.
         </p>
@@ -65,7 +65,7 @@ const promos = [
           <div class="pt-4 relative z-10">
             <div class="px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-dashed border-rose-200 dark:border-rose-900/40 flex items-center justify-between">
               <span class="text-xs font-black tracking-widest text-primary">{{ promo.code }}</span>
-              <button class="text-[10px] font-black uppercase text-rose-600 hover:text-rose-700">Salin</button>
+              <button class="text-xs font-black uppercase text-rose-600 hover:text-rose-700">Salin</button>
             </div>
           </div>
         </div>

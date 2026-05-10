@@ -11,7 +11,7 @@
       </div>
     </div>
     
-    <p class="text-[10px] text-muted leading-relaxed font-medium">
+    <p class="text-xs text-muted leading-relaxed font-medium">
       Mendukung Transfer Bank, QRIS, GoPay, dan Bayar di Tempat (COD) untuk kenyamanan Anda.
     </p>
   </div>

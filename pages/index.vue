@@ -23,7 +23,7 @@
           </div>
           <div class="min-w-0">
             <h3 class="text-primary font-bold text-sm leading-tight mb-0.5">{{ badge.title }}</h3>
-            <p class="text-muted text-[11px] leading-snug">{{ badge.text }}</p>
+            <p class="text-muted text-xs leading-snug">{{ badge.text }}</p>
           </div>
         </div>
       </div>
@@ -42,11 +42,11 @@
           <!-- Left: Text & Timer -->
           <div class="space-y-7 text-white">
             <div class="space-y-4">
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[11px] font-black uppercase tracking-widest">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-black uppercase tracking-widest">
                 <Icon name="ph:lightning-fill" class="w-4 h-4 text-amber-300 animate-pulse" />
                 Penawaran Terbatas
               </div>
-              <h2 class="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+              <h2 class="text-2xl md:text-5xl font-black tracking-tight leading-tight">
                 Flash Sale<br />
                 <span class="text-gradient-gold" style="-webkit-text-fill-color: #FCD34D;">Special Deals!</span>
               </h2>
@@ -57,7 +57,7 @@
 
             <!-- Countdown Timer -->
             <div class="space-y-3">
-              <p class="text-rose-200/70 text-[10px] font-bold uppercase tracking-widest">Berakhir Dalam</p>
+              <p class="text-rose-200/70 text-xs font-bold uppercase tracking-widest">Berakhir Dalam</p>
               <div class="flex items-center gap-3">
                 <div
                   v-for="(unit, index) in timerUnits"
@@ -257,16 +257,6 @@ const dummyCategories = [
   { name: 'Kering', emoji: '🍂' },
 ]
 
-const dummyProducts = [
-  { id: 1, name: 'Buket Mawar Premium', price: 185000, rating: 4.8, reviewCount: 127, badge: 'Terlaris', category: 'Mawar', image: 'https://images.unsplash.com/photo-1487530811015-780d4d5af7d8?q=80&w=600&fit=crop' },
-  { id: 2, name: 'Buket Wisuda Elegance', price: 250000, rating: 4.9, reviewCount: 89, badge: 'Baru', category: 'Wisuda', image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=600&fit=crop' },
-  { id: 3, name: 'Mini Bouquet Anniversary', price: 120000, rating: 4.7, reviewCount: 54, badge: 'Diskon', category: 'Anniversary', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&fit=crop' },
-  { id: 4, name: 'Buket Snack Unik', price: 150000, rating: 4.6, reviewCount: 38, badge: null, category: 'Snack', image: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=600&fit=crop' },
-  { id: 5, name: 'Hand Bouquet Tulip', price: 200000, rating: 4.9, reviewCount: 210, badge: 'Hot', category: 'Tulip', image: 'https://images.unsplash.com/photo-1468327768560-75b778cbb551?q=80&w=600&fit=crop' },
-  { id: 6, name: 'Dried Flower Rustic', price: 160000, rating: 4.5, reviewCount: 76, badge: null, category: 'Kering', image: 'https://images.unsplash.com/photo-1530552182927-a6ea415d6ae1?q=80&w=600&fit=crop' },
-  { id: 7, name: 'Buket Mewah Gold', price: 350000, rating: 5.0, reviewCount: 34, badge: 'Terlaris', category: 'Premium', image: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=600&fit=crop' },
-  { id: 8, name: 'Buket Ulang Tahun Pastel', price: 175000, rating: 4.7, reviewCount: 92, badge: 'Baru', category: 'Birthday', image: 'https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?q=80&w=600&fit=crop' },
-]
 
 // ===== FETCH DYNAMIC DATA =====
 const { data: bannersRes } = await useFetch<any>(`${apiUrl}/banners`)
@@ -278,13 +268,17 @@ const categories = computed(() => categoriesRes.value?.data?.length ? categories
 
 const allProductsRaw = computed(() => {
   const apiData = productsRes.value?.data || []
-  if (apiData.length === 0) return dummyProducts
   return apiData.map((p: any) => ({
     ...p,
+    id: p.id,
+    slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
+    name: p.name,
     price: p.price ? Number(p.price) : 0,
+    originalPrice: p.price ? Number(p.price) * 1.2 : 0,
     image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80',
     rating: 4.5,
-    reviewCount: 0
+    reviewCount: 0,
+    category: typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category
   }))
 })
 

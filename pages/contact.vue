@@ -5,7 +5,7 @@
     <div class="section-wrapper py-20 lg:py-32 text-center lg:text-left">
       <div class="reveal max-w-2xl">
         <div class="section-tag">Komunikasi & Hubungan</div>
-        <h1 class="section-title text-5xl md:text-6xl text-gradient">Terhubung dengan Kami</h1>
+        <h1 class="section-title text-4xl md:text-5xl lg:text-6xl text-gradient">Terhubung dengan Kami</h1>
         <p class="text-sm md:text-base text-secondary font-medium mt-6 leading-relaxed">
           Punya pertanyaan khusus atau ingin konsultasi desain buket untuk momen spesial Anda? Tim concierge kami siap memberikan layanan personal yang Anda butuhkan.
         </p>
@@ -28,7 +28,7 @@
                 <Icon :name="info.icon" class="w-6 h-6" />
               </div>
               <div class="space-y-1 pt-1">
-                <p class="text-[10px] font-black text-muted uppercase tracking-[0.2em] leading-none mb-2">{{ info.label }}</p>
+                <p class="text-xs font-black text-muted uppercase tracking-[0.2em] leading-none mb-2">{{ info.label }}</p>
                 <h3 class="text-lg font-black text-primary tracking-tight">{{ info.value }}</h3>
                 <p v-if="info.desc" class="text-xs text-secondary font-medium">{{ info.desc }}</p>
               </div>
@@ -74,7 +74,7 @@
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                  <div class="space-y-2 group">
-                    <label class="text-[10px] font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Nama Lengkap</label>
+                    <label class="text-xs font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Nama Lengkap</label>
                     <input 
                       v-model="form.name"
                       type="text" 
@@ -84,7 +84,7 @@
                     />
                  </div>
                  <div class="space-y-2 group">
-                    <label class="text-[10px] font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Alamat Email</label>
+                    <label class="text-xs font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Alamat Email</label>
                     <input 
                       v-model="form.email"
                       type="email" 
@@ -96,7 +96,7 @@
               </div>
 
               <div class="space-y-2 group">
-                <label class="text-[10px] font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Subjek Pesan</label>
+                <label class="text-xs font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Subjek Pesan</label>
                 <select 
                   v-model="form.subject"
                   class="w-full px-5 py-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-rose-400 focus:ring-4 focus:ring-rose-500/10 outline-none transition-all text-sm font-medium appearance-none"
@@ -109,7 +109,7 @@
               </div>
 
               <div class="space-y-2 group">
-                <label class="text-[10px] font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Pesan Anda</label>
+                <label class="text-xs font-black text-muted uppercase tracking-widest pl-1 group-focus-within:text-rose-500 transition-colors">Pesan Anda</label>
                 <textarea 
                   v-model="form.message"
                   placeholder="Tulis pesan lengkap Anda di sini..."
@@ -151,7 +151,7 @@
                 
                 <div class="mt-4 p-4 bg-white dark:bg-slate-950 rounded-2xl shadow-2xl border border-rose-100 min-w-[200px] text-center">
                    <p class="text-xs font-black text-rose-600 tracking-widest uppercase">HappyBouquet Central</p>
-                   <p class="text-[10px] font-bold text-muted mt-1 leading-tight">Gedung Antigravity, Lt. 12 <br> Jakarta Selatan, 12345</p>
+                   <p class="text-xs font-bold text-muted mt-1 leading-tight">Gedung Antigravity, Lt. 12 <br> Jakarta Selatan, 12345</p>
                 </div>
              </div>
           </div>

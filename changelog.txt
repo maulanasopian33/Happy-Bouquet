@@ -245,3 +245,117 @@ LATEST UPDATES - 15 April 2026
    - File yang disentuh: `nuxt.config.ts`
 
 Timestamp: 2026-04-15 11:29:47
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+21. AUDIT LENGKAP UI/UX & SEO
+   - Melakukan audit mendalam terhadap ukuran font, tipografi, dan kontras warna (Light/Dark Mode).
+   - Menemukan penggunaan font di bawah 12px (seperti text-[10px]) yang berdampak buruk pada SEO Mobile-Friendly.
+   - Menganalisis rasio kontras warna pada assets/css/main.css dan mengidentifikasi variabel --text-muted yang gagal standar WCAG AA.
+   - Mengidentifikasi masalah touch target pada tombol interaktif mobile.
+   - Membuat dokumen hasil audit komprehensif (ui_ux_seo_audit.md) beserta rekomendasi perbaikan aksi.
+
+Timestamp: 2026-04-25 10:38:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+22. IMPLEMENTASI PERBAIKAN UI/UX & SEO
+   - Menurunkan skala ukuran heading utama di 14 halaman/komponen mobile (dari text-5xl/6xl menjadi text-3xl/4xl) untuk mencegah layout patah dan menghemat ruang layar.
+   - Mengganti seluruh penggunaan micro-text (text-[10px] dan text-[11px]) di lebih dari 30 file dengan standar SEO text-xs (12px) untuk meningkatkan skor keterbacaan Mobile-Friendly.
+   - Memperbaiki kontras warna --text-muted di assets/css/main.css agar lulus standar aksesibilitas WCAG AA (Rasio > 4.5:1) pada mode terang maupun gelap.
+   - Meningkatkan touch target (area sentuh) pada tombol interaktif mobile seperti wishlist dan cart di ProductCard.vue dari 32px (w-8 h-8) menjadi 44px (w-11 h-11) sesuai standar UX Apple/Google.
+
+Timestamp: 2026-04-25 10:45:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+23. REDESIGN HALAMAN AKUN (PROFESSIONAL E-COMMERCE DASHBOARD)
+   - Pivot Layout Desktop: Mengubah struktur halaman `account.vue` dari layout tumpuk vertikal menjadi layout Dashboard Grid 12-kolom (Sidebar Navigasi di kiri, Konten di kanan).
+   - Optimasi Mobile UI: Mengubah menu navigasi tab menjadi sistem *sticky horizontal scroll* sehingga menu tidak hilang saat pengguna melakukan *scroll* ke bawah.
+   - Pembaruan UI Tab Pesanan: Mendesain ulang daftar pesanan menjadi gaya *Receipt Card* (Struk Pembayaran) yang jauh lebih rapi, profesional, dan mewah.
+   - Penyempurnaan Estetika Keseluruhan: Membersihkan *Profile Card* dari tombol-tombol sekunder yang terlalu mencolok, serta menerapkan hierarki tipografi yang konsisten dengan desain Premium Deep Rose.
+   - File yang disentuh: `pages/account.vue`.
+
+Timestamp: 2026-04-25 11:00:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+24. FIX BLOCKED BY RESPONSE (CORS/CORP) & DISPLAY BUG KATEGORI
+   - Memperbaiki error `net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin` pada aset gambar statis (seperti `sunflower.png`) dengan mengonfigurasi middleware `helmet` di sisi backend (api-happyBouquet/src/app.ts). Kebijakan `crossOriginResourcePolicy` sekarang diizinkan secara "cross-origin".
+   - Memperbaiki bug pada `ProductCard.vue` di mana nama kategori dirender sebagai string objek JSON mentah. Sekarang, antarmuka dapat secara otomatis menangani dan menampilkan field `NAME` / `name` jika data kategori diterima dalam bentuk objek.
+   - File yang disentuh: `api-happyBouquet/src/app.ts`, `components/product/ProductCard.vue`.
+
+Timestamp: 2026-04-25 11:35:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+25. FIX DISPLAY CHIP KATEGORI (PRODUCT GRID)
+   - Memperbaiki bug pada `ProductGrid.vue` di mana *chip* filter kategori (seperti tombol "Semua") ikut merender objek JSON mentah.
+   - Mengubah komputasi `categoryTabs` dan `filtered` agar secara otomatis mengekstrak properti `NAME` atau `name` dari objek kategori, sehingga *chip* filter kembali menampilkan teks normal (contoh: "Buket Bunga", "Buket Snack") dan filter dapat berfungsi sebagaimana mestinya.
+   - File yang disentuh: `components/product/ProductGrid.vue`.
+
+Timestamp: 2026-04-25 11:45:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+26. REDESIGN CATALOG PRODUK DENGAN SIDEBAR FILTER & MOBILE DRAWER
+   - Implementasi Sidebar Layout: Mengubah halaman `/products` menjadi struktur dashboard profesional dengan sidebar filter permanen di desktop (Grid 12-kolom).
+   - Fitur Filter Tingkat Lanjut: Menambahkan sistem pemfilteran komprehensif yang mencakup Pencarian Real-time, Filter Kategori (Radio List), dan Filter Rentang Harga (Min-Max).
+   - Mobile Filter Drawer: Menambahkan antarmuka "Bottom Sheet/Drawer" untuk perangkat mobile yang dapat diakses melalui tombol floating, menjaga kebersihan layout layar kecil.
+   - Sinkronisasi State: Memindahkan logika filter dari komponen `ProductGrid` ke halaman `index.vue` untuk kontrol yang lebih presisi dan modern.
+   - Penambahan Prop `externalViewMode`: Memperbarui `ProductGrid.vue` agar mendukung mode tampilan (Grid/List) yang dikontrol dari parent.
+   - File yang disentuh: `pages/products/index.vue`, `components/product/ProductGrid.vue`.
+
+Timestamp: 2026-04-25 11:55:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+27. IMPLEMENTASI PAGINATION & SEO-FRIENDLY SEARCH (URL SYNC)
+   - Implementasi Pagination: Menambahkan fitur paginasi pada katalog produk (12 item per halaman) lengkap dengan UI navigasi halaman di bagian bawah grid.
+   - SEO-Friendly Search (URL Sync): Mengintegrasikan state filter (pencarian, kategori, rentang harga, pengurutan, dan halaman) dengan URL query parameters menggunakan `useRouter`. Hal ini memungkinkan hasil pencarian diindeks lebih baik oleh mesin pencari dan dapat dibagikan langsung via URL.
+   - Auto-scroll: Menambahkan fungsi otomatis *scroll* ke atas saat berpindah halaman untuk meningkatkan kenyamanan navigasi pengguna.
+   - Sinkronisasi State URL: Memastikan UI filter tetap sinkron saat pengguna menekan tombol "Back" atau "Forward" di browser.
+   - File yang disentuh: `pages/products/index.vue`.
+
+Timestamp: 2026-04-25 12:00:00
+
+LATEST UPDATES - 25 April 2026
+==============================
+
+28. FIX LOGIC EMPTY STATE SEARCH & PRODUCT GRID
+   - Perbaikan Bug Fallback Dummy: Memperbaiki logika pada `ProductGrid.vue` yang sebelumnya selalu menampilkan data dummy jika hasil filter kosong. Sekarang, komponen akan menghormati array kosong (`[]`) sebagai tanda tidak ada produk ditemukan.
+   - Perbaikan Teks Result Count: Memperbaiki tampilan teks pada `/products` agar tidak menampilkan "Menampilkan 1-0 dari 0" ketika hasil pencarian kosong, digantikan dengan teks "Tidak ada produk ditemukan" yang lebih informatif.
+   - Sinkronisasi Data Parent-Child: Memastikan komponen `ProductGrid` hanya menggunakan data asli yang diberikan oleh parent tanpa melakukan fallback otomatis ke data contoh saat proses pemfilteran aktif.
+   - File yang disentuh: `components/product/ProductGrid.vue`, `pages/products/index.vue`.
+
+
+LATEST UPDATES - 2 Mei 2026
+==============================
+
+29. MIGRASI DETAIL PRODUK: ID KE SLUG (SEO OPTIMIZATION)
+   - Migrasi URL Detail Produk: Mengubah struktur URL dari `/products/:id` menjadi `/products/:slug` untuk optimasi SEO dan keterbacaan tautan yang lebih baik.
+   - Refactoring Page & Routing: Mengganti file `pages/products/[id].vue` menjadi `pages/products/[slug].vue` dan memperbarui logika pengambilan parameter route.
+   - Update Composables: Memperbarui `useProducts.ts` dan `useProductDetail.ts` untuk mendukung metode pencarian produk berdasarkan slug (`findProductBySlug`) sesuai dengan update terbaru pada API backend.
+   - Sinkronisasi Komponen: Memperbarui `ProductCard.vue` dan `ProductDetailPage.vue` agar menggunakan properti `slug` untuk navigasi dan fetch data.
+   - Pembaruan Data Mock: Menambahkan properti `slug` pada seluruh data dummy di frontend guna memastikan fungsionalitas navigasi tetap berjalan normal selama masa transisi.
+
+
+LATEST UPDATES - 2 Mei 2026
+==============================
+
+30. INTEGRASI PENUH API (HAPUS MOCK DATA)
+   - Transisi Data Real: Menghapus seluruh sistem fallback `dummyProducts` pada halaman Beranda, Katalog, dan Carousel. Sekarang aplikasi murni mengambil data dari API.
+   - Update useProducts Composable: Mengimplementasikan pemanggilan `$fetch` untuk `findProduct`, `findProductBySlug`, dan `getRelatedProducts` guna menggantikan array statis.
+   - Standardisasi Field: Menyeragamkan penggunaan field `name` (sebelumnya `title`) di seluruh komponen (`ProductInfo`, `ProductDetailPage`, `ProductGallery`, dll) agar selaras dengan skema database backend.
+   - Pemetaan Data Lanjutan: Memperbaiki logika mapping pada `pages/index.vue` dan `pages/products/index.vue` untuk menyertakan kategori objek, harga diskon (originalPrice), dan URL gambar dinamis dari server.
+   - SEO & Routing Fix: Memastikan komponen `FlashSaleSmall` dan komponen lainnya menggunakan `slug` untuk navigasi internal.
+   - Perbaikan Bug Slug Undefined: Menambahkan logika fallback pembuatan slug otomatis jika API mengembalikan nilai kosong, serta menambahkan guard pada `findProductBySlug` untuk mencegah pemanggilan API dengan parameter `undefined` (Fix 404 Error).
+
+Timestamp: 2026-05-02 13:05:00

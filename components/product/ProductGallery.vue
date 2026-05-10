@@ -75,7 +75,7 @@ function toggleWishlist() {
 function shareProduct() {
   if (navigator.share) {
     navigator.share({
-      title: props.product?.title || 'HappyBouquet',
+      title: props.product?.name || 'HappyBouquet',
       text: 'Lihat buket cantik ini!',
       url: window.location.href
     })

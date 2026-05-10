@@ -4,13 +4,13 @@
     <Icon name="ph:sparkles-fill" class="absolute top-4 right-4 w-12 h-12 text-rose-500/10 pointer-events-none" />
     
     <div class="space-y-4">
-      <div v-if="product.badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 text-[10px] font-black uppercase tracking-widest border border-rose-100 dark:border-rose-900/30">
+      <div v-if="product.badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 text-xs font-black uppercase tracking-widest border border-rose-100 dark:border-rose-900/30">
         <Icon name="ph:seal-check-fill" class="w-3.5 h-3.5" />
         {{ product.badge }}
       </div>
 
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-primary leading-tight">
-        {{ product.title }}
+      <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-primary leading-tight">
+        {{ product.name }}
       </h1>
 
       <div class="flex flex-wrap items-center gap-6">
@@ -37,7 +37,7 @@
       
       <div class="relative z-10 space-y-4">
         <div class="flex items-center gap-3">
-          <span class="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rose-500/20">
+          <span class="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-xs font-black uppercase tracking-widest shadow-lg shadow-rose-500/20">
             Penawaran Spesial
           </span>
           <p v-if="discountPercentage" class="text-xs font-black text-rose-600">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex items-baseline gap-4">
-          <span class="text-4xl md:text-5xl font-black text-rose-600 tracking-tight">
+          <span class="text-3xl md:text-5xl font-black text-rose-600 tracking-tight">
             {{ formatPrice(product.price) }}
           </span>
           <span v-if="product.originalPrice" class="text-xl font-bold text-muted line-through decoration-rose-400/50">
