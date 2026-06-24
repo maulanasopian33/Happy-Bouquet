@@ -1,0 +1,10 @@
+LATEST UPDATES - 2026-06-24
+==============================
+1. REDESIGN TAMPILAN PRODUK MOBILE FIRST
+   - Menghapus sidebar kategori pada tampilan desktop
+   - Menambahkan filter kategori bergaya scroll horizontal
+   - Memindahkan fitur pencarian ke atas dengan gaya e-commerce modern
+   - Menambahkan style hide-scrollbar untuk mobile filter
+   - File/modul yang disentuh: pages/products/index.vue
+Timestamp: 2026-06-24 16:35:00
+
