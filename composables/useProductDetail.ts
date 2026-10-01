@@ -1,8 +1,8 @@
-import { ref, onMounted, type Ref } from 'vue'
+import { ref, onMounted, type Ref, isRef, unref } from 'vue'
 import type { Product } from './useProducts'
 
-export const useProductDetail = (productSlug: Ref<string>) => {
-  const { findProductBySlug, getRelatedProducts } = useProducts()
+export const useProductDetail = (productIdentifier: Ref<string | number> | string | number) => {
+  const { findProduct, findProductBySlug, getRelatedProducts } = useProducts()
 
   const product = ref<Product | null>(null)
   const related = ref<Product[]>([])
@@ -16,16 +16,25 @@ export const useProductDetail = (productSlug: Ref<string>) => {
     related.value = []
 
     try {
-      if (!productSlug.value || productSlug.value === 'undefined') {
-        throw new Error('Slug produk tidak valid.')
+      const identifier = unref(productIdentifier)
+      if (!identifier || identifier === 'undefined') {
+        throw new Error('Product identifier tidak valid.')
       }
-      const foundProduct = await findProductBySlug(productSlug.value)
+
+      let foundProduct: Product | undefined
+      const isNumericId = !isNaN(Number(identifier))
+
+      if (isNumericId) {
+        foundProduct = await findProduct(Number(identifier))
+      } else {
+        foundProduct = await findProductBySlug(String(identifier))
+      }
+
       if (foundProduct) {
         product.value = foundProduct
-        // Fetch related products after main product is found
         related.value = await getRelatedProducts(foundProduct)
       } else {
-        throw new Error(`Product with slug "${productSlug.value}" not found.`)
+        throw new Error(`Product not found.`)
       }
     } catch (e: any) {
       error.value = e.message || 'Failed to fetch product details.'
