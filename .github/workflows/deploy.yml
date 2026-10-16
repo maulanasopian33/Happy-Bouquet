@@ -9,6 +9,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SSH_HOST: ${{ secrets.FTP_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_KEY: ${{ secrets.SSH_KEY }}
+      SSH_REMOTE_DIR: ${{ secrets.SSH_REMOTE_DIR }}
+
     steps:
       # Checkout repo
       - name: Checkout repository
@@ -44,39 +51,19 @@ jobs:
           cp package.json deploy/package.json
           cp package-lock.json deploy/package-lock.json
 
-      # Deploy via FTP
-      - name: Upload build via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          protocol: ftp
-          local-dir: "deploy/"
-          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
-          # Override default ignore agar node_modules tetap di-upload
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github*
-            **/.github*/**
-            **/node_modules/**/.git*
+      # Deploy via SSH (tar over ssh, aman untuk dotfile/symlink seperti .output & node_modules/.bin)
+      - name: Upload build via SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          tar -czf - -C deploy . | ssh -i ~/.ssh/id_deploy -p "$SSH_PORT" -o StrictHostKeyChecking=accept-new \
+            "$SSH_USERNAME@$SSH_HOST" \
+            "mkdir -p '$SSH_REMOTE_DIR/tmp' && tar -xzf - -C '$SSH_REMOTE_DIR'"
 
       # ===== AUTO RESTART NODE.JS APP =====
-      - name: Generate restart trigger
+      - name: Restart Node.js app (Passenger)
         run: |
-          mkdir -p restart-tmp
-          echo "restart $(date)" > restart-tmp/restart.txt
-
-      - name: Upload restart trigger to FTP (Passenger restart)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          protocol: ftp
-          local-dir: "restart-tmp/"
-          server-dir: "${{ secrets.FTP_REMOTE_DIR }}/tmp/"
-          dangerous-clean-slate: false
+          ssh -i ~/.ssh/id_deploy -p "$SSH_PORT" -o StrictHostKeyChecking=accept-new \
+            "$SSH_USERNAME@$SSH_HOST" \
+            "echo \"restart \$(date)\" > '$SSH_REMOTE_DIR/tmp/restart.txt'"
