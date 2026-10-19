@@ -32,20 +32,31 @@
         </span>
         <span v-else class="w-0" />
 
-        <!-- Wishlist button: always visible -->
-        <button
-          @click.prevent="toggleWishlist"
-          class="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md"
-          :class="isWishlisted
-            ? 'bg-rose-600 text-white shadow-rose-500/30'
-            : 'bg-white/85 dark:bg-slate-800/85 text-secondary hover:bg-rose-50 hover:text-rose-600 backdrop-blur-sm'"
-          aria-label="Tambah ke wishlist"
-        >
-          <Icon
-            :name="isWishlisted ? 'ph:heart-fill' : 'ph:heart-bold'"
-            class="w-4 h-4"
-          />
-        </button>
+        <!-- Wishlist button: always visible (ClientOnly — localStorage baru terbaca di client) -->
+        <ClientOnly>
+          <button
+            @click.prevent="toggleWishlist"
+            class="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md"
+            :class="isWishlisted
+              ? 'bg-rose-600 text-white shadow-rose-500/30'
+              : 'bg-white/85 dark:bg-slate-800/85 text-secondary hover:bg-rose-50 hover:text-rose-600 backdrop-blur-sm'"
+            aria-label="Tambah ke wishlist"
+          >
+            <Icon
+              :name="isWishlisted ? 'ph:heart-fill' : 'ph:heart-bold'"
+              class="w-4 h-4"
+            />
+          </button>
+          <template #fallback>
+            <button
+              class="w-11 h-11 rounded-xl flex items-center justify-center shadow-md bg-white/85 dark:bg-slate-800/85 text-secondary backdrop-blur-sm"
+              aria-label="Tambah ke wishlist"
+              tabindex="-1"
+            >
+              <Icon name="ph:heart-bold" class="w-4 h-4" />
+            </button>
+          </template>
+        </ClientOnly>
       </div>
 
       <!-- Quick View Overlay (hover desktop + always on mobile) -->
@@ -60,7 +71,7 @@
       </div>
 
       <!-- Full link overlay -->
-      <NuxtLink :to="`/products/${slug}`" class="absolute inset-0 z-10" :aria-label="`Lihat detail ${name}`" />
+      <NuxtLink :to="`/products/${slug ?? id}`" class="absolute inset-0 z-10" :aria-label="`Lihat detail ${name}`" />
     </div>
 
     <!-- Content Section -->

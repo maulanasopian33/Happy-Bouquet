@@ -48,7 +48,7 @@ const priceFormatted = computed(() =>
   new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(props.product?.price ?? 0)
 )
 
-// Mock stock for visual interest
-const stockPercent = computed(() => Math.floor(Math.random() * 40) + 20)
+// Stok determinis (bukan Math.random — bikin hydration mismatch SSR)
+const stockPercent = computed(() => 20 + ((props.product?.id ?? 0) % 40))
 const stockLeft = computed(() => Math.floor(stockPercent.value / 10) + 3)
 </script>

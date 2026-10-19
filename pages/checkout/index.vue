@@ -224,7 +224,7 @@
                 class="btn-premium w-full flex items-center justify-center gap-3 py-4.5 rounded-2xl shadow-xl shadow-rose-500/30"
               >
                 <Icon name="ph:seal-check-fill" class="w-5 h-5 text-amber-300" />
-                Bayar Sekarang
+                Pesan via WhatsApp
               </button>
             </div>
             
@@ -289,34 +289,13 @@ const selectedPayment = ref<PaymentMethod>(paymentMethods[0] as PaymentMethod)
 const shippingCost = computed(() => selectedShipping.value?.cost || 0)
 const totalOrder = computed(() => cart.totalPrice + shippingCost.value)
 
-const paymentSummary = computed(() => {
-  const total = totalOrder.value
-  const p = selectedPayment.value
-  if (!p) return { totalLabel: 'Total', totalAmount: total, amountToPay: total, remainingAmount: 0 }
-  
-  const rate = p.rate
-
-  const amountToPay = total * rate
-  const remainingAmount = total - amountToPay
-
-  let totalLabel = 'Tagihan Total'
-  if (p.id.startsWith('dp')) {
-    totalLabel = 'Total Pesanan'
-  } else if (p.id === 'cod') {
-    totalLabel = 'Total Bayar COD'
-  }
-
-  return {
-    totalLabel,
-    totalAmount: total,
-    amountToPay,
-    remainingAmount,
-  }
-})
+const paymentSummary = computed(() => computePaymentSummary(totalOrder.value, selectedPayment.value))
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(value)
 }
+
+const WA_NUMBER = '6281234567890' // nomor WhatsApp bisnis (sama dengan tombol WA lain di situs)
 
 const placeOrder = () => {
   // Validasi sederhana
@@ -325,16 +304,26 @@ const placeOrder = () => {
     return
   }
 
-  console.log('Order processed:', {
-    customer: form.value,
-    items: cart.items,
-    shipping: selectedShipping.value!,
-    payment: selectedPayment.value!,
-    total: totalOrder.value,
-    amountRequired: paymentSummary.value.amountToPay
-  })
+  const lines = [
+    'Halo HappyBouquet, saya mau pesan:',
+    '',
+    ...cart.items.map((i) => `- ${i.name}${i.variants && Object.keys(i.variants).length ? ' (' + Object.values(i.variants).join(', ') + ')' : ''} x${i.quantity} = ${formatCurrency(i.price * i.quantity)}`),
+    '',
+    `Subtotal: ${cart.formattedTotalPrice}`,
+    `Pengiriman: ${selectedShipping.value.name} (${formatCurrency(shippingCost.value)})`,
+    `Pembayaran: ${selectedPayment.value.name}`,
+    `Total: ${formatCurrency(totalOrder.value)}`,
+    ...(selectedPayment.value.id.startsWith('dp') ? [`DP dibayar sekarang: ${formatCurrency(paymentSummary.value.amountToPay)}`] : []),
+    '',
+    `Nama: ${form.value.name}`,
+    `Telp: ${form.value.phone}`,
+    `Email: ${form.value.email}`,
+    `Alamat: ${form.value.address}`,
+    `Jadwal kirim: ${form.value.pickupDate}`,
+  ]
 
-  alert('Pesanan dikonfirmasi! Anda akan diarahkan ke halaman utama.')
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank')
+
   cart.clearCart()
   router.push('/')
 }
@@ -343,7 +332,10 @@ const placeOrder = () => {
 const minDate = computed(() => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  return tomorrow.toISOString().split('T')[0];
+  const y = tomorrow.getFullYear();
+  const m = String(tomorrow.getMonth() + 1).padStart(2, '0');
+  const d = String(tomorrow.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 });
 
 onMounted(() => {

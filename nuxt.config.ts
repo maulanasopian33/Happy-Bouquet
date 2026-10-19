@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["@/assets/css/main.css"],
   modules: ['@pinia/nuxt', "@nuxt/icon"],
+  icon: {
+    serverBundle: 'remote'
+  },
   app: {
     head: {
       charset: 'utf-8',
@@ -56,28 +59,14 @@ export default defineNuxtConfig({
     '/maintenance': { cache: false },
   },
 
-  // =========================================================
-  // NITRO STORAGE — Redis via Upstash (menghemat RAM server)
-  // Aktifkan blok ini jika sudah memiliki kredensial Upstash.
-  //
-  // CARA SETUP:
-  //   1. Buka https://upstash.com → buat database Redis.
-  //   2. Salin UPSTASH_REDIS_REST_URL & UPSTASH_REDIS_REST_TOKEN.
-  //   3. Tambahkan ke file .env project:
-  //        UPSTASH_REDIS_REST_URL=https://xxxxxx.upstash.io
-  //        UPSTASH_REDIS_REST_TOKEN=AxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxQ
-  //   4. Install driver: npm install unstorage @upstash/redis
-  //   5. Hapus komentar pada blok nitro di bawah ini.
-  // =========================================================
-  //
+  // Cache SWR Nitro -> Redis Upstash (persisten lintas restart Passenger).
+  // Wajib set UPSTASH_REDIS_REST_URL & UPSTASH_REDIS_REST_TOKEN di .env server.
   nitro: {
     storage: {
-      // Mengganti backend cache Nitro dari RAM → Redis Upstash
       cache: {
         driver: 'upstash',
         url: process.env.UPSTASH_REDIS_REST_URL,
         token: process.env.UPSTASH_REDIS_REST_TOKEN,
-        // Prefix key di Redis agar mudah didentifikasi
         base: 'happybouquet:cache:',
       },
     },
@@ -87,14 +76,21 @@ export default defineNuxtConfig({
       }
     }
   },
+  // Ikon: 'remote' agar koleksi ph (4.5MB) tidak dimuat ke RAM tiap proses;
+  // SVG di-fetch dari Iconify API sekali lalu di-cache.
 
   runtimeConfig: {
+    // Secret hanya di server (private) — jangan dipindahkan ke public.
+    // Maintenance hanya aktif jika NUXT_MAINTENANCE_ENABLED=true saat build
+    // DAN secret di-set; tanpa secret, middleware menganggap salah konfigurasi.
+    maintenance: {
+      secret: process.env.NUXT_MAINTENANCE_SECRET || ''
+    },
     public: {
       gaId: 'G-1H48JGPPD8',
       apiUrl: process.env.NUXT_API_URL || 'http://localhost:5000/api',
       maintenance: {
-        enabled: process.env.NUXT_MAINTENANCE_ENABLED === 'true',
-        secret: 'happy-dev'
+        enabled: process.env.NUXT_MAINTENANCE_ENABLED === 'true'
       }
     }
   },

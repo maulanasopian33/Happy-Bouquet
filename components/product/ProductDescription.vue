@@ -7,9 +7,8 @@
     
     <div class="prose prose-rose dark:prose-invert max-w-none">
       <div 
-        class="text-secondary leading-loose text-sm md:text-base font-medium space-y-4"
-        v-html="formattedDescription"
-      ></div>
+        class="text-secondary leading-loose text-sm md:text-base font-medium space-y-4 whitespace-pre-line"
+      >{{ props.description || 'Belum ada deskripsi untuk produk ini.' }}</div>
     </div>
 
     <!-- Features / Highlights -->
@@ -24,12 +23,6 @@
 
 <script setup lang="ts">
 const props = defineProps<{ description: string }>()
-
-const formattedDescription = computed(() => {
-  if (!props.description) return 'Belum ada deskripsi untuk produk ini.'
-  // Replace newlines with <br> for better HTML rendering if it's plain text
-  return props.description.replace(/\n/g, '<br>')
-})
 
 const features = [
   { text: 'Hand-picked fresh flowers' },

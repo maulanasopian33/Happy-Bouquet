@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const isBypassActive = ref(false)
-
-onMounted(() => {
-  // Check localStorage for bypass flag
-  if (localStorage.getItem('maintenance_bypass') === 'true') {
-    isBypassActive.value = true
-  }
+const config = useRuntimeConfig()
+// Jika maintenance aktif dan user melihat halaman normal (bukan /maintenance),
+// berarti server sudah membypass kunjungan ini.
+const isBypassActive = computed(() => {
+  if (!import.meta.dev) return false
+  if (!config.public.maintenance?.enabled) return false
+  const path = useRoute().path
+  return path !== '/maintenance'
 })
 </script>
 

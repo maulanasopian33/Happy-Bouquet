@@ -70,7 +70,7 @@
                           {{ item.name }}
                         </h4>
                         <button 
-                          @click="cart.removeItem(item.id)"
+                          @click="cart.removeItem(item.cartItemId!)"
                           class="p-1 text-muted hover:text-rose-600 transition-colors"
                         >
                           <Icon name="ph:trash-bold" class="w-4 h-4" />
@@ -94,14 +94,14 @@
                       <!-- Qty Control -->
                       <div class="flex items-center bg-(--bg-section) rounded-xl p-0.5 border border-(--border-color)">
                         <button 
-                          @click="cart.decrease(item.id)"
+                          @click="cart.decrease(item.cartItemId!)"
                           class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-rose-900 text-rose-600 transition-all"
                         >
                           <Icon name="ph:minus-bold" class="w-3 h-3" />
                         </button>
                         <span class="w-8 text-center text-xs font-black text-primary">{{ item.quantity }}</span>
                         <button 
-                          @click="cart.increase(item.id)"
+                          @click="cart.increase(item.cartItemId!)"
                           class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-rose-900 text-rose-600 transition-all"
                         >
                           <Icon name="ph:plus-bold" class="w-3 h-3" />

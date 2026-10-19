@@ -18,6 +18,11 @@ logs
 .fleet
 .idea
 
+# Local deploy artifacts & script (berisi detail server, jangan di-push)
+deploy/
+deploy.tar.gz
+deploy-local*
+
 # Local env files
 .env
 .env.*

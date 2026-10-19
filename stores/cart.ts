@@ -1,3 +1,4 @@
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 
@@ -11,74 +12,79 @@ export interface CartItem  {
   cartItemId?: string // Unique ID for cart item including variants
 }
 
-export const useCartStore = defineStore('cart', {
-  state: () => ({
-    items: [] as CartItem[],
-    isOpen: false
-  }),
+export const useCartStore = defineStore('cart', () => {
+  const items = useLocalStorage<CartItem[]>('happybouquet-cart', [])
+  const isOpen = ref(false)
 
-  getters: {
-    totalItems: (state): number =>
-      state.items.reduce((t: number, i: CartItem) => t + i.quantity, 0),
+  const totalItems = computed(() =>
+    items.value.reduce((t, i) => t + i.quantity, 0)
+  )
 
-    totalPrice: (state): number =>
-      state.items.reduce((t: number, i: CartItem) => t + i.price * i.quantity, 0),
+  const totalPrice = computed(() =>
+    items.value.reduce((t, i) => t + i.price * i.quantity, 0)
+  )
 
-    formattedTotalPrice(): string {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0
-      }).format(this.totalPrice)
+  const formattedTotalPrice = computed(() =>
+    new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0
+    }).format(totalPrice.value)
+  )
+
+  const showCart = (open: boolean = true) => {
+    isOpen.value = open
+  }
+
+  const addItem = (product: CartItem) => {
+    // Buat ID unik berdasarkan produk dan variannya
+    const cartItemId = product.id + '-' + Object.values(product.variants || {}).join('-')
+
+    const exist = items.value.find((i) => i.cartItemId === cartItemId)
+
+    if (exist) {
+      exist.quantity += product.quantity || 1
+    } else {
+      items.value.push({
+        ...product,
+        price: Number(product.price), // Pastikan harga adalah angka
+        cartItemId: cartItemId,
+        quantity: product.quantity || 1
+      })
     }
-  },
 
-  actions: {
-    showCart(open: boolean = true) {
-      this.isOpen = open
-    },
+    showCart(true)
+  }
 
-    addItem(product: CartItem) {
-      // Buat ID unik berdasarkan produk dan variannya
-      const cartItemId = product.id + '-' + Object.values(product.variants || {}).join('-')
+  const removeItem = (cartItemId: string) => {
+    items.value = items.value.filter((i) => i.cartItemId !== cartItemId)
+  }
 
-      const exist = this.items.find((i) => i.cartItemId === cartItemId)
-      
-      if (exist) {
-        exist.quantity += product.quantity || 1
-      } else {
-        this.items.push({
-          ...product,
-          price: Number(product.price), // Pastikan harga adalah angka
-          cartItemId: cartItemId,
-          quantity: product.quantity || 1
-        })
-      }
+  const increase = (cartItemId: string) => {
+    const item = items.value.find((i) => i.cartItemId === cartItemId)
+    if (item) item.quantity++
+  }
 
-      this.showCart(true)
+  const decrease = (cartItemId: string) => {
+    const item = items.value.find((i) => i.cartItemId === cartItemId)
+    if (item && item.quantity > 1) item.quantity--
+  }
 
-      // Hapus tracking sementara karena struktur produk berubah
-      // ⬅️ Tracking Add to Cart
-      // const { trackAddToCart } = useAnalytics()
-      // trackAddToCart(product, 1)
-    },
+  const clearCart = () => {
+    items.value = []
+  }
 
-    removeItem(productId: number) {
-      this.items = this.items.filter((i) => i.id !== productId)
-    },
-
-    increase(id: number) {
-      const item = this.items.find((i) => i.id === id)
-      if (item) item.quantity++
-    },
-
-    decrease(id: number) {
-      const item = this.items.find((i) => i.id === id)
-      if (item && item.quantity > 1) item.quantity--
-    },
-
-    clearCart() {
-      this.items = []
-    }
+  return {
+    items,
+    isOpen,
+    totalItems,
+    totalPrice,
+    formattedTotalPrice,
+    showCart,
+    addItem,
+    removeItem,
+    increase,
+    decrease,
+    clearCart
   }
 })

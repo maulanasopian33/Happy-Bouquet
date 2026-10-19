@@ -134,7 +134,7 @@ import StickyPurchaseBar from './StickyPurchaseBar.vue'
 const props = defineProps<{ slug: string }>()
 
 // Fetching Logic
-const { product, related, loading, error } = useProductDetail(computed(() => props.slug))
+const { product, related, loading, error } = await useProductDetail(computed(() => props.slug))
 
 const activeImage = ref(0)
 const activeTab = ref('Deskripsi')

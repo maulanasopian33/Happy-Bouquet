@@ -35,21 +35,16 @@ jobs:
       - name: Build Nuxt
         run: npm run build
         env:
-          NUXT_MAINTENANCE_ENABLED: true
           NUXT_API_URL: ${{ secrets.NUXT_API_URL }}
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
 
-      # Prepare deploy dir (gabungkan .output + node_modules + package.json)
+      # Prepare deploy dir (hanya .output + package.json — .output sudah self-contained)
       - name: Prepare deploy folder
         run: |
           mkdir deploy
           cp -r .output deploy/.output
-          # Optimasi: Hapus devDependencies agar node_modules lebih ringan
-          npm prune --production
-          cp -r node_modules deploy/node_modules
           cp package.json deploy/package.json
-          cp package-lock.json deploy/package-lock.json
 
       # Deploy via SSH (tar over ssh, aman untuk dotfile/symlink seperti .output & node_modules/.bin)
       - name: Upload build via SSH

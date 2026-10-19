@@ -15,13 +15,13 @@
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-3 group shrink-0">
           <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-black flex items-center justify-center shadow-lg group-hover:rotate-6 transition-all duration-300">
-            <span class="text-base">HB</span>
+            <img src="/icon.png" alt="HappyBouquet Logo" class="w-6 h-6" />
           </div>
           <div class="hidden sm:block">
             <span class="block text-lg font-extrabold tracking-tight text-primary leading-none">
               Happy<span class="text-rose-600">Bouquet</span>
             </span>
-            <p class="text-[9px] uppercase tracking-widest text-secondary font-medium mt-0.5">Premium Floral Art</p>
+            <p class="text-[9px] uppercase tracking-widest text-secondary font-medium mt-0.5">Make Your Always Happy</p>
           </div>
         </NuxtLink>
 
@@ -178,7 +178,7 @@
         <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800">
           <NuxtLink to="/" class="flex items-center gap-3" @click="isMobileMenuOpen = false">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-black flex items-center justify-center text-sm">
-              HB
+              <img src="/icon.png" alt="HappyBouquet Logo" class="w-5 h-5" />
             </div>
             <span class="text-base font-extrabold text-primary">Happy<span class="text-rose-600">Bouquet</span></span>
           </NuxtLink>
@@ -232,7 +232,7 @@
 
           <!-- Cart CTA -->
           <button
-            @click="openCart; isMobileMenuOpen = false"
+            @click="openCart(); isMobileMenuOpen = false"
             class="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-rose-600 text-white font-bold text-base shadow-lg hover:bg-rose-700 transition-colors"
           >
             <Icon name="ph:shopping-cart-simple-bold" class="w-5 h-5" />

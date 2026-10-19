@@ -58,14 +58,14 @@ export interface UserProfile {
 
 export const useUserStore = defineStore('user', () => {
   const profile = ref<UserProfile>({
-    name: 'Maulana Sopian',
-    email: 'maulana@example.com',
-    phone: '081234567890',
-    address: 'Jl. Melati No. 123, Bandung, Jawa Barat',
-    memberSince: 'Januari 2024',
-    avatar: 'https://ui-avatars.com/api/?name=Maulana+Sopian&background=E11D48&color=fff',
-    tier: 'Gold Member',
-    points: 1250
+    name: 'Pelanggan',
+    email: 'pelanggan@example.com',
+    phone: '0812-xxxx-xxxx',
+    address: '[ISI: alamat Anda]',
+    memberSince: '2026',
+    avatar: 'https://ui-avatars.com/api/?name=Pelanggan&background=E11D48&color=fff',
+    tier: 'Member',
+    points: 0
   })
 
   const orders = ref<Order[]>([
@@ -110,13 +110,13 @@ export const useUserStore = defineStore('user', () => {
   ])
 
   const addresses = ref<UserAddress[]>([
-    { id: 1, label: 'Rumah Utama', receiver: 'Maulana Sopian', phone: '081234567890', fullAddress: 'Jl. Melati No. 123, Bandung, Jawa Barat, 40123', isDefault: true },
-    { id: 2, label: 'Kantor', receiver: 'Maulana Sopian', phone: '081234567890', fullAddress: 'Gedung Wisma Sejahtera, Lt. 5, Jakarta Selatan', isDefault: false },
+    { id: 1, label: 'Rumah', receiver: 'Penerima', phone: '0812-xxxx-xxxx', fullAddress: '[ISI: alamat rumah]', isDefault: true },
+    { id: 2, label: 'Kantor', receiver: 'Penerima', phone: '0812-xxxx-xxxx', fullAddress: '[ISI: alamat kantor]', isDefault: false },
   ])
 
   const loginSessions = ref<LoginSession[]>([
-    { id: 's1', device: 'Windows PC', browser: 'Chrome', location: 'Bandung, Indonesia', time: 'Baru Saja', isCurrent: true },
-    { id: 's2', device: 'Safari iPhone', browser: 'Mobile Safari', location: 'Bandung, Indonesia', time: '2 hari yang lalu', isCurrent: false },
+    { id: 's1', device: 'Perangkat Saat Ini', browser: 'Browser', location: 'Indonesia', time: 'Baru Saja', isCurrent: true },
+    { id: 's2', device: 'Perangkat Lain', browser: 'Browser', location: 'Indonesia', time: '2 hari yang lalu', isCurrent: false },
   ])
 
   const updateProfile = (newProfile: UserProfile) => {

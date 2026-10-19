@@ -274,7 +274,6 @@ const allProductsRaw = computed(() => {
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
     name: p.name,
     price: p.price ? Number(p.price) : 0,
-    originalPrice: p.price ? Number(p.price) * 1.2 : 0,
     image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80',
     rating: 4.5,
     reviewCount: 0,
@@ -282,14 +281,10 @@ const allProductsRaw = computed(() => {
   }))
 })
 
-const allProducts = computed(() => allProductsRaw.value)
+// Home tampilkan 12 produk saja; katalog lengkap di /products (payload home ikut ramping)
+const allProducts = computed(() => allProductsRaw.value.slice(0, 12))
 const recoProducts = computed(() => allProductsRaw.value.slice(0, 6))
-const flashSale = computed(() =>
-  allProductsRaw.value.slice(0, 2).map((p: any) => ({
-    ...p,
-    original: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(Number(p.price) * 1.3)
-  }))
-)
+const flashSale = computed(() => allProductsRaw.value.slice(0, 2))
 
 // ===== TESTIMONIALS =====
 const testimonials = [

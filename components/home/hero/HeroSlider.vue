@@ -27,7 +27,10 @@
             :src="banner.imageUrl"
             :alt="banner.title || 'Koleksi Bunga'"
             class="w-full h-full object-cover transition-transform duration-[12s] ease-linear scale-105 group-hover:scale-110"
-            loading="eager"
+            :loading="i === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="i === 0 ? 'high' : 'auto'"
+            width="1600"
+            height="900"
           />
 
           <!-- Multi-layer Gradient Overlay (premium cinematic look) -->

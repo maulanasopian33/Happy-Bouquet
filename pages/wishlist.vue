@@ -14,51 +14,54 @@
 
     <!-- ======= WISHLIST CONTENT ======= -->
     <div class="section-wrapper">
-      <TransitionGroup 
-        v-if="wishlist.items.length > 0"
-        tag="div" 
-        name="list"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-      >
-        <div v-for="product in wishlist.items" :key="product.id" class="reveal">
-          <ProductCard
-            :id="product.id"
-            :name="product.title || product.name"
-            :price="product.price"
-            :original-price="product.originalPrice"
-            :image="product.image"
-            :badge="product.badge"
-            :category="product.category"
-            :rating="product.rating"
-            :review-count="product.reviewCount"
-            @view="onViewProduct"
-          />
-        </div>
-      </TransitionGroup>
-
-      <!-- Empty State -->
-      <div v-else class="reveal flex flex-col items-center justify-center py-20 px-6 text-center space-y-8 card-premium max-w-3xl mx-auto">
-        <div class="relative">
-          <div class="w-32 h-32 rounded-full bg-rose-50 dark:bg-rose-950/30 flex items-center justify-center text-rose-300">
-            <Icon name="ph:heart-break-duotone" class="w-16 h-16" />
+      <!-- ClientOnly: isi wishlist dari localStorage — render setelah hydrate (anti hydration mismatch) -->
+      <ClientOnly>
+        <TransitionGroup 
+          v-if="wishlist.items.length > 0"
+          tag="div" 
+          name="list"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+        >
+          <div v-for="product in wishlist.items" :key="product.id" class="reveal">
+            <ProductCard
+              :id="product.id"
+              :name="product.title || product.name"
+              :price="product.price"
+              :original-price="product.originalPrice"
+              :image="product.image"
+              :badge="product.badge"
+              :category="product.category"
+              :rating="product.rating"
+              :review-count="product.reviewCount"
+              @view="onViewProduct"
+            />
           </div>
-          <div class="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-rose-100 flex items-center justify-center shadow-lg">
-            <Icon name="ph:sparkle-bold" class="w-5 h-5 text-rose-500 animate-pulse" />
+        </TransitionGroup>
+
+        <!-- Empty State -->
+        <div v-else class="reveal flex flex-col items-center justify-center py-20 px-6 text-center space-y-8 card-premium max-w-3xl mx-auto">
+          <div class="relative">
+            <div class="w-32 h-32 rounded-full bg-rose-50 dark:bg-rose-950/30 flex items-center justify-center text-rose-300">
+              <Icon name="ph:heart-break-duotone" class="w-16 h-16" />
+            </div>
+            <div class="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-rose-100 flex items-center justify-center shadow-lg">
+              <Icon name="ph:sparkle-bold" class="w-5 h-5 text-rose-500 animate-pulse" />
+            </div>
+          </div>
+          
+          <div class="space-y-3">
+            <h2 class="text-2xl font-black text-primary">Belum Ada Favorit?</h2>
+            <p class="text-secondary text-sm font-medium max-w-md mx-auto leading-relaxed">
+              Sepertinya Anda belum menemukan buket yang mencuri hati. Mari jelajahi koleksi terbaik kami untuk momen spesial Anda.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <NuxtLink to="/products" class="btn-premium px-10">Mulai Jelajah</NuxtLink>
+            <NuxtLink to="/" class="btn-premium-outline px-10">Kembali Beranda</NuxtLink>
           </div>
         </div>
-        
-        <div class="space-y-3">
-          <h2 class="text-2xl font-black text-primary">Belum Ada Favorit?</h2>
-          <p class="text-secondary text-sm font-medium max-w-md mx-auto leading-relaxed">
-            Sepertinya Anda belum menemukan buket yang mencuri hati. Mari jelajahi koleksi terbaik kami untuk momen spesial Anda.
-          </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 pt-4">
-          <NuxtLink to="/products" class="btn-premium px-10">Mulai Jelajah</NuxtLink>
-          <NuxtLink to="/" class="btn-premium-outline px-10">Kembali Beranda</NuxtLink>
-        </div>
-      </div>
+      </ClientOnly>
     </div>
 
   </div>
