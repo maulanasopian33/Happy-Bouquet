@@ -1,226 +1,297 @@
 <template>
-  <div class="overflow-hidden">
+  <div class="noir-home overflow-hidden">
+    <!-- ======= 1. TOPBAR PROMO ======= -->
+    <div class="border-b border-[var(--noir-line)] bg-[#171612]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex flex-col md:flex-row items-center justify-between gap-2 text-sm">
+        <div class="flex items-center gap-2 text-[var(--noir-champagne-dim)]">
+          <span>Diskon Pengguna Baru 15%:</span>
+          <span class="label-crest px-2 py-0.5 rounded bg-[var(--noir-gold)]/20 border border-[var(--noir-gold)]/30">GOLDNOIR</span>
+        </div>
+        <div class="hidden lg:flex items-center gap-4 text-[var(--noir-champagne-dim)]">
+          <span class="flex items-center gap-1.5"><Icon name="ph:clock-bold" class="w-4 h-4 text-[var(--noir-gold)]" />Kirim Hari Ini (Order sebelum 14:00 WIB)</span>
+          <span class="opacity-30 text-[var(--noir-gold)]">•</span>
+          <span class="flex items-center gap-1.5"><Icon name="ph:truck-bold" class="w-4 h-4 text-[var(--noir-gold)]" />Gratis Ongkir Min. Rp 150rb</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <NuxtLink to="/tracking" class="flex items-center gap-1 text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)] transition-colors">
+            <Icon name="ph:package-bold" class="w-3.5 h-3.5 text-[var(--noir-gold)]" />Lacak Pesanan
+          </NuxtLink>
+          <span class="opacity-30">|</span>
+          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)] transition-colors">
+            <Icon name="ph:headset-bold" class="w-3.5 h-3.5 text-[var(--noir-gold)]" />Concierge WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
 
-    <!-- ======= HERO SECTION ======= -->
-    <section class="section-wrapper py-4 sm:py-6 animate-fade-in">
-      <HeroSlider :banners="heroBanners" />
-    </section>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <!-- ======= 2. HERO SLIDER ======= -->
+      <section class="pt-3 pb-4">
+        <HeroSlider :banners="heroBanners" />
+      </section>
 
-    <!-- ======= TRUST BADGES ======= -->
-    <section class="section-wrapper py-10">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-        <div
-          v-for="badge in trustBadges"
-          :key="badge.title"
-          class="group flex items-center gap-4 p-4 md:p-5 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] hover:border-rose-300/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-          :style="{ boxShadow: 'var(--shadow-card)' }"
-        >
+      <!-- ======= 3. VALUE PROPS ======= -->
+      <section class="py-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
-            class="w-11 h-11 md:w-13 md:h-13 rounded-2xl flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"
-            :class="badge.color"
+            v-for="badge in trustBadges"
+            :key="badge.title"
+            class="noir-card p-4 flex items-start gap-3.5 hover:border-[var(--noir-gold)]/50 transition-colors"
           >
-            {{ badge.icon }}
-          </div>
-          <div class="min-w-0">
-            <h3 class="text-primary font-bold text-sm leading-tight mb-0.5">{{ badge.title }}</h3>
-            <p class="text-muted text-xs leading-snug">{{ badge.text }}</p>
+            <div class="w-11 h-11 rounded-xl bg-[var(--noir-gold)]/10 border border-[var(--noir-gold)]/30 text-[var(--noir-gold)] flex items-center justify-center shrink-0">
+              <Icon :name="badge.icon" class="w-5 h-5" />
+            </div>
+            <div class="flex flex-col">
+              <h3 class="font-bold text-sm text-[var(--noir-champagne)] leading-tight">{{ badge.title }}</h3>
+              <p class="text-xs text-[var(--noir-champagne-dim)] leading-snug mt-0.5">{{ badge.text }}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ======= FLASH SALE & DEALS ======= -->
-    <section class="section-wrapper py-8">
-      <div class="rounded-[2rem] bg-gradient-to-br from-rose-600 via-rose-600 to-rose-800 p-7 md:p-14 relative overflow-hidden shadow-2xl shadow-rose-500/20">
-        <!-- Decorations -->
-        <div class="absolute top-0 right-0 w-80 h-80 bg-white/8 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-rose-400/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
-        <div class="absolute top-1/2 right-1/4 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+      <!-- ======= 4. FLASH SALE ======= -->
+      <section class="py-4">
+        <div class="noir-card p-6 lg:p-8 relative overflow-hidden">
+          <div class="pointer-events-none absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-[var(--noir-gold)]/10 blur-3xl" />
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
-
-          <!-- Left: Text & Timer -->
-          <div class="space-y-7 text-white">
-            <div class="space-y-4">
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-black uppercase tracking-widest">
-                <Icon name="ph:lightning-fill" class="w-4 h-4 text-amber-300 animate-pulse" />
-                Penawaran Terbatas
-              </div>
-              <h2 class="text-2xl md:text-5xl font-black tracking-tight leading-tight">
-                Flash Sale<br />
-                <span class="text-gradient-gold" style="-webkit-text-fill-color: #FCD34D;">Special Deals!</span>
-              </h2>
-              <p class="text-rose-100/80 text-sm md:text-base max-w-md font-medium leading-relaxed">
-                Jangan lewatkan buket eksklusif dengan harga spesial — hanya hari ini!
-              </p>
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 relative z-10">
+            <div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--noir-gold)]/20 border border-[var(--noir-gold)]/40 label-crest mb-2">
+                <Icon name="ph:fire-fill" class="w-3.5 h-3.5" />
+                Penawaran Terbatas Hari Ini
+              </span>
+              <h2 class="noir-display text-2xl text-[var(--noir-champagne)]">Flash Offer Spesial Hari Ini</h2>
+              <p class="text-sm text-[var(--noir-champagne-dim)] mt-1">Koleksi buket eksklusif dengan harga istimewa, kuota slot terbatas harian.</p>
             </div>
 
-            <!-- Countdown Timer -->
-            <div class="space-y-3">
-              <p class="text-rose-200/70 text-xs font-bold uppercase tracking-widest">Berakhir Dalam</p>
-              <div class="flex items-center gap-3">
-                <div
-                  v-for="(unit, index) in timerUnits"
-                  :key="unit.label"
-                  class="flex items-center gap-3"
-                >
-                  <div class="text-center">
-                    <div class="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 min-w-[60px]">
-                      <span class="text-2xl md:text-3xl font-black tabular-nums block" :key="unit.value">
-                        {{ String(unit.value).padStart(2, '0') }}
-                      </span>
-                    </div>
-                    <p class="text-rose-200/60 text-[9px] font-bold uppercase tracking-widest mt-1.5">{{ unit.label }}</p>
+            <!-- Countdown -->
+            <div class="flex items-center gap-2">
+              <div v-for="(unit, index) in timerUnits" :key="unit.label" class="flex items-center gap-2">
+                <div class="flex flex-col items-center">
+                  <div class="w-12 h-12 rounded-xl bg-[var(--noir-raised)] border border-[var(--noir-champagne-dim)]/40 text-[var(--noir-gold)] font-bold flex items-center justify-center tabular-nums">
+                    {{ String(unit.value).padStart(2, '0') }}
                   </div>
-                  <span v-if="index < timerUnits.length - 1" class="text-white/50 text-2xl font-black -mt-5 select-none">:</span>
+                  <span class="label-crest !text-[10px] text-[var(--noir-champagne-dim)] mt-1">{{ unit.label }}</span>
                 </div>
+                <span v-if="index < timerUnits.length - 1" class="noir-display text-[var(--noir-gold)] text-xl mb-3">:</span>
               </div>
             </div>
-
-            <NuxtLink
-              to="/promo"
-              class="inline-flex items-center gap-3 px-7 py-3.5 bg-white text-rose-600 rounded-2xl font-black text-sm shadow-xl hover:bg-rose-50 hover:-translate-y-1 hover:shadow-2xl transition-all w-fit"
-            >
-              <Icon name="ph:lightning-fill" class="w-4.5 h-4.5 text-amber-500" />
-              Ambil Promo Sekarang
-              <Icon name="ph:arrow-right-bold" class="w-4 h-4" />
-            </NuxtLink>
           </div>
 
-          <!-- Right: Flash Sale Products -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 3 flash cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10">
             <div
-              v-for="product in flashSale.slice(0, 2)"
+              v-for="product in flashSale"
               :key="product.id"
-              class="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/15 hover:bg-white/20 transition-all duration-300 cursor-pointer group"
+              class="rounded-2xl bg-[var(--noir-surface)] p-4 border border-[var(--noir-champagne-dim)]/30 hover:border-[var(--noir-gold)]/60 transition-all flex flex-col justify-between group"
             >
-              <FlashSaleSmall :product="product" />
+              <div>
+                <div class="relative w-full aspect-square rounded-xl overflow-hidden mb-3 bg-[var(--noir-raised)]">
+                  <NuxtImg
+                    :src="product.image"
+                    :alt="product.name"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    width="400"
+                    height="400"
+                    @error="onImgError"
+                  />
+                </div>
+                <h3 class="noir-display text-base text-[var(--noir-champagne)] leading-tight group-hover:text-[var(--noir-gold)] transition-colors line-clamp-2">
+                  {{ product.name }}
+                </h3>
+              </div>
+              <div class="mt-4 pt-3 flex flex-col gap-2">
+                <div class="w-full bg-[var(--noir-raised)] rounded-full h-1.5 overflow-hidden" role="progressbar" aria-label="Ketersediaan stok" aria-valuemin="0" aria-valuemax="100" :aria-valuenow="flashStockPercent(product)">
+                  <div class="bg-[var(--noir-gold)] h-full rounded-full" :style="{ width: `${flashStockPercent(product)}%` }" />
+                </div>
+                <span class="price-gold text-base">{{ formatRupiah(product.price) }}</span>
+                <NuxtLink :to="`/products/${product.slug}`" class="btn-gold w-full py-2.5 text-sm">
+                  <Icon name="ph:shopping-bag-bold" class="w-4 h-4" />
+                  Beli Sekarang
+                </NuxtLink>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ======= QUICK CATEGORIES ======= -->
-    <section class="section-wrapper space-y-6 py-8">
-      <div class="flex items-end justify-between gap-4">
-        <div class="space-y-1.5">
-          <div class="section-tag">Jelajahi</div>
-          <h2 class="section-title">Belanja per Kategori</h2>
-        </div>
-        <NuxtLink
-          to="/products"
-          class="text-xs font-bold text-rose-600 hover:gap-3 flex items-center gap-2 transition-all group shrink-0 pb-1"
-        >
-          Lihat Semua
-          <Icon name="ph:arrow-right-bold" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-        </NuxtLink>
-      </div>
-      <QuickCategories :categories="categories" @select="goToCategory" />
-    </section>
-
-    <!-- ======= FEATURED / RECOMMENDATION ======= -->
-    <section class="bg-(--bg-section) py-20 transition-colors">
-      <div class="section-wrapper space-y-10">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div class="space-y-1.5">
-            <div class="section-tag">Pilihan Kami</div>
-            <h2 class="section-title">Rekomendasi Untukmu</h2>
-            <p class="text-secondary text-sm max-w-lg">Koleksi bunga pilihan yang paling dicintai pelanggan setia kami.</p>
+      <!-- ======= 5. KATEGORI ======= -->
+      <section class="py-12">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div>
+            <span class="label-crest">Jelajahi Koleksi</span>
+            <h2 class="noir-display text-2xl mt-1 text-[var(--noir-champagne)]">Belanja Berdasarkan Kategori</h2>
           </div>
-          <NuxtLink
-            to="/products"
-            class="text-xs font-bold text-rose-600 flex items-center gap-2 transition-all group shrink-0 pb-1"
-          >
-            Lihat Semua
-            <Icon name="ph:arrow-right-bold" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          <NuxtLink to="/products" class="text-sm font-semibold text-[var(--noir-gold)] hover:text-[var(--noir-gold-hover)] flex items-center gap-1 group/link shrink-0">
+            Lihat Semua Kategori
+            <Icon name="ph:arrow-right-bold" class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
           </NuxtLink>
         </div>
-        <ProductCarousel
-          :products="recoProducts"
-          @view="openQuickView"
-        />
-      </div>
-    </section>
-
-    <!-- ======= MAIN PRODUCT GRID ======= -->
-    <section class="section-wrapper py-16 space-y-10">
-      <div class="text-center space-y-3 max-w-2xl mx-auto">
-        <div class="section-tag mx-auto">Koleksi Lengkap</div>
-        <h2 class="section-title">Temukan Buket Sempurnamu</h2>
-        <p class="text-secondary text-sm">Dari mawar romantis hingga buket wisuda elegan — semua ada di sini.</p>
-      </div>
-
-      <ProductGrid :products="allProducts" :show-filter="false" @view="openQuickView" />
-
-      <div class="flex justify-center pt-4">
-        <NuxtLink to="/products" class="btn-premium-outline flex items-center gap-2">
-          <Icon name="ph:flower-lotus-bold" class="w-4.5 h-4.5" />
-          Lihat Semua Koleksi
-        </NuxtLink>
-      </div>
-    </section>
-
-    <!-- ======= TESTIMONIALS ======= -->
-    <section class="bg-[var(--bg-card)] dark:bg-slate-900 border-t border-[var(--border-color)] py-20 relative overflow-hidden transition-colors duration-500">
-      <!-- Subtle background pattern -->
-      <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style="background-image: radial-gradient(circle at 1px 1px, var(--color-brand) 1px, transparent 0); background-size: 32px 32px;" />
-
-      <div class="section-wrapper relative z-10 space-y-14">
-        <div class="text-center space-y-3">
-          <div class="section-tag mx-auto">Cerita Bahagia</div>
-          <h2 class="section-title">Apa Kata Mereka?</h2>
-          <p class="text-secondary text-sm max-w-lg mx-auto">Ribuan pelanggan puas mempercayakan momen spesial mereka kepada kami.</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <button
+            v-for="cat in categoryTiles"
+            :key="cat.name"
+            class="noir-card group flex flex-col items-center p-3 hover:border-[var(--noir-gold)]/60 transition-all text-center"
+            @click="goToCategory(cat)"
+          >
+            <div class="w-full aspect-square rounded-xl overflow-hidden mb-3 bg-[var(--noir-raised)]">
+              <NuxtImg
+                v-if="cat.photo"
+                :src="cat.photo"
+                :alt="cat.name"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+                width="300"
+                height="300"
+                @error="onImgError"
+              />
+              <div v-else class="w-full h-full flex items-center justify-center text-4xl">{{ cat.emoji || '🌸' }}</div>
+            </div>
+            <span class="text-sm font-bold text-[var(--noir-champagne)] group-hover:text-[var(--noir-gold)] transition-colors">{{ cat.name }}</span>
+            <span class="text-[11px] text-[var(--noir-champagne-dim)] mt-0.5">{{ cat.count }} Rangkaian</span>
+          </button>
         </div>
+      </section>
+    </div>
 
-        <TestimonialSlider :testimonials="testimonials" />
-
-        <!-- Trust stat summary -->
-        <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto">
-          <div v-for="stat in trustStats" :key="stat.label" class="text-center">
-            <p class="text-2xl md:text-3xl font-black text-gradient">{{ stat.value }}</p>
-            <p class="text-xs text-secondary font-medium mt-1">{{ stat.label }}</p>
+    <!-- ======= 6. BESTSELLER ======= -->
+    <section class="bg-[var(--noir-surface)]/60 border-y border-[var(--noir-line)] py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+          <div>
+            <span class="label-crest">Pilihan Kurator</span>
+            <h2 class="noir-display text-2xl mt-1 text-[var(--noir-champagne)]">Rekomendasi Bunga Terlaris</h2>
+            <p class="text-sm text-[var(--noir-champagne-dim)] mt-1">Koleksi terfavorit yang paling banyak membahagiakan penerima.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======= CTA SECTION (NEW) ======= -->
-    <section class="section-wrapper py-16">
-      <div class="rounded-[2rem] p-8 md:p-14 relative overflow-hidden bg-[var(--bg-card)] border border-[var(--border-color)] shadow-lg">
-        <!-- Decorative circles -->
-        <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-rose-50 dark:bg-rose-950/20 pointer-events-none" />
-        <div class="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-rose-50 dark:bg-rose-950/10 pointer-events-none" />
-
-        <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
-          <div class="flex-1 space-y-5 text-center md:text-left">
-            <div class="section-tag md:text-left mx-auto md:mx-0">Custom Order</div>
-            <h2 class="section-title">Punya Konsep Sendiri?</h2>
-            <p class="text-secondary text-sm leading-relaxed max-w-md mx-auto md:mx-0">
-              Kami siap mewujudkan buket impianmu sesuai tema, warna, dan anggaran. Konsultasi gratis via WhatsApp!
-            </p>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-3 shrink-0">
-            <a
-              href="https://wa.me/6281234567890"
-              target="_blank"
-              class="btn-premium flex items-center gap-2.5"
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              v-for="chip in filterChips"
+              :key="chip"
+              class="px-4 py-2 text-sm transition-all"
+              :class="activeChip === chip ? 'chip-noir chip-noir-active' : 'chip-noir'"
+              @click="activeChip = chip"
             >
-              <Icon name="ph:whatsapp-logo-fill" class="w-4.5 h-4.5" />
-              Chat di WhatsApp
-            </a>
-            <NuxtLink
-              to="/contact"
-              class="btn-premium-outline flex items-center gap-2.5"
-            >
-              <Icon name="ph:envelope-fill" class="w-4.5 h-4.5" />
-              Kirim Pesan
-            </NuxtLink>
+              {{ chip }}
+            </button>
           </div>
+        </div>
+
+        <div v-if="filteredBestsellers.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <ProductCardNoir v-for="product in filteredBestsellers" :key="product.id" v-bind="product" />
+        </div>
+        <div v-else class="text-center py-12 text-sm text-[var(--noir-champagne-dim)]">
+          Tidak ada produk pada kategori ini.
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <NuxtLink to="/products" class="btn-noir px-8 py-3.5 text-sm font-semibold">
+            Lihat Semua Koleksi Lengkap
+            <Icon name="ph:expand-more-bold" class="w-4 h-4 text-[var(--noir-gold)]" />
+          </NuxtLink>
         </div>
       </div>
     </section>
 
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <!-- ======= 7. CUSTOM ORDER ======= -->
+      <section class="py-12">
+        <div class="rounded-2xl bg-gradient-to-r from-[#18181a] via-[#1f1e1b] to-[#121214] border border-[var(--noir-gold)]/40 px-6 py-10 lg:px-12 lg:py-14 relative overflow-hidden shadow-2xl">
+          <div class="pointer-events-none absolute -top-12 -right-12 w-96 h-96 rounded-full bg-[var(--noir-gold)]/15 blur-3xl" />
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-8 flex flex-col items-start gap-3">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--noir-gold)]/15 border border-[var(--noir-gold)]/40">
+                <Icon name="ph:paint-brush-bold" class="w-4 h-4 text-[var(--noir-gold)]" />
+                <span class="label-crest">Bespoke Floral Artisan</span>
+              </span>
+              <h2 class="noir-display text-2xl text-[var(--noir-champagne)] tracking-tight">Punya Konsep Rangkaian Sendiri?</h2>
+              <p class="text-[var(--noir-champagne-dim)] max-w-2xl leading-relaxed">
+                Sesuaikan jenis bunga favorit, tema warna, hingga budget Anda bersama Floral Stylist kami secara gratis.
+              </p>
+            </div>
+            <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="btn-gold px-6 py-3.5 text-sm">
+                <Icon name="ph:whatsapp-logo-fill" class="w-5 h-5" />
+                Chat Stylist via WhatsApp
+              </a>
+              <NuxtLink to="/contact" class="btn-noir px-6 py-3.5 text-sm">
+                <Icon name="ph:envelope-simple-bold" class="w-5 h-5 text-[var(--noir-gold)]" />
+                Kirim Pesan
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= 8. METRICS + TESTIMONI ======= -->
+      <section class="py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 p-6 rounded-2xl bg-[var(--noir-card)] border border-[var(--noir-line)]">
+          <div v-for="stat in trustStats" :key="stat.label" class="flex items-center gap-4 px-4 py-2">
+            <div class="w-12 h-12 rounded-2xl bg-[var(--noir-gold)]/10 border border-[var(--noir-gold)]/30 text-[var(--noir-gold)] flex items-center justify-center shrink-0">
+              <Icon :name="stat.icon" class="w-6 h-6" />
+            </div>
+            <div class="flex flex-col">
+              <span class="noir-display text-xl font-bold text-[var(--noir-champagne)] leading-none">{{ stat.value }}</span>
+              <span class="text-xs text-[var(--noir-champagne-dim)] mt-1">{{ stat.label }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <span class="label-crest">Cerita Bahagia</span>
+          <h2 class="noir-display text-2xl mt-1 text-[var(--noir-champagne)]">Momen Berharga yang Kami Rayakan Bersama</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div
+            v-for="t in testimonials"
+            :key="t.name"
+            class="noir-card p-6 hover:border-[var(--noir-gold)]/50 transition-all flex flex-col justify-between"
+          >
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between">
+                <div class="flex text-[var(--noir-gold)]">
+                  <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-4 h-4" />
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full bg-[var(--noir-gold)]/15 border border-[var(--noir-gold)]/30 text-[var(--noir-gold)] text-[11px] font-semibold">{{ t.tag }}</span>
+              </div>
+              <p class="text-sm italic leading-relaxed text-[var(--noir-champagne-dim)]">“{{ t.text }}”</p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 mt-4 border-t border-[var(--noir-line)]">
+              <div class="w-10 h-10 rounded-full bg-[var(--noir-gold)]/20 border border-[var(--noir-gold)]/40 text-[var(--noir-gold)] flex items-center justify-center font-bold text-xs">{{ t.initials }}</div>
+              <div class="flex flex-col">
+                <span class="text-sm font-bold text-[var(--noir-champagne)]">{{ t.name }}</span>
+                <span class="text-[11px] text-[var(--noir-champagne-dim)]">{{ t.location }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= 9. FAQ ======= -->
+      <section class="py-12 pb-16">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-8">
+            <span class="label-crest">Bantuan &amp; Informasi</span>
+            <h2 class="noir-display text-2xl mt-1 text-[var(--noir-champagne)]">Pertanyaan yang Sering Diajukan</h2>
+            <p class="text-sm text-[var(--noir-champagne-dim)] mt-1">Hal yang perlu Anda ketahui soal pemesanan, pengiriman, dan perawatan buket.</p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <details
+              v-for="faq in faqs"
+              :key="faq.q"
+              class="group noir-card p-5 cursor-pointer open:border-[var(--noir-gold)]/50 transition-all"
+            >
+              <summary class="flex items-center justify-between noir-display text-base text-[var(--noir-champagne)] select-none list-none cursor-pointer">
+                <span>{{ faq.q }}</span>
+                <Icon name="ph:caret-down-bold" class="w-5 h-5 shrink-0 text-[var(--noir-gold)] transition-transform group-open:rotate-180" />
+              </summary>
+              <p class="pt-3 text-sm text-[var(--noir-champagne-dim)] leading-relaxed">{{ faq.a }}</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -257,7 +328,6 @@ const dummyCategories = [
   { name: 'Kering', emoji: '🍂' },
 ]
 
-
 // ===== FETCH DYNAMIC DATA =====
 const { data: bannersRes } = await useFetch<any>(`${apiUrl}/banners`)
 const { data: categoriesRes } = await useFetch<any>(`${apiUrl}/categories`)
@@ -266,50 +336,92 @@ const { data: productsRes } = await useFetch<any>(`${apiUrl}/products?active=tru
 const heroBanners = computed(() => bannersRes.value?.data?.length ? bannersRes.value.data : dummyBanners)
 const categories = computed(() => categoriesRes.value?.data?.length ? categoriesRes.value.data : dummyCategories)
 
-const allProductsRaw = computed(() => {
-  const apiData = productsRes.value?.data || []
-  return apiData.map((p: any) => ({
-    ...p,
-    id: p.id,
-    slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
-    name: p.name,
-    price: p.price ? Number(p.price) : 0,
-    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80',
-    rating: 4.5,
-    reviewCount: 0,
-    category: typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category
-  }))
+// Mapping lewat mapProduct (composables/useProducts.ts) — satu sumber, rating determinis
+const allProductsRaw = computed(() =>
+  (productsRes.value?.data || []).map((p: any) => mapProduct(p, apiUrl))
+)
+
+const flashSale = computed(() => allProductsRaw.value.slice(0, 3))
+const bestsellers = computed(() => allProductsRaw.value.slice(0, 12))
+
+// Stok flash sale determinis (bukan Math.random — anti hydration mismatch)
+const flashStockPercent = (product: any) => 20 + ((product?.id ?? 0) % 40)
+
+const formatRupiah = (val: number) =>
+  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val || 0)
+
+// Gambar produk gagal load -> default.png (hindari loop; target bisa null)
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
+
+// ===== KATEGORI: foto dari produk pertama per kategori =====
+const categoryTiles = computed(() =>
+  categories.value.slice(0, 6).map((cat: any) => {
+    const name = cat.name || cat.NAME || ''
+    const matching = allProductsRaw.value.filter((p: any) =>
+      String(p.category || '').toLowerCase().includes(String(name).toLowerCase())
+    )
+    return {
+      ...cat,
+      name,
+      count: matching.length,
+      photo: matching[0]?.image || null,
+    }
+  })
+)
+
+// ===== FILTER BESTSELLER =====
+const filterChips = ['Semua', 'Wisuda', 'Romantis', 'Birthday']
+const activeChip = ref('Semua')
+
+const chipPattern = (chip: string) => {
+  switch (chip) {
+    case 'Wisuda': return /wisuda|kelulusan/i
+    case 'Romantis': return /mawar|romantis|anniversary|tulip|love/i
+    case 'Birthday': return /birthday|ulang|snack|hampers/i
+    default: return null
+  }
+}
+
+const filteredBestsellers = computed(() => {
+  const pattern = chipPattern(activeChip.value)
+  if (!pattern) return bestsellers.value
+  return bestsellers.value.filter((p: any) => pattern.test(String(p.category || '')))
 })
 
-// Home tampilkan 12 produk saja; katalog lengkap di /products (payload home ikut ramping)
-const allProducts = computed(() => allProductsRaw.value.slice(0, 12))
-const recoProducts = computed(() => allProductsRaw.value.slice(0, 6))
-const flashSale = computed(() => allProductsRaw.value.slice(0, 2))
-
-// ===== TESTIMONIALS =====
+// ===== TESTIMONI (statis, determinis) =====
 const testimonials = [
-  { text: "Buketnya fresh dan cantik banget! Pengiriman juga tepat waktu. Pacarku suka banget!", name: "Rina Amelia", location: "Jakarta", avatar: "https://ui-avatars.com/api/?name=Rina+Amelia&background=f472b6&color=fff&size=80" },
-  { text: "Pesan buket wisuda untuk adik, hasilnya rapi dan sesuai ekspektasi. Recommended!", name: "Dedi Setiawan", location: "Bandung", avatar: "https://ui-avatars.com/api/?name=Dedi+Setiawan&background=e11d48&color=fff&size=80" },
-  { text: "Pelayanan ramah dan sangat membantu saat konsultasi buket custom. Hasilnya luar biasa!", name: "Siti Nurhaliza", location: "Surabaya", avatar: "https://ui-avatars.com/api/?name=Siti+Nurhaliza&background=f472b6&color=fff&size=80" },
+  { text: 'Buket mawarnya luar biasa segar dan harum tahan sampai 6 hari di vas! Kartu wax seal-nya premium banget, istri saya sampai terharu.', name: 'Raka Aditya', location: 'Kebayoran Baru, Jakarta Selatan', initials: 'RA', tag: 'Anniversary ke-5' },
+  { text: 'Pesan jam 10 pagi minta dikirim jam 13.00 ke Balairung UI, beneran sampai tepat waktu dengan bunga yang mekar sempurna. Kurir sangat sopan!', name: 'Siti Nurhaliza', location: 'Depok, Jawa Barat', initials: 'SN', tag: 'Wisuda Adik' },
+  { text: 'Florist-nya ramah diajak konsultasi via WhatsApp. Warnanya disesuaikan sama dress wisuda pacar saya. Hasilnya artistik, bukan bunga pasaran.', name: 'Dedi Setiawan', location: 'Bandung Wetan, Bandung', initials: 'DS', tag: 'Custom Gift Box' },
 ]
 
-// ===== TRUST BADGES =====
+// ===== VALUE PROPS =====
 const trustBadges = [
-  { icon: '🚚', title: 'Gratis Ongkir', text: 'Min. pembelian Rp 150.000', color: 'bg-blue-50 dark:bg-blue-950/30' },
-  { icon: '🌸', title: 'Bunga Segar', text: 'Dipilih & dirancang tiap hari', color: 'bg-rose-50 dark:bg-rose-950/30' },
-  { icon: '⚡', title: 'Kirim Hari Ini', text: 'Order sebelum pukul 14.00', color: 'bg-amber-50 dark:bg-amber-950/30' },
-  { icon: '🔒', title: 'Pembayaran Aman', text: 'COD, Transfer & QRIS', color: 'bg-emerald-50 dark:bg-emerald-950/30' },
+  { icon: 'ph:flower-bold', title: '100% Bunga Segar Pilihan', text: 'Dipilih & dirancang ulang tiap hari.' },
+  { icon: 'ph:bolt-bold', title: 'Kirim Hari Ini (Same Day)', text: 'Order sebelum 14:00 WIB, garansi sampai hari ini.' },
+  { icon: 'ph:envelope-bold', title: 'Gratis Kartu Ucapan', text: 'Kartu custom tanpa biaya tambahan.' },
+  { icon: 'ph:shield-check-bold', title: 'Garansi 100% Ganti Baru', text: 'Bunga layu saat diterima? Kami ganti baru.' },
 ]
 
 // ===== TRUST STATS =====
 const trustStats = [
-  { value: '500+', label: 'Pelanggan Puas' },
-  { value: '4.9★', label: 'Rating Rata-rata' },
-  { value: '2h', label: 'Estimasi Kirim' },
+  { value: '500+', label: 'Pelanggan Puas', icon: 'ph:flowers-bold' },
+  { value: '4.9★', label: 'Rating Rata-rata', icon: 'ph:star-fill' },
+  { value: '2h', label: 'Estimasi Kirim', icon: 'ph:clock-fill' },
 ]
 
-// ===== FLASH SALE REAL COUNTDOWN =====
-// Target: end of today at 23:59:59
+// ===== FAQ (statis) =====
+const faqs = [
+  { q: 'Bagaimana cara merawat bunga agar tetap segar?', a: 'Potong batang miring 45 derajat setiap 2 hari, gunakan air bersih sejuk, dan hindari sinar matahari langsung atau hembusan AC secara konstan. Kami sertakan satu sachet nutrisi bunga gratis di setiap kemasan.' },
+  { q: 'Apakah bisa meminta waktu pengiriman spesifik?', a: 'Bisa. Sampaikan slot waktu yang diinginkan saat pemesanan, atau hubungi Concierge WhatsApp kami untuk pengiriman di waktu menit-presisi pada event mendesak.' },
+  { q: 'Bagaimana prosedur klaim garansi jika bunga layu saat diterima?', a: 'Kirimkan foto buket saat pertama tiba melalui WhatsApp dalam 3 jam setelah paket diterima. Tim kami akan merangkai buket pengganti dan mengirimkannya tanpa biaya.' },
+  { q: 'Metode pembayaran apa saja yang didukung?', a: 'Kami menerima Transfer Bank, QRIS (GoPay, OVO, Dana, ShopeePay), serta COD (Bayar di Tempat) untuk area tertentu.' },
+]
+
+// ===== FLASH SALE COUNTDOWN (berakhir akhir hari) =====
 const getEndOfDay = () => {
   const now = new Date()
   now.setHours(23, 59, 59, 0)
@@ -349,9 +461,6 @@ onUnmounted(() => {
 })
 
 // ===== ACTIONS =====
-const productModal = useProductModalStore()
-const openQuickView = (product: any) => productModal.openModal(product)
-
 const router = useRouter()
 const goToCategory = (cat: any) => {
   if (!cat) return router.push('/products')

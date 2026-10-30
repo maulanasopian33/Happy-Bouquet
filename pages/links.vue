@@ -76,6 +76,7 @@
               :key="social.label"
               :href="social.href"
               target="_blank"
+              rel="noopener noreferrer"
               class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-secondary hover:text-rose-600 hover:border-rose-400 transition-all active:scale-90"
               :title="social.label"
             >

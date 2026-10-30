@@ -47,7 +47,7 @@ useHead({
       </div>
 
       <div class="footer-cta">
-        <a href="https://wa.me/628123456789" target="_blank" class="btn-premium">
+        <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer" class="btn-premium">
           <Icon name="ph:whatsapp-logo" size="20" />
           Hubungi Admin (WhatsApp)
         </a>

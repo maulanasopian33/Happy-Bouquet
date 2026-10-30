@@ -29,6 +29,7 @@
       <a 
         href="https://wa.me/6281234567890" 
         target="_blank"
+        rel="noopener noreferrer"
         class="flex items-center justify-center gap-2 w-full py-3 bg-rose-50 dark:bg-rose-900/20 text-rose-600 rounded-xl text-xs font-bold hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all border border-rose-100 dark:border-rose-900/40"
       >
         <Icon name="ph:chat-circle-dots-fill" class="w-4 h-4" />

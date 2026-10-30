@@ -44,6 +44,7 @@
                   :key="social.label" 
                   :href="social.href"
                   target="_blank"
+                  rel="noopener noreferrer"
                   class="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center text-secondary hover:text-rose-600 hover:shadow-xl hover:shadow-rose-500/10 hover:-translate-y-1 transition-all border border-slate-100 dark:border-slate-800"
                 >
                   <Icon :name="social.icon" class="w-5 h-5" />

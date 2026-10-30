@@ -16,6 +16,10 @@
 | T3 | Performa (app terasa berat) | BUG-0008, 0009, 0010, 0011, 0012, 0013, 0019 | 2026-10-19 | Detail produk SSR via useAsyncData (1 fetch), payload HTML ramping, related tanpa katalok penuh, hasil benchmark cache jelas, ikon server dikecilkan, swiper satu sumber, hero image berdimensi |
 | T4 | Deploy & kebersihan | BUG-0014, 0015 | 2026-10-19 | Deploy hanya .output+package.json (tanpa root node_modules), file/deps mati terhapus |
 | T5 | Pengamanan & test | BUG-0016, 0018 | 2026-10-19 | Test unit DP/total + cart reducer; wishlist aman hydration |
+| T6 | Redesign home noir-gold | CR-0001 | 2026-10-19 | Home pakai design system "Aura Botanica Noir" (design/home/): font serif+body baru, section 1-9 sesuai mockup, FAQ baru, build lulus |
+| T7 | Shell noir (header/footer) | CR-0002 | 2026-10-19 | Header, ticker, bottom bar, footer ikut tema noir-gold; halaman lain menyusul |
+| T8 | Audit home/header/footer | BUG-0021 | 2026-10-19 | Fix tap target, kontras hero, font self-host, dokumen home-api |
+| T9 | Penguatan Keamanan Frontend | BUG-0028..0032 | 2026-10-30 | Security headers global, cookie HMAC bypass, rel noopener, hapus dummy admin, dynamic key |
 
 Urutan: T1 -> T2 -> T3 -> T4 -> T5. T4 bisa paralel dengan T3. T2 punya keputusan user dulu: situs mau publik atau tetap maintenance (BUG-0005).
 
@@ -64,6 +68,49 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] BUG-0018: wishlist list + tombol heart ProductCard di `ClientOnly` (anti hydration mismatch)
 - [x] BUG-0016: test unit vitest (`npm test`): payment summary DP (6) + cart reducer (6)
 - Verifikasi: 12/12 test lulus; `npm run build` lulus (L2)
+
+**T6** — selesai 2026-10-19
+- [x] F1: `@nuxtjs/google-fonts` (Plus Jakarta Sans, download:true; Playfair+Outfit sudah ada) + token noir-gold scoped `.noir-home` di main.css
+- [x] F2: rewrite sections home mengikuti design/home/code.html:
+  - [x] topbar promo strip (kode promo GOLDNOIR placeholder)
+  - [x] restyle HeroSlider (340-380px, overlay noir, pill gold, dots+arrow gold)
+  - [x] 4 value prop restyle (ph icons, hairline gold)
+  - [x] flash sale panel noir-gold + 3 kartu + countdown (tetap; tanpa harga coret)
+  - [x] kategori berfoto (foto produk per kategori, fallback emoji) — inline di index.vue
+  - [x] bestseller grid 4 kolom + chip filter lokal + `ProductCardNoir` baru
+  - [x] banner custom order restyle (WA + /contact)
+  - [x] metrics strip + 3 kartu testimoni statis (tag + inisial)
+  - [x] FAQ accordion baru (4 item, disesuaikan: Transfer/QRIS/COD)
+- [x] F3: 4 komponen tak terpakai dihapus (QuickCategories, FlashSaleSmall, ProductCarousel, TestimonialSlider); `npm test` + `npm run build` lulus (total build 3.94MB — naik ~160KB = font self-host)
+- Verifikasi: L1 build + test lulus; cek visual manual via `npm run dev` (belum dilakukan)
+
+**T7** — selesai 2026-10-19
+- [x] Token noir dipindah ke `:root`; tambah `.noir-shell` (bg/color/font) untuk header/footer
+- [x] TickerBanner: noir + aksen gold (bukan gradient rose)
+- [x] HeaderMain: logo/nav/search/actions/drawer mobile -> noir-gold
+- [x] MobileBottomBar: aktif gold, CTA keranjang gold
+- [x] FooterMain: noir #0a0a0a, heading label-crest, socials/newsletter gold
+- [x] meta theme-color -> #D4AF37
+- Verifikasi: `npm test` + `npm run build` lulus (L1); cek visual manual belum dilakukan. Catatan: CartModal/ProductVariantModal masih rose (menyusul)
+
+**T8** — selesai 2026-10-19 (BUG-0021)
+- [x] Helper noir pakai `:is(.noir-home, .noir-shell)` (btn-gold/btn-noir/noir-display/label-crest aktif di shell)
+- [x] Footer: `/custom-order` -> `/contact`; param `?kategori=` -> `?cat=`; bottom bar `pb-24 md:pb-6`
+- [x] FAQ: tambah class `group` di `<details>`; progress bar flash sale diberi aria-label
+- [x] Header: scroll-lock body saat drawer mobile; tap target icon button 36 -> 40px
+- [x] HeroSlider: counter hilangkan opasitas /60 (kontras)
+- [x] Font: Playfair+Outfit self-host via @nuxtjs/google-fonts; hapus CDN import di main.css
+- [x] index.vue: mapping produk duplikat -> pakai `mapProduct`; topbar text-xs -> text-sm
+- [x] Dokumen kebutuhan API home: `docs/home-api-requirements.md`
+- Verifikasi: `npm test` + `npm run build` lulus (L1)
+
+**T9** — selesai 2026-10-30 (BUG-0028..0032)
+- [x] BUG-0028: Tambah HTTP Security Headers global di `routeRules` (`X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`)
+- [x] BUG-0029: Cookie bypass maintenance menggunakan HMAC SHA-256 token turunan (`httpOnly`, `sameSite: lax`, `secure: prod`)
+- [x] BUG-0030: Reverse Tabnabbing fix: pasang `rel="noopener noreferrer"` pada semua tautan eksternal `target="_blank"` (FooterMain, ProductTrustPromise, contact, links, maintenance, index)
+- [x] BUG-0031: Hapus file dummy `pages/admin/index.vue` dan tambahkan redirect 301 `/admin` -> `/` di `routeRules`
+- [x] BUG-0032: Scoped dynamic key `product-detail-${id}` pada `useAsyncData` di `composables/useProductDetail.ts` untuk mencegah cache collision
+- Verifikasi: `npm test` (12/12 lulus) + `npm run build` lulus (Nitro preset: node-server)
 
 ## 3. Rilis
 

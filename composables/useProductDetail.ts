@@ -19,7 +19,7 @@ export const useProductDetail = async (productIdentifier: Ref<string | number> |
   )
 
   const { data, pending, error: fetchError } = await useAsyncData(
-    'product-detail',
+    `product-detail-${unref(productIdentifier)}`,
     async () => {
       const id = identifier.value
       if (!id || id === 'undefined') throw new Error('Product identifier tidak valid.')

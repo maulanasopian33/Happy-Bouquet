@@ -5,7 +5,16 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
   css: ["@/assets/css/main.css"],
-  modules: ['@pinia/nuxt', "@nuxt/icon"],
+  modules: ['@pinia/nuxt', "@nuxt/icon", '@nuxtjs/google-fonts', '@nuxt/image'],
+  // Font self-host (CR-0001 + BUG-0021): PJS untuk noir, Outfit+Playfair untuk sisanya
+  googlefonts: {
+    families: {
+      'Plus Jakarta Sans': [300, 400, 500, 600, 700],
+      'Outfit': [300, 400, 500, 600, 700, 800],
+      'Playfair Display': { weights: [600, 700, 800], italics: [600] },
+    },
+    download: true,
+  },
   icon: {
     serverBundle: 'remote'
   },
@@ -16,19 +25,25 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'id' },
       meta: [
         { name: 'robots', content: 'index, follow' },
-        { name: 'theme-color', content: '#E11D48' },
+        { name: 'theme-color', content: '#D4AF37' },
       ]
     }
   },
 
   // =========================================================
-  // ROUTE CACHING — SWR (Stale-While-Revalidate)
-  // Strategi:
-  //   swr: N  → Halaman di-serve dari cache. Cache diperbarui
-  //             di background setelah N detik (tidak memblokir user).
-  //   Rekomendasi durasi berdasarkan frekuensi perubahan konten.
+  // ROUTE CACHING & SECURITY HEADERS
   // =========================================================
   routeRules: {
+    // Security headers global (anti-clickjacking & sniffing)
+    '/**': {
+      headers: {
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+      }
+    },
+
     // Landing Page — konten statis (hero, promo, testimoni).
     // Cache 24 jam; sangat jarang berubah, ideal untuk SWR.
     '/': { swr: 86400 },
@@ -57,6 +72,9 @@ export default defineNuxtConfig({
     '/account/**': { cache: false },
     '/tracking': { cache: false },
     '/maintenance': { cache: false },
+
+    // Redirect dummy admin route storefront ke beranda
+    '/admin': { redirect: { to: '/', statusCode: 301 } },
   },
 
   // Cache SWR Nitro -> Redis Upstash (persisten lintas restart Passenger).
