@@ -165,7 +165,7 @@
             <ul role="list" class="space-y-6">
               <li v-for="item in cart.items" :key="item.cartItemId" class="flex gap-4 group">
                 <div class="relative w-20 h-20 shrink-0 rounded-2xl overflow-hidden border border-(--border-color) bg-(--bg-section)">
-                  <img :src="item.image" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                  <NuxtImg :src="item.image || '/default.png'" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" width="80" height="80" @error="onImgError"></NuxtImg>
                   <div class="absolute top-1 right-1 bg-rose-600 text-white text-[9px] font-black w-5 h-5 flex items-center justify-center rounded-full shadow-lg">
                     {{ item.quantity }}
                   </div>
@@ -344,6 +344,11 @@ onMounted(() => {
   }
   form.value.pickupDate = minDate.value as string; 
 })
+
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>
 
 <style scoped>

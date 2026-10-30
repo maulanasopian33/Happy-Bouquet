@@ -73,7 +73,7 @@ const filteredProducts = computed(() => {
   const raw = productsRes.value?.data || []
   return raw.map((p: any) => ({
     ...p,
-    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80',
+    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : '/default.png',
     rating: 4.5,
     reviewCount: 0
   }))

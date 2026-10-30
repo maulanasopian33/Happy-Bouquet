@@ -1,7 +1,7 @@
 <template>
   <!-- Hanya tampil di mobile (hidden md ke atas) -->
   <nav
-    class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-(--bg-card)/95 backdrop-blur-xl border-t border-(--border-color) shadow-2xl"
+    class="noir-shell md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--noir-canvas)]/95 backdrop-blur-xl border-t border-[var(--noir-line)] shadow-2xl"
     style="padding-bottom: env(safe-area-inset-bottom, 0px);"
     aria-label="Navigasi bawah"
   >
@@ -11,7 +11,7 @@
       <NuxtLink
         to="/"
         class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 group"
-        :class="isActive('/') ? 'text-rose-600' : 'text-(--text-muted) hover:text-rose-500'"
+        :class="isActive('/') ? 'text-[var(--noir-gold)]' : 'text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)]'"
       >
         <Icon
           :name="isActive('/') ? 'ph:house-fill' : 'ph:house-bold'"
@@ -23,7 +23,7 @@
       <!-- Cari -->
       <button
         @click="$emit('open-search')"
-        class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 text-(--text-muted) hover:text-rose-500 group"
+        class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)] group"
       >
         <Icon name="ph:magnifying-glass-bold" class="w-5 h-5 transition-transform group-active:scale-90" />
         <span class="text-xs font-bold leading-none">Cari</span>
@@ -35,26 +35,26 @@
         class="flex flex-col items-center gap-0.5 -mt-5 relative group"
         aria-label="Buka keranjang"
       >
-        <div class="w-14 h-14 rounded-2xl bg-rose-600 text-white flex items-center justify-center shadow-xl shadow-rose-500/40 hover:shadow-rose-500/60 hover:-translate-y-1 transition-all duration-300 relative">
+        <div class="w-14 h-14 rounded-2xl bg-[var(--noir-gold)] text-[#141416] flex items-center justify-center shadow-xl shadow-[var(--noir-gold)]/30 hover:shadow-[var(--noir-gold)]/50 hover:-translate-y-1 transition-all duration-300 relative">
           <Icon name="ph:shopping-cart-simple-bold" class="w-6 h-6 transition-transform group-active:scale-90" />
           <!-- Badge count -->
           <ClientOnly>
             <span
               v-if="cartCount > 0"
-              class="absolute -top-1.5 -right-1.5 bg-white text-rose-600 text-[9px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-rose-600 font-black shadow-sm animate-pulse-ring"
+              class="absolute -top-1.5 -right-1.5 bg-[var(--noir-canvas)] text-[var(--noir-gold)] text-[9px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-[var(--noir-gold)] font-black shadow-sm animate-pulse-ring"
             >
               {{ cartCount > 9 ? '9+' : cartCount }}
             </span>
           </ClientOnly>
         </div>
-        <span class="text-xs font-bold text-rose-600 leading-none mt-1">Keranjang</span>
+        <span class="text-xs font-bold text-[var(--noir-gold)] leading-none mt-1">Keranjang</span>
       </button>
 
       <!-- Wishlist -->
       <NuxtLink
         to="/wishlist"
         class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 group"
-        :class="isActive('/wishlist') ? 'text-rose-600' : 'text-(--text-muted) hover:text-rose-500'"
+        :class="isActive('/wishlist') ? 'text-[var(--noir-gold)]' : 'text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)]'"
       >
         <Icon
           :name="isActive('/wishlist') ? 'ph:heart-fill' : 'ph:heart-bold'"
@@ -67,7 +67,7 @@
       <NuxtLink
         to="/account"
         class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-2xl transition-all duration-200 group"
-        :class="isActive('/account') ? 'text-rose-600' : 'text-(--text-muted) hover:text-rose-500'"
+        :class="isActive('/account') ? 'text-[var(--noir-gold)]' : 'text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)]'"
       >
         <Icon
           :name="isActive('/account') ? 'ph:user-circle-fill' : 'ph:user-circle-bold'"

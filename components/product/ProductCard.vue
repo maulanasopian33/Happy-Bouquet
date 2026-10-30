@@ -8,13 +8,14 @@
 
     <!-- Image Section -->
     <div class="relative aspect-4/5 overflow-hidden shrink-0">
-      <img
-        :src="image || 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80&w=600&fit=crop'"
+      <NuxtImg
+        :src="image || '/default.png'"
         :alt="name"
         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
         loading="lazy"
         width="400"
         height="500"
+        @error="onImgError"
       />
 
       <!-- Gradient overlay on hover -->
@@ -173,6 +174,11 @@ const priceFormatted = computed(() => {
   const val = Number(props.price)
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(val || 0)
 })
+
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 
 const originalPriceFormatted = computed(() => {
   const val = props.originalPrice != null ? Number(props.originalPrice) : null

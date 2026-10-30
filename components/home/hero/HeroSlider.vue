@@ -1,5 +1,5 @@
 <template>
-  <div class="relative overflow-hidden group rounded-[2rem] shadow-2xl">
+  <div class="relative overflow-hidden group rounded-2xl border border-[var(--noir-line-strong)] shadow-[0_4px_30px_rgba(0,0,0,0.5)] bg-[var(--noir-card)] min-h-[340px] md:min-h-[380px]">
     <swiper
       :modules="[Autoplay, Pagination, Navigation, EffectFade]"
       :loop="true"
@@ -16,91 +16,59 @@
         nextEl: '.hero-next',
         prevEl: '.hero-prev',
       }"
-      class="h-[480px] md:h-[600px] lg:h-[680px] w-full"
+      class="h-[340px] md:h-[380px] w-full"
       @slide-change="onSlideChange"
       @swiper="onSwiperInit"
     >
       <swiper-slide v-for="(banner, i) in displayBanners" :key="i">
         <div class="relative w-full h-full overflow-hidden">
           <!-- Background Image -->
-          <img
+          <NuxtImg
             :src="banner.imageUrl"
             :alt="banner.title || 'Koleksi Bunga'"
-            class="w-full h-full object-cover transition-transform duration-[12s] ease-linear scale-105 group-hover:scale-110"
+            class="w-full h-full object-cover opacity-30 brightness-75 scale-105 transition-transform duration-[12s] ease-linear group-hover:scale-110"
             :loading="i === 0 ? 'eager' : 'lazy'"
             :fetchpriority="i === 0 ? 'high' : 'auto'"
             width="1600"
             height="900"
+            @error="onImgError"
           />
 
-          <!-- Multi-layer Gradient Overlay (premium cinematic look) -->
-          <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/50 to-transparent" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
+          <!-- Noir gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-r from-[#0e0e10] via-[#0e0e10]/85 to-transparent" />
+          <div class="absolute top-0 right-0 w-96 h-96 bg-[var(--noir-gold)]/10 rounded-full blur-3xl pointer-events-none" />
 
-          <!-- Content Wrapper -->
-          <div class="absolute inset-0 flex flex-col justify-center px-8 md:px-16 lg:px-24">
-            <div class="max-w-2xl space-y-5">
-              <!-- Subtitle Tag -->
-              <div class="reveal" style="animation-delay: 0s">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-600/20 backdrop-blur-md border border-rose-500/25 text-rose-300 text-xs font-bold uppercase tracking-[0.25em]">
-                  <span class="w-1.5 h-1.5 bg-rose-400 rounded-full animate-pulse" />
-                  {{ banner.subtitle || 'Exclusive Collection' }}
-                </span>
-              </div>
+          <!-- Content -->
+          <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-14 lg:px-16">
+            <div class="max-w-2xl flex flex-col items-start gap-3">
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--noir-gold)]/15 border border-[var(--noir-gold)]/40 backdrop-blur-md">
+                <Icon name="ph:sparkle-fill" class="text-[var(--noir-gold)] text-[15px]" />
+                <span class="label-crest">{{ banner.subtitle || 'Exclusive Collection' }}</span>
+              </span>
 
-              <!-- Main Title -->
-              <h2
-                class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] reveal"
-                style="animation-delay: 0.12s"
-              >
+              <h2 class="noir-display text-2xl sm:text-3xl lg:text-4xl text-[var(--noir-champagne)] leading-tight">
                 {{ banner.title }}
               </h2>
 
-              <!-- Description -->
-              <p
-                class="text-slate-300 text-sm md:text-base max-w-lg leading-relaxed reveal"
-                style="animation-delay: 0.22s"
-              >
-                Rangkaian bunga premium yang dibuat dengan penuh cinta dan dikirim segar ke pintu rumahmu.
+              <p class="text-[var(--noir-champagne-dim)] text-sm md:text-base leading-relaxed line-clamp-2">
+                Rangkaian bunga premium yang dirangkai penuh kehangatan, dikirim segar ke pintu rumahmu.
               </p>
 
-              <!-- CTA Buttons -->
-              <div class="flex flex-wrap items-center gap-4 pt-2 reveal" style="animation-delay: 0.32s">
+              <div class="flex items-center gap-3 pt-2">
                 <NuxtLink
                   v-if="banner.link"
                   :to="banner.link"
-                  class="btn-premium flex items-center gap-2.5"
+                  class="btn-gold px-6 py-2.5 text-sm"
                 >
-                  <Icon name="ph:flower-lotus-fill" class="w-4.5 h-4.5" />
                   Lihat Koleksi
                   <Icon name="ph:arrow-right-bold" class="w-4 h-4" />
                 </NuxtLink>
                 <NuxtLink
                   to="/contact"
-                  class="flex items-center gap-2 px-5 py-3 rounded-2xl border border-white/25 text-white text-sm font-semibold hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
+                  class="btn-noir px-5 py-2.5 text-sm"
                 >
-                  <Icon name="ph:chat-circle-dots-bold" class="w-4 h-4" />
                   Custom Order
                 </NuxtLink>
-              </div>
-            </div>
-          </div>
-
-          <!-- Floating Rating Badge (bottom right) -->
-          <div class="absolute bottom-8 right-8 hidden md:flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 reveal" style="animation-delay: 0.45s">
-            <div class="flex -space-x-2">
-              <img
-                v-for="(avatar, ai) in miniAvatars"
-                :key="ai"
-                :src="avatar"
-                class="w-8 h-8 rounded-full border-2 border-white/30 object-cover"
-              />
-            </div>
-            <div>
-              <p class="text-white text-xs font-black leading-none">500+ pelanggan puas</p>
-              <div class="flex items-center gap-1 mt-1">
-                <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-3 h-3 text-amber-400" />
-                <span class="text-white/70 text-xs font-bold ml-1">4.9/5</span>
               </div>
             </div>
           </div>
@@ -108,26 +76,24 @@
       </swiper-slide>
     </swiper>
 
-    <!-- Navigation Arrows (visible on hover, always on mobile) -->
+    <!-- Navigation Arrows -->
     <button
-      class="hero-prev absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full glass border-white/20 flex items-center justify-center text-white
-             hover:bg-rose-600 hover:border-rose-600 transition-all duration-300
-             opacity-60 hover:opacity-100 group-hover:opacity-100 md:-translate-x-2 md:group-hover:translate-x-0"
+      class="hero-prev absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[var(--noir-raised)]/80 border border-[var(--noir-champagne-dim)]/40 text-[var(--noir-champagne)] flex items-center justify-center hover:text-[var(--noir-gold)] hover:border-[var(--noir-gold)] transition-colors"
+      aria-label="Slide sebelumnya"
     >
-      <Icon name="ph:caret-left-bold" class="w-5 h-5" />
+      <Icon name="ph:caret-left-bold" class="w-4 h-4" />
     </button>
     <button
-      class="hero-next absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full glass border-white/20 flex items-center justify-center text-white
-             hover:bg-rose-600 hover:border-rose-600 transition-all duration-300
-             opacity-60 hover:opacity-100 group-hover:opacity-100 md:translate-x-2 md:group-hover:translate-x-0"
+      class="hero-next absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[var(--noir-raised)]/80 border border-[var(--noir-champagne-dim)]/40 text-[var(--noir-champagne)] flex items-center justify-center hover:text-[var(--noir-gold)] hover:border-[var(--noir-gold)] transition-colors"
+      aria-label="Slide berikutnya"
     >
-      <Icon name="ph:caret-right-bold" class="w-5 h-5" />
+      <Icon name="ph:caret-right-bold" class="w-4 h-4" />
     </button>
 
-    <!-- Pagination + Slide Counter -->
-    <div class="absolute bottom-6 left-8 md:left-16 lg:left-24 z-20 flex items-center gap-5">
+    <!-- Pagination + counter -->
+    <div class="absolute bottom-5 right-6 md:right-24 z-20 flex items-center gap-4">
       <div class="hero-custom-pagination flex items-center gap-2" />
-      <span class="text-white/40 text-xs font-bold tabular-nums select-none">{{ currentSlide }} / {{ displayBanners.length }}</span>
+      <span class="text-[var(--noir-champagne-dim)] text-xs font-bold tabular-nums select-none">{{ currentSlide }} / {{ displayBanners.length }}</span>
     </div>
   </div>
 </template>
@@ -189,28 +155,26 @@ const onSlideChange = (swiper: any) => {
   currentSlide.value = (swiper.realIndex ?? 0) + 1
 }
 
-// Mini avatars for social proof badge
-const miniAvatars = [
-  'https://ui-avatars.com/api/?name=Rina+A&background=f472b6&color=fff&size=64',
-  'https://ui-avatars.com/api/?name=Dedi+S&background=e11d48&color=fff&size=64',
-  'https://ui-avatars.com/api/?name=Siti+N&background=fb7185&color=fff&size=64',
-]
+// Banner gagal load -> default.png (hindari loop; target bisa null)
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>
 
 <style scoped>
 :deep(.hero-bullet) {
   width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
+  height: 6px;
+  background: rgba(184, 178, 163, 0.5);
+  border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.4s ease;
   display: inline-block;
 }
 
 :deep(.hero-bullet-active) {
-  width: 30px;
-  background: #E11D48;
-  border-radius: 4px;
+  width: 24px;
+  background: #d4af37;
 }
 </style>

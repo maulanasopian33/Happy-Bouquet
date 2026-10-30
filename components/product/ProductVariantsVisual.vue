@@ -10,7 +10,7 @@
         :class="selections[variant.id] === option.id ? 'ring-2 ring-pink-500 border-pink-500' : 'border-gray-200'"
         :title="option.label"
       >
-        <img v-if="option.image" :src="option.image" :alt="option.label" class="w-full h-full object-cover" />
+        <NuxtImg v-if="option.image" :src="option.image" :alt="option.label" class="w-full h-full object-cover" width="40" height="40" @error="onImgError" />
         <span v-else class="w-full h-full block" :style="{ backgroundColor: option.value }"></span>
       </button>
     </div>
@@ -30,6 +30,11 @@ const selections = ref({})
 
 function selectOption(variantId, optionId) {
   selections.value[variantId] = optionId
+}
+
+const onImgError = (e) => {
+  const t = e.target
+  if (t && !t.src.endsWith('/default.png')) t.src = '/default.png'
 }
 
 watch(selections, (newSelections) => {

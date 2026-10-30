@@ -20,11 +20,14 @@
     <!-- Main Exhibition Image -->
     <div class="relative overflow-hidden rounded-4xl aspect-square bg-(--bg-section) shadow-inner border border-(--border-color)">
       <Transition name="fade-zoom" mode="out-in">
-        <img 
+        <NuxtImg 
           :key="activeIndex"
-          :src="images[activeIndex]" 
+          :src="images[activeIndex] || '/default.png'" 
           :alt="`Galeri produk ${activeIndex + 1}`"
           class="w-full h-full object-cover transition-all duration-1000 transform group-hover/gallery:scale-105"
+          width="800"
+          height="800"
+          @error="onImgError"
         />
       </Transition>
       
@@ -41,7 +44,7 @@
         class="relative shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-2 transition-all duration-500 p-0.5"
         :class="activeIndex === i ? 'border-rose-600 scale-105 shadow-lg shadow-rose-500/20' : 'border-transparent opacity-50 grayscale hover:grayscale-0 hover:opacity-100'"
       >
-        <img :src="src" class="w-full h-full object-cover rounded-xl" />
+        <NuxtImg :src="src || '/default.png'" class="w-full h-full object-cover rounded-xl" width="120" height="120" @error="onImgError" />
         <!-- Active Indicator Dot -->
         <div v-if="activeIndex === i" class="absolute bottom-1 right-1 w-2 h-2 bg-rose-600 rounded-full border-2 border-white dark:border-slate-900 transition-all scale-100 shadow-lg"></div>
       </button>
@@ -64,6 +67,11 @@ const isWishlisted = computed(() => props.product ? wishlistStore.isWishlisted(p
 
 function setActive(i: number) {
   emit('update:modelValue', i)
+}
+
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
 }
 
 function toggleWishlist() {

@@ -104,10 +104,13 @@
         class="flex items-center gap-5 p-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] hover:border-rose-300/50 hover:shadow-lg transition-all duration-300 group"
       >
         <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden shrink-0">
-          <img
-            :src="product.image"
+          <NuxtImg
+            :src="product.image || '/default.png'"
             :alt="product.name"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            width="120"
+            height="120"
+            @error="onImgError"
           />
         </div>
         <div class="flex-1 min-w-0">
@@ -207,4 +210,9 @@ const sortedProducts = computed(() => {
 
 const formatPrice = (price: number) =>
   new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price)
+
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>

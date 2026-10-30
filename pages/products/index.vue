@@ -276,7 +276,7 @@ const allProducts = computed(() => {
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
     name: p.name,
     price: p.price ? Number(p.price) : 0,
-    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80',
+    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : '/default.png',
     rating: 4.5,
     reviewCount: 0,
     category: typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category

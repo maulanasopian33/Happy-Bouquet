@@ -27,3 +27,17 @@ deploy-local*
 .env
 .env.*
 !.env.example
+design/*
+
+# AI, Agent & Development tooling
+AGENTS.md
+agents.md
+CLAUDE.md
+COPILOT.md
+.cursor/
+.cursorrules
+.gemini/
+.antigravity/
+.dev/
+tasks/
+graphify-out/

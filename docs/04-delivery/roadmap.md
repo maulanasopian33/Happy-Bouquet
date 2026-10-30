@@ -20,6 +20,10 @@
 | T7 | Shell noir (header/footer) | CR-0002 | 2026-10-19 | Header, ticker, bottom bar, footer ikut tema noir-gold; halaman lain menyusul |
 | T8 | Audit home/header/footer | BUG-0021 | 2026-10-19 | Fix tap target, kontras hero, font self-host, dokumen home-api |
 | T9 | Penguatan Keamanan Frontend | BUG-0028..0032 | 2026-10-30 | Security headers global, cookie HMAC bypass, rel noopener, hapus dummy admin, dynamic key |
+| T10 | Sync Promo & Auto Collect Analytics | CR-0004 | 2026-10-30 | Halaman /promo fetch API dinamis, plugin FE kirim data page view ke /api/analytics/collect |
+| T11 | API Public Orders & Tracking | CR-0004 | 2026-10-30 | POST /api/orders/public & GET /api/orders/track/:orderNumber (rate-limited) di backend |
+| T12 | FE Multi-Channel & Real-Time Tracking | CR-0004 | 2026-10-30 | Checkout FE integrasi auto-record & direct WA, halaman /tracking fetch API order riil |
+| T13 | Panel Admin Real-Time SSE & Channel Filter | CR-0004 | 2026-10-30 | Panel menerima notifikasi live order baru dari web & filter channel penjualan |
 
 Urutan: T1 -> T2 -> T3 -> T4 -> T5. T4 bisa paralel dengan T3. T2 punya keputusan user dulu: situs mau publik atau tetap maintenance (BUG-0005).
 
@@ -111,6 +115,27 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] BUG-0031: Hapus file dummy `pages/admin/index.vue` dan tambahkan redirect 301 `/admin` -> `/` di `routeRules`
 - [x] BUG-0032: Scoped dynamic key `product-detail-${id}` pada `useAsyncData` di `composables/useProductDetail.ts` untuk mencegah cache collision
 - Verifikasi: `npm test` (12/12 lulus) + `npm run build` lulus (Nitro preset: node-server)
+
+**T10** — Sync Promo & Auto Collect Analytics (CR-0004)
+- [ ] Ubah `pages/promo.vue` agar memanggil API `${apiUrl}/promos?active=true` secara reaktif (hapus hardcoded promos)
+- [ ] Buat/integrasikan plugin telemetri FE agar memanggil `POST /api/analytics/collect` pada event `page:finish`
+- Verifikasi: `npm test` + `npm run build` lulus
+
+**T11** — API Public Orders & Tracking (CR-0004)
+- [ ] Buat endpoint `POST /api/orders/public` di `api-happyBouquet` (input order pelanggan dari web, generate order_number `HB-...`, channel `Web`)
+- [ ] Buat endpoint `GET /api/orders/track/:orderNumber` di `api-happyBouquet` (rate-limited, public sanitized tracking data)
+- Verifikasi: Test suite backend & unit test pass
+
+**T12** — FE Multi-Channel & Real-Time Tracking (CR-0004)
+- [ ] Modifikasi `pages/checkout/index.vue`: sebelum redirect ke WhatsApp, simpan order via `POST /api/orders/public`, sertakan nomor order resmi di teks WhatsApp & tampilkan confirmation modal/screen
+- [ ] Modifikasi `pages/tracking.vue`: hubungkan input tracking ke `GET /api/orders/track/:orderNumber` dari database riil
+- [ ] Tambahkan tombol alternatif channel (Chat WA / Shopee / TikTok) pada detail produk
+- Verifikasi: `npm test` + `npm run build` lulus
+
+**T13** — Panel Admin Real-Time SSE & Channel Filter (CR-0004)
+- [ ] Pastikan event SSE `order:created` dari public web checkout memicu toast dan badge notifikasi di Panel Admin
+- [ ] Filter order berdasarkan channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`) di `OrderListView.vue`
+- Verifikasi: Build Vite panel lulus
 
 ## 3. Rilis
 

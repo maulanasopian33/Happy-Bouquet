@@ -19,7 +19,7 @@ export interface Product {
 export const mapProduct = (p: any, apiUrl: string): Product => {
   const imageUrl = p.photo_url
     ? `${apiUrl.replace('/api', '')}${p.photo_url}`
-    : 'https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80'
+    : '/default.png'
   return {
     id: p.id,
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),

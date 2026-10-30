@@ -59,7 +59,7 @@
                 <div class="flex gap-5">
                   <!-- Product Image -->
                   <div class="w-24 h-24 rounded-2xl overflow-hidden shrink-0 bg-(--bg-section) border border-(--border-color)">
-                    <img :src="item.image" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <NuxtImg :src="item.image || '/default.png'" :alt="item.name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" width="96" height="96" @error="onImgError" />
                   </div>
                   
                   <!-- Info -->
@@ -206,6 +206,11 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
 })
+
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>
 
 <style scoped>

@@ -38,7 +38,7 @@
             <div class="p-6 space-y-4">
               <!-- Product Info -->
               <div class="flex items-start sm:items-center gap-4 flex-col sm:flex-row">
-                <img :src="product.image" :alt="product.name" class="w-20 h-20 rounded-lg object-cover border">
+                <NuxtImg :src="product.image || '/default.png'" :alt="product.name" class="w-20 h-20 rounded-lg object-cover border" width="80" height="80" @error="onImgError"></NuxtImg>
                 <div>
                   <h4 class="font-semibold text-gray-800">{{ product.name }}</h4>
                   <p class="text-lg font-bold text-pink-600">{{ priceFormatted }}</p>
@@ -115,4 +115,9 @@ const priceFormatted = computed(() => {
   if (!product.value) return ''
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(product.value.price)
 })
+
+const onImgError = (e) => {
+  const t = e.target
+  if (t && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>

@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
 @import "tailwindcss";
 
 /* ========================================
@@ -37,23 +36,6 @@
   --shadow-brand: 0 8px 30px rgba(225, 29, 72, 0.18);
   --shadow-card: 0 4px 24px rgba(15, 23, 42, 0.07);
   --shadow-card-hover: 0 20px 50px rgba(225, 29, 72, 0.12);
-}
-
-.dark {
-  --bg-main: #020617;
-  --bg-card: #0F172A;
-  --bg-card-hover: #131C32;
-  --bg-section: #0A1020;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #94A3B8;
-  --border-color: #1E293B;
-  --border-strong: #334155;
-  --glass-bg: rgba(15, 23, 42, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --shadow-brand: 0 8px 30px rgba(225, 29, 72, 0.25);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
-  --shadow-card-hover: 0 20px 50px rgba(225, 29, 72, 0.15);
 }
 
 /* ========================================
@@ -176,10 +158,6 @@ h1, h2, h3, h4 {
 .btn-premium-outline:hover {
   background-color: var(--color-brand-subtle);
   transform: translateY(-1px);
-}
-
-.dark .btn-premium-outline:hover {
-  background-color: rgba(225, 29, 72, 0.12);
 }
 
 /* ========================================
@@ -448,4 +426,116 @@ h1, h2, h3, h4 {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ========================================
+   NOIR-GOLD (CR-0001/CR-0002)
+   Design system: design/home/DESIGN.md ("Aura Botanica Noir")
+   Vars global; visual base hanya di .noir-home / .noir-shell
+   ======================================== */
+:root {
+  --noir-canvas: #0e0e10;
+  --noir-surface: #131315;
+  --noir-card: #1b1b1d;
+  --noir-raised: #232429;
+  --noir-line: rgba(212, 175, 55, 0.18);
+  --noir-line-strong: rgba(212, 175, 55, 0.35);
+  --noir-gold: #d4af37;
+  --noir-gold-hover: #e9c349;
+  --noir-gold-dim: #c5a059;
+  --noir-champagne: #f4ede2;
+  --noir-champagne-dim: #b8b2a3;
+  --noir-font-body: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+}
+
+.noir-home,
+.noir-shell {
+  background-color: var(--noir-canvas);
+  color: var(--noir-champagne);
+  font-family: var(--noir-font-body);
+}
+
+.noir-home .noir-card {
+  background: var(--noir-card);
+  border: 1px solid var(--noir-line);
+  border-radius: 0.5rem;
+}
+
+:is(.noir-home, .noir-shell) .noir-display {
+  font-family: 'Playfair Display', serif;
+}
+
+:is(.noir-home, .noir-shell) .label-crest {
+  font-family: var(--noir-font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--noir-gold);
+}
+
+:is(.noir-home, .noir-shell) .btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--noir-gold);
+  color: #141416;
+  font-weight: 700;
+  border-radius: 9999px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+:is(.noir-home, .noir-shell) .btn-gold:hover {
+  background: var(--noir-gold-hover);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+:is(.noir-home, .noir-shell) .btn-noir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--noir-raised);
+  color: var(--noir-champagne);
+  border: 1px solid rgba(244, 237, 226, 0.15);
+  font-weight: 500;
+  border-radius: 9999px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+:is(.noir-home, .noir-shell) .btn-noir:hover {
+  background: #2a2a2c;
+  border-color: var(--noir-line-strong);
+}
+
+.noir-home .price-gold {
+  color: var(--noir-gold);
+  font-weight: 700;
+}
+
+.noir-home .chip-noir {
+  background: var(--noir-raised);
+  border: 1px solid rgba(244, 237, 226, 0.12);
+  color: var(--noir-champagne-dim);
+  border-radius: 9999px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.noir-home .chip-noir:hover {
+  border-color: var(--noir-line-strong);
+  color: var(--noir-champagne);
+}
+
+.noir-home .chip-noir-active {
+  background: var(--noir-gold);
+  border-color: var(--noir-gold);
+  color: #141416;
+  font-weight: 600;
+}
+
+.noir-home .chip-noir-active:hover {
+  background: var(--noir-gold-hover);
+  border-color: var(--noir-gold-hover);
+  color: #141416;
 }

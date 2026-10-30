@@ -1,23 +1,23 @@
 <template>
-  <div class="bg-gradient-to-r from-rose-600 via-rose-500 to-pink-600 text-white py-2.5 overflow-hidden relative select-none">
+  <div class="bg-[#171612] border-b border-[var(--noir-line)] text-[var(--noir-champagne-dim)] py-2 overflow-hidden relative select-none">
     <div class="flex whitespace-nowrap animate-ticker">
       <div
         v-for="(promo, index) in tickerItems"
         :key="index"
         class="flex items-center px-8 gap-2.5 shrink-0"
       >
-        <span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0" />
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--noir-gold)]/50 shrink-0" />
         <span class="text-xs font-semibold tracking-wide">
-          <span class="text-rose-200 font-black">{{ promo.name }}:</span>
+          <span class="text-[var(--noir-gold)] font-black">{{ promo.name }}:</span>
           {{ promo.description }}
           <span
             v-if="promo.code"
-            class="ml-2 px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded-md text-white font-black border border-white/30 text-xs tracking-widest"
+            class="ml-2 px-2 py-0.5 bg-[var(--noir-gold)]/15 rounded-md text-[var(--noir-gold)] font-black border border-[var(--noir-gold)]/30 text-xs tracking-widest"
           >
             {{ promo.code }}
           </span>
         </span>
-        <span class="mx-3 text-rose-300/50 text-base">✦</span>
+        <span class="mx-3 text-[var(--noir-gold)]/40 text-base">✦</span>
       </div>
     </div>
   </div>
