@@ -7,11 +7,12 @@ Sumber: audit menyeluruh 2026-10-19 & 2026-10-30. Detail analisis: `docs/04-deli
 ## Terbuka
 | ID | Jenis | Tanggal | Ringkasan | ID terdampak | Dokumen diubah | Status |
 |---|---|---|---|---|---|---|
-| CR-0004 | Fitur | 2026-10-30 | Multi-Channel Order Ingestion, Real-Time Order Tracking & Storefront Sync (T10 sebagian: promo sync + channel FE selesai; sisa: SSE Panel, tracking riil) | roadmap T10-T13 | roadmap, STATE, CR-0004.md | Terbuka |
+| — | — | — | Tidak ada task/bug terbuka | — | — | — |
 
 ## Selesai
 | ID | Tanggal | Ringkasan | Versi | Commit/PR |
 |---|---|---|---|---|
+| CR-0004 | 2026-11-04 | Multi-Channel Order Ingestion, Real-Time Order Tracking & Storefront Sync (T10-T13 selesai penuh): FE checkout auto-record `POST /api/orders/public` (`channel:'Web'`) + WA template nomor order; tracking riil `GET /api/orders/track/:orderNumber` (sanitized); Panel Admin SSE realtime toast pesanan baru + filter channel pesanan di `OrderListView.vue` | 0.3.0 | — |
 | BUG-0038 | 2026-11-03 | Breadcrumb PDP `pages/products/[slug].vue` belum ikut `design/home/code.html` — kini full-width bar `bg-(--bg-section)`: jejak 4 level (Beranda / Koleksi Produk / kategori → `?cat=` / nama produk) + pill status (dot ping + Ready Stock/Preorder, data API tanpa mengarang angka stok). Fetch dipindah jadi kepemilikan halaman saja — `ProductDetailPage` terima props (`product/related/loading/error`); sebelumnya page & komponen sama-sama memanggil `useProductDetail` → `useAsyncData` jalan 2× per render (dedupe 'cancel' = fetch pertama dibatalkan). Terbukti: `sadas` 200 + nama di breadcrumb, slug tak ada 200, 1× fetch, test 17/17 | 0.3.0 | — |
 | BUG-0037 | 2026-11-02 | PDP 500 + `[nuxt] instance unavailable` di `/products/*` — `useProductDetail` async memanggil `useAsyncData` SETELAH `await` (kehilangan Nuxt instance) + `useHead` di dalam `watch`; direstrukturisasi jadi satu `useAsyncData` sync (`Promise.all` produk + related), `useHead(computed)` langsung di setup, slug tak ada → 404 lempar `createError` (render 200 + state error). Terbukti: `/products/sadas` 200, slug tak ada 200, test 17/17 | 0.3.0 | — |
 | RISK-0001 | 2026-11-02 | Endpoint `GET/PUT /api/settings` **sudah dibangun di backend** (tabel `StoreSettings`, allowlist 9 key kontrak `useStoreSettings.ts`, GET publik + PUT admin, commit api `3d06767`) + alias mount `/api/analytics` — FE kini memakai data live, bukan fallback | 0.3.0 | api `3d06767` |

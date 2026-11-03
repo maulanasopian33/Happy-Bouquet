@@ -126,16 +126,16 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] `GET /api/orders/track/:orderNumber` (public sanitized)
 - Verifikasi: Test suite backend lulus
 
-**T12** — FE Multi-Channel & Real-Time Tracking (CR-0004)
+**T12** — selesai 2026-11-04 FE Multi-Channel & Real-Time Tracking (CR-0004)
 - [x] `pages/checkout/index.vue`: simpan order via `POST /api/orders/public` (kirim `channel:'Web'`) sebelum redirect WA; nomor order masuk teks WA & redirect `/tracking?order=`
-- [ ] Modifikasi `pages/tracking.vue`: hubungkan input tracking ke `GET /api/orders/track/:orderNumber` dari database riil
+- [x] Modifikasi `pages/tracking.vue`: hubungkan input tracking ke `GET /api/orders/track/:orderNumber` dari database riil
 - [x] Tambahkan tombol channel (WA/Shopee/TikTok) pada detail produk dari `orderChannels` API + tracking outbound (BUG-0035/0036)
-- Verifikasi: `npm test` lulus (build lulus saat rilis)
+- Verifikasi: `npm test` lulus (17/17) + `npm run build` lulus
 
-**T13** — Panel Admin Real-Time SSE & Channel Filter (CR-0004)
-- [ ] Pastikan event SSE `order:created` dari public web checkout memicu toast dan badge notifikasi di Panel Admin
-- [ ] Filter order berdasarkan channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`) di `OrderListView.vue`
-- Verifikasi: Build Vite panel lulus
+**T13** — selesai 2026-11-04 Panel Admin Real-Time SSE & Channel Filter (CR-0004)
+- [x] Pastikan event SSE `order:created` dari public web checkout memicu toast dan badge notifikasi di Panel Admin (broadcast via `notificationService`)
+- [x] Filter order berdasarkan channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`, `Direct`, `Reseller`) di `OrderListView.vue`
+- Verifikasi: Build Vite panel lulus + 14/14 unit test Panel lulus
 
 ## 3. Rilis
 
