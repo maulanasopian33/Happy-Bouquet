@@ -119,7 +119,7 @@
              </div>
              <div class="text-left">
                 <p class="text-[9px] font-black text-muted uppercase tracking-widest leading-none mb-1">WhatsApp CS</p>
-                <p class="text-sm font-black text-primary">+62 812 3456 7890</p>
+                <p class="text-sm font-black text-primary">{{ formatWaDisplay(settings.whatsapp_number) }}</p>
              </div>
           </div>
           <div class="p-6 card-premium flex items-center gap-4 min-w-[280px]">
@@ -128,7 +128,7 @@
              </div>
              <div class="text-left">
                 <p class="text-[9px] font-black text-muted uppercase tracking-widest leading-none mb-1">Email Support</p>
-                <p class="text-sm font-black text-primary">hello@happybouquet.id</p>
+                <p class="text-sm font-black text-primary">{{ settings.email }}</p>
              </div>
           </div>
        </div>
@@ -138,6 +138,7 @@
 </template>
 
 <script setup lang="ts">
+const { settings } = useStoreSettings()
 const searchQuery = ref('')
 const activeCategory = ref('order')
 const openedFaqs = ref<string[]>([])

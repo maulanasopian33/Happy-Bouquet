@@ -12,7 +12,7 @@
         <div class="relative inline-block group">
            <div class="absolute -inset-1.5 bg-linear-to-tr from-rose-500 to-rose-700 rounded-4xl blur opacity-40 group-hover:opacity-70 transition-opacity"></div>
            <div class="relative w-24 h-24 rounded-4xl bg-white dark:bg-slate-900 border-2 border-white dark:border-slate-800 flex items-center justify-center p-4">
-              <img src="https://happybouquet.id/logo.png" alt="HappyBouquet Logo" class="w-full h-auto" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=HB&backgroundColor=e11d48'" />
+              <NuxtImg src="https://happybouquet.id/logo.png" alt="HappyBouquet Logo" class="w-full h-auto" width="96" height="96" @error="onImgError" />
            </div>
            <div class="absolute -bottom-1 -right-1 bg-emerald-500 text-white p-1 rounded-full border-2 border-white dark:border-slate-800 flex items-center justify-center shadow-lg">
               <Icon name="ph:seal-check-fill" class="w-4 h-4" />
@@ -21,7 +21,7 @@
 
         <div class="space-y-1">
           <h1 class="text-xl font-black text-primary tracking-tight">HappyBouquet Central</h1>
-          <p class="text-sm font-bold text-rose-600 uppercase tracking-widest leading-none">@happybouquet.id</p>
+          <p class="text-sm font-bold text-rose-600 uppercase tracking-widest leading-none">@{{ settings.instagram_url.split('/').pop() }}</p>
         </div>
         
         <p class="text-xs font-medium text-secondary leading-relaxed max-w-[280px] mx-auto opacity-80">
@@ -56,7 +56,7 @@
               <p class="text-xs font-black uppercase tracking-widest opacity-80">Promo Minggu Ini</p>
            </div>
            <div class="flex gap-4 items-center">
-              <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?q=80&w=200&fit=crop" class="w-16 h-16 rounded-xl object-cover border border-white/20" alt="Promo Bouquet" />
+              <NuxtImg src="https://images.unsplash.com/photo-1596436889106-be35e843f974?q=80&w=200&fit=crop" class="w-16 h-16 rounded-xl object-cover border border-white/20" alt="Promo Bouquet" width="64" height="64" @error="onImgError" />
               <div class="flex-1">
                  <h4 class="text-sm font-black leading-tight">Bundle "Spring Love"</h4>
                  <p class="text-xs font-medium opacity-80 mt-1">Diskon 15% + Gratis Kartu Ucapan Premium</p>
@@ -98,6 +98,10 @@
 </template>
 
 <script setup lang="ts">
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 // Disable main layout
 definePageMeta({
   layout: false
@@ -111,12 +115,13 @@ const mainLinks = [
   { label: 'Lokasi Galeri Kami', icon: 'ph:map-pin-fill', path: '/contact' },
 ]
 
-const socialLinks = [
-  { label: 'Instagram', href: '#', icon: 'ph:instagram-logo-fill' },
-  { label: 'TikTok', href: '#', icon: 'ph:tiktok-logo-fill' },
-  { label: 'WhatsApp', href: '#', icon: 'ph:whatsapp-logo-fill' },
-  { label: 'Facebook', href: '#', icon: 'ph:facebook-logo-fill' },
-]
+const { settings, waHref } = useStoreSettings()
+
+const socialLinks = computed(() => [
+  { label: 'Instagram', href: settings.value.instagram_url, icon: 'ph:instagram-logo-fill' },
+  { label: 'TikTok', href: settings.value.tiktok_url, icon: 'ph:tiktok-logo-fill' },
+  { label: 'WhatsApp', href: waHref(), icon: 'ph:whatsapp-logo-fill' },
+])
 
 useHead({
   title: 'Link-in-Bio - HappyBouquet'

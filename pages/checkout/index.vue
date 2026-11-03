@@ -221,10 +221,12 @@
             <div class="pt-4">
               <button 
                 @click="placeOrder" 
-                class="btn-premium w-full flex items-center justify-center gap-3 py-4.5 rounded-2xl shadow-xl shadow-rose-500/30"
+                :disabled="isSubmitting"
+                class="btn-premium w-full flex items-center justify-center gap-3 py-4.5 rounded-2xl shadow-xl shadow-rose-500/30 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <Icon name="ph:seal-check-fill" class="w-5 h-5 text-amber-300" />
-                Pesan via WhatsApp
+                <Icon v-if="isSubmitting" name="ph:spinner-bold" class="w-5 h-5 animate-spin" />
+                <Icon v-else name="ph:seal-check-fill" class="w-5 h-5 text-amber-300" />
+                {{ isSubmitting ? 'Memproses...' : 'Pesan via WhatsApp' }}
               </button>
             </div>
             
@@ -249,6 +251,8 @@ definePageMeta({
 
 const cart = useCartStore()
 const router = useRouter()
+const config = useRuntimeConfig()
+const { waHref } = useStoreSettings()
 
 const form = ref({
   email: '',
@@ -257,6 +261,9 @@ const form = ref({
   address: '',
   pickupDate: ''
 })
+
+// State untuk proses submit
+const isSubmitting = ref(false)
 
 interface ShippingMethod {
   id: number
@@ -295,13 +302,39 @@ const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(value)
 }
 
-const WA_NUMBER = '6281234567890' // nomor WhatsApp bisnis (sama dengan tombol WA lain di situs)
-
-const placeOrder = () => {
+const placeOrder = async () => {
   // Validasi sederhana
   if (!form.value.email || !form.value.name || !form.value.phone || !form.value.address || !form.value.pickupDate) {
     alert('Harap lengkapi semua informasi pengiriman dan kontak.')
     return
+  }
+
+  isSubmitting.value = true
+  let orderNumber = ''
+
+  // Simpan pesanan ke API (non-blocking — fallback graceful jika gagal)
+  try {
+    const apiUrl = config.public.apiUrl
+    const items = cart.items.map((i) => ({ name: i.name, qty: i.quantity, price: i.price }))
+    const paymentType = selectedPayment.value.id.startsWith('dp') ? 'dp' : 'full'
+
+    const res: any = await $fetch(`${apiUrl}/orders/public`, {
+      method: 'POST',
+      body: {
+        customer_name: form.value.name,
+        customer_phone: form.value.phone,
+        delivery_address: form.value.address,
+        delivery_date: form.value.pickupDate,
+        notes: form.value.email, // simpan email di notes (sementara, tidak ada kolom email)
+        items,
+        payment_type: paymentType,
+        channel: 'Web',
+      },
+    })
+    orderNumber = res?.data?.order_number || ''
+  } catch {
+    // Gagal simpan ke API — checkout tetap lanjut via WA, tidak blokir pelanggan
+    // shortcut: order tidak tersimpan di DB jika API down, monitor via log API
   }
 
   const lines = [
@@ -320,12 +353,19 @@ const placeOrder = () => {
     `Email: ${form.value.email}`,
     `Alamat: ${form.value.address}`,
     `Jadwal kirim: ${form.value.pickupDate}`,
+    ...(orderNumber ? [``, `Nomor Pesanan: ${orderNumber}`, `Lacak: https://happybouquet.web.id/tracking?order=${orderNumber}`] : []),
   ]
 
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank')
+  window.open(waHref(lines.join('\n')), '_blank')
 
   cart.clearCart()
-  router.push('/')
+  isSubmitting.value = false
+  // Arahkan ke tracking jika dapat nomor pesanan, jika tidak ke beranda
+  if (orderNumber) {
+    router.push(`/tracking?order=${orderNumber}`)
+  } else {
+    router.push('/')
+  }
 }
 
 // Minimal H+1 untuk pesanan bunga

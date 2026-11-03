@@ -151,8 +151,8 @@
                 <div class="w-6 h-2 bg-black/10 blur-md rounded-full mt-2"></div>
                 
                 <div class="mt-4 p-4 bg-white dark:bg-slate-950 rounded-2xl shadow-2xl border border-rose-100 min-w-[200px] text-center">
-                   <p class="text-xs font-black text-rose-600 tracking-widest uppercase">HappyBouquet Central</p>
-                   <p class="text-xs font-bold text-muted mt-1 leading-tight">Gedung Antigravity, Lt. 12 <br> Jakarta Selatan, 12345</p>
+                   <p class="text-xs font-black text-rose-600 tracking-widest uppercase">{{ settings.brand_name }} Central</p>
+                   <p class="text-xs font-bold text-muted mt-1 leading-tight">{{ settings.address.split(',')[0] }} <br> {{ settings.address.split(',').slice(1).join(',').trim() }}</p>
                 </div>
              </div>
           </div>
@@ -170,6 +170,7 @@
 </template>
 
 <script setup lang="ts">
+const { settings, waHref } = useStoreSettings()
 const isSubmitted = ref(false)
 const form = ref({
   name: '',
@@ -191,17 +192,17 @@ const handleSubmit = () => {
   }, 1000)
 }
 
-const contactInfo = [
-  { label: 'Telepon Concierge', icon: 'ph:phone-fill', value: '+62 21 555-0123', desc: 'Senin - Minggu, 08:00 - 20:00' },
-  { label: 'Email Pelayanan', icon: 'ph:envelope-simple-fill', value: 'hello@happybouquet.id', desc: 'Respon cepat dalam 24 jam' },
-  { label: 'Lokasi Galeri', icon: 'ph:map-pin-fill', value: 'Gedung Antigravity, Lt. 12', desc: 'Kuningan, Jakarta Selatan, 12345' },
-]
+const contactInfo = computed(() => [
+  { label: 'WhatsApp Concierge', icon: 'ph:phone-fill', value: formatWaDisplay(settings.value.whatsapp_number), desc: settings.value.hours },
+  { label: 'Email Pelayanan', icon: 'ph:envelope-simple-fill', value: settings.value.email, desc: 'Respon cepat dalam 24 jam' },
+  { label: 'Lokasi Galeri', icon: 'ph:map-pin-fill', value: settings.value.address.split(',')[0], desc: settings.value.address.split(',').slice(1).join(',').trim() },
+])
 
-const socialLinks = [
-  { label: 'Instagram', href: '#', icon: 'ph:instagram-logo-fill' },
-  { label: 'TikTok', href: '#', icon: 'ph:tiktok-logo-fill' },
-  { label: 'WhatsApp', href: '#', icon: 'ph:whatsapp-logo-fill' },
-]
+const socialLinks = computed(() => [
+  { label: 'Instagram', href: settings.value.instagram_url, icon: 'ph:instagram-logo-fill' },
+  { label: 'TikTok', href: settings.value.tiktok_url, icon: 'ph:tiktok-logo-fill' },
+  { label: 'WhatsApp', href: waHref(), icon: 'ph:whatsapp-logo-fill' },
+])
 
 useHead({
   title: 'Hubungi Kami - HappyBouquet'

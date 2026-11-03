@@ -19,7 +19,7 @@
            <div class="card-premium p-6 flex items-center lg:flex-col gap-4 lg:text-center">
              <div class="relative shrink-0">
                <div class="w-16 h-16 lg:w-24 lg:h-24 rounded-full overflow-hidden border-2 border-white dark:border-slate-800 shadow-md">
-                 <img :src="user.profile.avatar" :alt="user.profile.name" class="w-full h-full object-cover">
+                 <NuxtImg :src="user.profile.avatar" :alt="user.profile.name" class="w-full h-full object-cover" width="96" height="96" @error="onImgError"/>
                </div>
                <button class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-rose-600 text-white flex items-center justify-center border-2 border-white dark:border-slate-800 hover:bg-rose-700 transition-colors shadow-sm">
                  <Icon name="ph:pencil-simple-bold" class="w-3.5 h-3.5" />
@@ -362,6 +362,10 @@
 </template>
 
 <script setup lang="ts">
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 import OrderTimeline from '~/components/account/OrderTimeline.vue'
 import VoucherCard from '~/components/account/VoucherCard.vue'
 import SupportSection from '~/components/account/SupportSection.vue'

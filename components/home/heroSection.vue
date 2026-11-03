@@ -31,7 +31,7 @@
                 </div>
                 <div class="relative">
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=700&fit=crop" alt="Bouquet" class="w-full h-[500px] object-cover">
+                        <NuxtImg src="https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=600&h=700&fit=crop" alt="Bouquet" class="w-full h-[500px] object-cover" width="600" height="700" @error="onImgError">
                         <div class="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
                             <p class="text-sm text-gray-600">⭐ 4.9/5 Rating</p>
                             <p class="text-lg font-semibold text-gray-900">Premium Quality</p>
@@ -44,7 +44,10 @@
 </template>
 
 <script lang="ts" setup>
-
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 </script>
 
 <style>

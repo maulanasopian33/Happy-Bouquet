@@ -27,9 +27,10 @@
 
     <div class="pt-2">
       <a 
-        href="https://wa.me/6281234567890" 
+        :href="waHref('Halo, saya ingin berkonsultasi tentang buket HappyBouquet.')" 
         target="_blank"
         rel="noopener noreferrer"
+        @click="trackChannelOutbound('WhatsApp')"
         class="flex items-center justify-center gap-2 w-full py-3 bg-rose-50 dark:bg-rose-900/20 text-rose-600 rounded-xl text-xs font-bold hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-all border border-rose-100 dark:border-rose-900/40"
       >
         <Icon name="ph:chat-circle-dots-fill" class="w-4 h-4" />
@@ -40,6 +41,8 @@
 </template>
 
 <script setup lang="ts">
+const { waHref } = useStoreSettings()
+const { trackChannelOutbound } = useAnalytics()
 const promises = [
   { icon: 'ph:flower-bold', title: '100% Bunga Segar', desc: 'Kami menjamin kesegaran bunga hingga sampai ke tangan Anda.' },
   { icon: 'ph:lightning-bold', title: 'Kirim Hari Ini', desc: 'Pesan sebelum jam 14.00 untuk pengiriman di hari yang sama.' },

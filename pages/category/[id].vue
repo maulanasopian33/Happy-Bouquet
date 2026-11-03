@@ -73,7 +73,7 @@ const filteredProducts = computed(() => {
   const raw = productsRes.value?.data || []
   return raw.map((p: any) => ({
     ...p,
-    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : '/default.png',
+    image: resolveImageUrl(p.photo_url, apiUrl),
     rating: 4.5,
     reviewCount: 0
   }))

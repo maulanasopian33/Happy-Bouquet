@@ -4,8 +4,8 @@
     <div class="border-b border-[var(--noir-line)] bg-[#171612]">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 flex flex-col md:flex-row items-center justify-between gap-2 text-sm">
         <div class="flex items-center gap-2 text-[var(--noir-champagne-dim)]">
-          <span>Diskon Pengguna Baru 15%:</span>
-          <span class="label-crest px-2 py-0.5 rounded bg-[var(--noir-gold)]/20 border border-[var(--noir-gold)]/30">GOLDNOIR</span>
+          <span>{{ topbarPromoLabel }}:</span>
+          <span class="label-crest px-2 py-0.5 rounded bg-[var(--noir-gold)]/20 border border-[var(--noir-gold)]/30">{{ topbarPromoCode }}</span>
         </div>
         <div class="hidden lg:flex items-center gap-4 text-[var(--noir-champagne-dim)]">
           <span class="flex items-center gap-1.5"><Icon name="ph:clock-bold" class="w-4 h-4 text-[var(--noir-gold)]" />Kirim Hari Ini (Order sebelum 14:00 WIB)</span>
@@ -17,7 +17,7 @@
             <Icon name="ph:package-bold" class="w-3.5 h-3.5 text-[var(--noir-gold)]" />Lacak Pesanan
           </NuxtLink>
           <span class="opacity-30">|</span>
-          <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)] transition-colors">
+          <a :href="waHref()" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-[var(--noir-champagne-dim)] hover:text-[var(--noir-gold)] transition-colors">
             <Icon name="ph:headset-bold" class="w-3.5 h-3.5 text-[var(--noir-gold)]" />Concierge WhatsApp
           </a>
         </div>
@@ -210,7 +210,7 @@
               </p>
             </div>
             <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="btn-gold px-6 py-3.5 text-sm">
+              <a :href="waHref()" target="_blank" rel="noopener noreferrer" class="btn-gold px-6 py-3.5 text-sm">
                 <Icon name="ph:whatsapp-logo-fill" class="w-5 h-5" />
                 Chat Stylist via WhatsApp
               </a>
@@ -309,6 +309,7 @@ useHead({
   ]
 })
 const config = useRuntimeConfig()
+const { waHref } = useStoreSettings()
 const apiUrl = config.public.apiUrl
 
 // ===== DUMMY FALLBACK DATA =====
@@ -332,6 +333,17 @@ const dummyCategories = [
 const { data: bannersRes } = await useFetch<any>(`${apiUrl}/banners`)
 const { data: categoriesRes } = await useFetch<any>(`${apiUrl}/categories`)
 const { data: productsRes } = await useFetch<any>(`${apiUrl}/products?active=true`)
+const { data: promosRes } = await useFetch<any>(`${apiUrl}/promos?active=true`)
+
+// Topbar promo dinamis (fallback statis bila API kosong)
+const topbarPromo = computed(() => promosRes.value?.data?.[0])
+const topbarPromoLabel = computed(() => {
+  const p = topbarPromo.value
+  if (!p?.name) return 'Diskon Pengguna Baru 15%'
+  const val = Number(p.value)
+  return p.type === 'percentage' ? `${p.name} ${val}%` : `${p.name} Rp${val.toLocaleString('id-ID')}`
+})
+const topbarPromoCode = computed(() => topbarPromo.value?.code || 'GOLDNOIR')
 
 const heroBanners = computed(() => bannersRes.value?.data?.length ? bannersRes.value.data : dummyBanners)
 const categories = computed(() => categoriesRes.value?.data?.length ? categoriesRes.value.data : dummyCategories)

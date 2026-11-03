@@ -63,10 +63,11 @@
          <!-- Image/Visual Representation of Box -->
          <div class="relative group">
             <div class="absolute inset-0 bg-rose-500/10 rounded-4xl blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-            <img 
+            <NuxtImg 
               src="https://images.unsplash.com/photo-1547096301-4ebda79e93d7?q=80&w=800&fit=crop" 
               alt="Premium Packaging Visual" 
               class="relative z-10 w-full rounded-4xl shadow-2xl border border-white/20"
+              width="800" height="600" @error="onImgError"
             />
             <div class="absolute -bottom-6 -left-6 z-20 card-premium p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md max-w-[200px] shadow-2xl border-rose-100">
                <div class="flex items-center gap-3">
@@ -116,6 +117,11 @@
 </template>
 
 <script setup lang="ts">
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
+
 const activeFaq = ref<number | null>(null)
 
 const shippingMethods = [

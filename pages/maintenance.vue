@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
+const { settings, waHref } = useStoreSettings()
 
 definePageMeta({
   layout: false
@@ -42,12 +43,12 @@ useHead({
         </div>
         <div class="info-item">
           <Icon name="ph:instagram-logo-duotone" size="24" />
-          <span>@happybouquet.id</span>
+          <span>@{{ settings.instagram_url.split('/').pop() }}</span>
         </div>
       </div>
 
       <div class="footer-cta">
-        <a href="https://wa.me/628123456789" target="_blank" rel="noopener noreferrer" class="btn-premium">
+        <a :href="waHref('Halo, situs sedang dalam pemeliharaan. Saya ingin menanyakan ketersediaan buket.')" target="_blank" rel="noopener noreferrer" class="btn-premium">
           <Icon name="ph:whatsapp-logo" size="20" />
           Hubungi Admin (WhatsApp)
         </a>

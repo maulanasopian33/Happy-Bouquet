@@ -13,7 +13,7 @@
         <!-- Logo -->
         <NuxtLink to="/" class="flex items-center gap-3 group shrink-0">
           <div class="w-10 h-10 rounded-full border border-[var(--noir-gold)]/40 bg-[var(--noir-card)] flex items-center justify-center group-hover:border-[var(--noir-gold)] transition-colors">
-            <img src="/icon.png" alt="HappyBouquet Logo" class="w-6 h-6" />
+            <NuxtImg src="/icon.png" alt="HappyBouquet Logo" class="w-6 h-6" width="24" height="24" @error="onImgError" />
           </div>
           <div class="hidden sm:block">
             <span class="block noir-display text-lg font-semibold tracking-tight text-[var(--noir-champagne)] leading-none">
@@ -168,7 +168,7 @@
         <div class="flex items-center justify-between px-6 py-5 border-b border-[var(--noir-line)]">
           <NuxtLink to="/" class="flex items-center gap-3" @click="isMobileMenuOpen = false">
             <div class="w-9 h-9 rounded-full border border-[var(--noir-gold)]/40 bg-[var(--noir-card)] flex items-center justify-center">
-              <img src="/icon.png" alt="HappyBouquet Logo" class="w-5 h-5" />
+              <NuxtImg src="/icon.png" alt="HappyBouquet Logo" class="w-5 h-5" width="20" height="20" @error="onImgError" />
             </div>
             <span class="noir-display text-base font-semibold text-[var(--noir-champagne)]">Happy<span class="text-[var(--noir-gold)]">Bouquet</span></span>
           </NuxtLink>
@@ -238,6 +238,10 @@
 </template>
 
 <script setup lang="ts">
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 const cartStore = useCartStore()
 const cartCount = computed(() => cartStore.totalItems)
 const openCart = () => cartStore.showCart(true)

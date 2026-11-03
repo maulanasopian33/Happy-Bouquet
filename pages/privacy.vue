@@ -34,7 +34,7 @@
            <div class="bg-rose-50 dark:bg-rose-950/20 rounded-3xl p-8 border border-rose-100 dark:border-rose-900/40 text-center">
               <p class="text-xs font-black text-rose-600 uppercase tracking-widest mb-2">Pertanyaan seputar privasi?</p>
               <p class="text-sm font-medium text-secondary mb-4">Hubungi Petugas Perlindungan Data kami di:</p>
-              <a href="mailto:privacy@happybouquet.id" class="text-lg font-black text-primary hover:text-rose-600 transition-colors">privacy@happybouquet.id</a>
+              <a :href="`mailto:${settings.email}`" class="text-lg font-black text-primary hover:text-rose-600 transition-colors">{{ settings.email }}</a>
            </div>
 
         </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+const { settings } = useStoreSettings()
 const sections = [
   { 
     title: '1. Informasi yang Kami Kumpulkan', 

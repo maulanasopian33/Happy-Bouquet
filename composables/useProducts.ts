@@ -14,12 +14,22 @@ export interface Product {
   reviewCount?: number
   images: string[]
   category?: string
+  type?: string
+  preorderDuration?: number
+  // Channel order produk dari API (bentuk: { name, icon_url, ProductOrderChannel: { store_url } })
+  orderChannels: any[]
+}
+
+// photo_url API berupa path relatif ("public/uploads/...") atau URL absolut.
+// Origin diambil dari apiUrl — jangan replace('/api','') karena memotong 'https://api.' juga.
+export const resolveImageUrl = (photo: string | undefined | null, apiUrl: string): string => {
+  if (!photo) return '/default.png'
+  if (/^https?:\/\//.test(photo)) return photo
+  return `${new URL(apiUrl).origin}/${photo.replace(/^\/+/, '')}`
 }
 
 export const mapProduct = (p: any, apiUrl: string): Product => {
-  const imageUrl = p.photo_url
-    ? `${apiUrl.replace('/api', '')}${p.photo_url}`
-    : '/default.png'
+  const imageUrl = resolveImageUrl(p.photo_url, apiUrl)
   return {
     id: p.id,
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
@@ -32,7 +42,10 @@ export const mapProduct = (p: any, apiUrl: string): Product => {
     rating: 4.5,
     reviewCount: 0,
     images: [imageUrl],
-    category: typeof p.category === 'object' ? (p.category.name || p.category.NAME) : p.category
+    category: typeof p.category === 'object' ? (p.category.name || p.category.NAME) : p.category,
+    type: p.type,
+    preorderDuration: p.preorder_duration,
+    orderChannels: p.orderChannels || []
   }
 }
 

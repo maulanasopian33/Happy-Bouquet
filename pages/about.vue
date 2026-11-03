@@ -5,10 +5,11 @@
     <div class="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
       <!-- Background Image with Overlay -->
       <div class="absolute inset-0">
-        <img 
+        <NuxtImg 
           src="https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1600&fit=crop" 
           class="w-full h-full object-cover scale-110 animate-slow-zoom"
           alt="Luxury Floral Background"
+          width="1600" height="900" @error="onImgError"
         />
         <div class="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-(--bg-main)"></div>
       </div>
@@ -30,10 +31,11 @@
         <div class="lg:col-span-5 reveal">
           <div class="relative group">
             <div class="absolute inset-0 bg-rose-500/20 rounded-[3rem] rotate-3 group-hover:rotate-6 transition-transform"></div>
-            <img 
+            <NuxtImg 
               src="https://images.unsplash.com/photo-1591886960571-74d43a19e16d?q=80&w=800&fit=crop" 
               class="relative z-10 rounded-[3rem] shadow-2xl border-4 border-white dark:border-slate-800"
               alt="Florist Crafting"
+              width="800" height="1000" @error="onImgError"
             />
             <div class="absolute -bottom-6 -right-6 z-20 bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-xl border border-rose-100">
                <p class="text-4xl font-black text-rose-600 leading-none">4+</p>
@@ -109,7 +111,7 @@
         </div>
         <div class="order-1 lg:order-2">
            <div class="relative rounded-4xl overflow-hidden shadow-2xl group">
-             <img src="https://images.unsplash.com/photo-1563201444-2c973aafa5f6?q=80&w=800&fit=crop" class="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" />
+             <NuxtImg src="https://images.unsplash.com/photo-1563201444-2c973aafa5f6?q=80&w=800&fit=crop" class="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" width="800" height="600" @error="onImgError" />
              <div class="absolute inset-0 bg-transparent group-hover:bg-rose-500/10 transition-all"></div>
            </div>
         </div>
@@ -120,6 +122,11 @@
 </template>
 
 <script setup lang="ts">
+const onImgError = (e: Event) => {
+  const t = e.target as HTMLImageElement | null
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
+
 const values = [
   { title: 'Kesegaran Mutlak', icon: 'ph:leaf-fill', desc: 'Hanya bunga segar dari kebun terbaik yang kami pilih untuk setiap pesanan Anda.' },
   { title: 'Desain Artisanal', icon: 'ph:paint-brush-broad-fill', desc: 'Rangkaian kami bukan hasil masal, melainkan kurasi seni dari para florist ahli.' },

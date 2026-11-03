@@ -116,21 +116,21 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] BUG-0032: Scoped dynamic key `product-detail-${id}` pada `useAsyncData` di `composables/useProductDetail.ts` untuk mencegah cache collision
 - Verifikasi: `npm test` (12/12 lulus) + `npm run build` lulus (Nitro preset: node-server)
 
-**T10** — Sync Promo & Auto Collect Analytics (CR-0004)
-- [ ] Ubah `pages/promo.vue` agar memanggil API `${apiUrl}/promos?active=true` secara reaktif (hapus hardcoded promos)
-- [ ] Buat/integrasikan plugin telemetri FE agar memanggil `POST /api/analytics/collect` pada event `page:finish`
-- Verifikasi: `npm test` + `npm run build` lulus
+**T10** — selesai sebagian 2026-11-02 (promo sync + telemetri channel)
+- [x] `pages/promo.vue` memanggil `${apiUrl}/promos?active=true` (fallback statis bila kosong); topbar home juga dinamis dari endpoint ini
+- [x] Telemetri FE: `plugins/ga-router.client.ts` (page:finish) + `composables/useAnalytics.ts` (`trackChannelOutbound` -> `POST /analytics/collect`) dipakai tombol channel PDP & trust promise
+- Verifikasi: `npm test` lulus
 
-**T11** — API Public Orders & Tracking (CR-0004)
-- [ ] Buat endpoint `POST /api/orders/public` di `api-happyBouquet` (input order pelanggan dari web, generate order_number `HB-...`, channel `Web`)
-- [ ] Buat endpoint `GET /api/orders/track/:orderNumber` di `api-happyBouquet` (rate-limited, public sanitized tracking data)
-- Verifikasi: Test suite backend & unit test pass
+**T11** — selesai 2026-10-30 di backend (`api-happyBouquet`)
+- [x] `POST /api/orders/public` (Zod, generate `HB-...`, field `channel` enum `Web|WhatsApp|Shopee|TikTok` — BUG-0036)
+- [x] `GET /api/orders/track/:orderNumber` (public sanitized)
+- Verifikasi: Test suite backend lulus
 
 **T12** — FE Multi-Channel & Real-Time Tracking (CR-0004)
-- [ ] Modifikasi `pages/checkout/index.vue`: sebelum redirect ke WhatsApp, simpan order via `POST /api/orders/public`, sertakan nomor order resmi di teks WhatsApp & tampilkan confirmation modal/screen
+- [x] `pages/checkout/index.vue`: simpan order via `POST /api/orders/public` (kirim `channel:'Web'`) sebelum redirect WA; nomor order masuk teks WA & redirect `/tracking?order=`
 - [ ] Modifikasi `pages/tracking.vue`: hubungkan input tracking ke `GET /api/orders/track/:orderNumber` dari database riil
-- [ ] Tambahkan tombol alternatif channel (Chat WA / Shopee / TikTok) pada detail produk
-- Verifikasi: `npm test` + `npm run build` lulus
+- [x] Tambahkan tombol channel (WA/Shopee/TikTok) pada detail produk dari `orderChannels` API + tracking outbound (BUG-0035/0036)
+- Verifikasi: `npm test` lulus (build lulus saat rilis)
 
 **T13** — Panel Admin Real-Time SSE & Channel Filter (CR-0004)
 - [ ] Pastikan event SSE `order:created` dari public web checkout memicu toast dan badge notifikasi di Panel Admin

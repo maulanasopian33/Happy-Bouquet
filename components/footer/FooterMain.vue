@@ -7,7 +7,7 @@
       <div class="lg:col-span-2 flex flex-col gap-4">
         <NuxtLink to="/" class="flex items-center gap-3 group w-fit">
           <div class="w-9 h-9 rounded-full border border-[var(--noir-gold)]/40 p-1 flex items-center justify-center bg-[#1f1f21] group-hover:border-[var(--noir-gold)] transition-colors">
-            <img src="/icon.png" alt="HappyBouquet Logo" class="w-full h-full object-contain" />
+            <NuxtImg src="/icon.png" alt="HappyBouquet Logo" class="w-full h-full object-contain" width="36" height="36" @error="onImgError" />
           </div>
           <span class="noir-display text-lg font-semibold">Happy<span class="text-[var(--noir-gold)]">Bouquet</span></span>
         </NuxtLink>
@@ -18,8 +18,8 @@
 
         <div class="flex flex-col gap-1 text-sm text-[var(--noir-champagne-dim)]">
           <span class="font-semibold text-[var(--noir-gold)]">Boutique &amp; Showroom:</span>
-          <span>Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan 12190</span>
-          <span>Buka Setiap Hari: 08:00 - 21:00 WIB</span>
+          <span>{{ settings.address }}</span>
+          <span>{{ settings.hours }}</span>
         </div>
 
         <div class="flex items-center gap-3 mt-2">
@@ -101,13 +101,17 @@
             class="px-2 py-1 rounded bg-[#1f1f21] border border-[#4a4538]/30 text-xs text-[#ccc6bb] font-semibold"
           >{{ m }}</span>
         </div>
-        <p>&copy; {{ new Date().getFullYear() }} HappyBouquet Indonesia. Hak cipta dilindungi undang-undang.</p>
+        <p>&copy; {{ new Date().getFullYear() }} {{ settings.brand_name }} Indonesia. Hak cipta dilindungi undang-undang.</p>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup>
+const onImgError = (e) => {
+  const t = e.target
+  if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
+}
 const emailInput = ref('')
 const subscribed = ref(false)
 
@@ -119,11 +123,13 @@ const handleSubscribe = () => {
   }
 }
 
-const socials = [
-  { icon: 'ph:instagram-logo-fill', href: 'https://instagram.com', title: 'Instagram' },
-  { icon: 'ph:play-circle-fill', href: 'https://tiktok.com', title: 'TikTok' },
-  { icon: 'ph:chat-circle-dots-fill', href: 'https://wa.me/6281234567890', title: 'WhatsApp' },
-]
+const { settings, waHref } = useStoreSettings()
+
+const socials = computed(() => [
+  { icon: 'ph:instagram-logo-fill', href: settings.value.instagram_url, title: 'Instagram' },
+  { icon: 'ph:play-circle-fill', href: settings.value.tiktok_url, title: 'TikTok' },
+  { icon: 'ph:chat-circle-dots-fill', href: waHref(), title: 'WhatsApp' },
+])
 
 const kategori = [
   { label: 'Signature Rose Bouquets', to: '/products?cat=buket-bunga' },

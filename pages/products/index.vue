@@ -225,7 +225,7 @@
               <Icon name="ph:flower-lotus-duotone" class="absolute -bottom-4 -right-4 w-24 h-24 text-white/10 rotate-12" />
               <p class="font-black text-base relative mb-1">Butuh Buket Custom?</p>
               <p class="text-rose-100 text-xs font-medium leading-relaxed relative mb-4">Wujudkan desain buket impian Anda bersama florist kami.</p>
-              <a href="https://wa.me/6281234567890" target="_blank" class="w-full py-2.5 bg-white text-rose-600 rounded-xl font-bold text-xs hover:bg-rose-50 flex items-center justify-center gap-2 transition-colors relative shadow-sm">
+              <a :href="waHref('Halo, saya ingin buket custom. Boleh konsultasi?')" target="_blank" class="w-full py-2.5 bg-white text-rose-600 rounded-xl font-bold text-xs hover:bg-rose-50 flex items-center justify-center gap-2 transition-colors relative shadow-sm">
                 <Icon name="ph:whatsapp-logo-fill" class="w-4 h-4" />
                 Chat WhatsApp
               </a>
@@ -261,6 +261,7 @@ useHead({
 })
 
 const config = useRuntimeConfig()
+const { waHref } = useStoreSettings()
 const apiUrl = config.public.apiUrl
 const route = useRoute()
 const router = useRouter()
@@ -276,7 +277,7 @@ const allProducts = computed(() => {
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
     name: p.name,
     price: p.price ? Number(p.price) : 0,
-    image: p.photo_url ? `${apiUrl.replace('/api', '')}${p.photo_url}` : '/default.png',
+    image: resolveImageUrl(p.photo_url, apiUrl),
     rating: 4.5,
     reviewCount: 0,
     category: typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : p.category

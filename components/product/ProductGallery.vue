@@ -18,7 +18,7 @@
     </div>
 
     <!-- Main Exhibition Image -->
-    <div class="relative overflow-hidden rounded-4xl aspect-square bg-(--bg-section) shadow-inner border border-(--border-color)">
+    <div class="relative overflow-hidden rounded-4xl aspect-[4/5] bg-(--bg-section) shadow-inner border border-(--border-color)">
       <Transition name="fade-zoom" mode="out-in">
         <NuxtImg 
           :key="activeIndex"

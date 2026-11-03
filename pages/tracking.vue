@@ -25,9 +25,10 @@
           />
           <button 
             @click="handleSearch"
-            class="btn-premium px-8 py-3.5 rounded-2xl shadow-lg shadow-rose-500/30"
+            :disabled="isLoading"
+            class="btn-premium px-8 py-3.5 rounded-2xl shadow-lg shadow-rose-500/30 disabled:opacity-60"
           >
-            Lacak
+            {{ isLoading ? 'Mencari...' : 'Lacak' }}
           </button>
         </div>
       </div>
@@ -92,7 +93,9 @@
                     <p class="text-xs opacity-90 font-medium">Tim concierge kami siap membantu koordinasi dengan kurir.</p>
                   </div>
                </div>
-               <button class="px-8 py-3 rounded-xl bg-white text-rose-600 text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 shadow-lg">Chat WhatsApp</button>
+               <button 
+                @click="onHelpClick"
+                class="px-8 py-3 rounded-xl bg-white text-rose-600 text-xs font-black uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 shadow-lg">Chat WhatsApp</button>
             </div>
           </div>
 
@@ -135,18 +138,63 @@
 <script setup lang="ts">
 import OrderTimeline from '~/components/account/OrderTimeline.vue'
 
-const userStore = useUserStore()
+const config = useRuntimeConfig()
+const route = useRoute()
 const productModal = useProductModalStore()
+
 const searchQuery = ref('')
 const hasSearched = ref(false)
+const isLoading = ref(false)
 const foundOrder = ref<any>(null)
 
-const handleSearch = () => {
-  if (!searchQuery.value) return
-  
-  hasSearched.value = true
+const handleSearch = async () => {
   const q = searchQuery.value.toUpperCase().trim()
-  foundOrder.value = userStore.orders.find(o => o.id === q) || null
+  if (!q) return
+
+  hasSearched.value = true
+  isLoading.value = true
+  foundOrder.value = null
+
+  try {
+    const res: any = await $fetch(`${config.public.apiUrl}/orders/track/${q}`)
+    if (res?.data) {
+      const d = res.data
+      // Petakan ke shape yang dipakai template
+      foundOrder.value = {
+        id: d.order_number,
+        date: d.delivery_date || (d.created_at ? new Date(d.created_at).toLocaleDateString('id-ID') : '-'),
+        items: d.items?.length ?? 0,
+        tracking: {
+          status: d.tracking_steps?.find((s: any) => s.done && d.status === s.status)?.label || d.status,
+          updatedAt: d.created_at ? new Date(d.created_at).toLocaleString('id-ID') : '-',
+          steps: d.tracking_steps || [],
+        },
+      }
+    } else {
+      foundOrder.value = null
+    }
+  } catch {
+    foundOrder.value = null
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Langsung cari jika URL mengandung ?order=...
+onMounted(() => {
+  const orderParam = route.query.order as string
+  if (orderParam) {
+    searchQuery.value = orderParam
+    handleSearch()
+  }
+})
+
+const { waHref } = useStoreSettings()
+const onHelpClick = () => {
+  const msg = foundOrder.value?.id
+    ? `Halo admin, saya ingin cek pesanan ${foundOrder.value.id}`
+    : 'Halo admin, saya butuh bantuan tracking pesanan'
+  window.open(waHref(msg), '_blank')
 }
 
 const onViewProduct = (product: any) => {
