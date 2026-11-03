@@ -1,18 +1,18 @@
 # HappyBouquet - STATE
 
-Diperbarui: 2026-11-04 | Versi app: 0.3.0-dev (T1-T13 selesai penuh) | Tahap: CR-0004 Tuntas & Siap Deploy
+Diperbarui: 2026-11-04 | Versi app: 0.3.0-dev (T1-T13 + Log Modernization selesai) | Tahap: Siap Deploy
 
 > Bukan log. Timpa tiap sesi; pertahankan di bawah ~60 baris. Riwayat ada di register, CHANGELOG, dan git.
 
 ## Langkah berikutnya (maks. 5)
-1. **Deploy Produksi**: Jalankan migrasi DB backend (`npx sequelize-cli db:migrate`) untuk tabel `StoreSettings` dan `PublicOrders`, lalu deploy API, FE (`bash deploy-local-cache.sh`), dan Panel.
-2. Konfigurasi remote git di Panel Admin (`git remote add origin <URL>`) dan push commit rilis `dab10af`.
-3. Verifikasi end-to-end pemesanan web di production: pesan di web -> cek notifikasi SSE di Panel -> cek stepper di `/tracking`.
+1. **Deploy Produksi**: Jalankan migrasi DB backend (`npx sequelize-cli db:migrate`) untuk tabel `StoreSettings` dan `PublicOrders`, lalu deploy API, FE (`bash deploy-local-cache.sh`), dan Panel Admin.
+2. Konfigurasi remote git di Panel Admin (`git remote add origin <URL>`) dan push commit rilis (`dab10af`, `dbac892`).
+3. Verifikasi end-to-end pemesanan web di production: pesan di web -> notifikasi SSE di Panel -> tracking `/tracking` -> pantau di Logs Admin.
 
 ## Keputusan
 - 2026-10-19: Situs **PUBLIK** (bukan maintenance). Cache app **tetap Upstash**.
-- 2026-10-30: Arsitektur Multi-Channel & Tracking (CR-0004): Reseller dipisah ke app terpisah; Ingestion order via `POST /api/orders/public`; Tracking pesanan via `GET /api/orders/track/:orderNumber`.
-- 2026-11-04: T13 tuntas: Backend broadcast SSE realtime `notification` saat order publik baru masuk; `getAllOrders` menggabungkan `PublicOrders`; Panel Admin `OrderListView.vue` dilengkapi filter multi-channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`, `Direct`, `Reseller`) dan badge channel.
+- 2026-10-30: Arsitektur Multi-Channel & Tracking (CR-0004): Reseller dipisah; Ingestion via `POST /api/orders/public`; Tracking via `GET /api/orders/track/:orderNumber`.
+- 2026-11-04: T13 tuntas (SSE order notification + multi-channel filter di Panel). Logging: Tetap berbasis file (Winston Daily Rotate JSON stream) dengan tail buffer 3MB; dashboard log dirombak dengan KPI cards, search filter, HTTP status badge, dan stack trace viewer.
 
 ## Dokumen
 | Dokumen | Status | Versi | Diubah |
