@@ -216,7 +216,7 @@ const props = defineProps<{
 }>()
 
 const { settings, waHref } = useStoreSettings()
-const { trackChannelOutbound } = useAnalytics()
+const { trackChannelOutbound, trackAction } = useAnalytics()
 
 const activeImage = ref(0)
 const activeTab = ref('Deskripsi')
@@ -277,6 +277,12 @@ const addToCart = (payload: any) => {
       variants: payload?.selections
     }
     cartStore.addItem(item as any)
+    trackAction('add_to_cart', {
+      product_id: props.product.id,
+      name: props.product.name,
+      price: props.product.price,
+      quantity: payload?.qty || 1
+    })
   }
 }
 

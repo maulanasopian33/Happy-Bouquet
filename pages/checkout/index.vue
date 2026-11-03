@@ -253,6 +253,7 @@ const cart = useCartStore()
 const router = useRouter()
 const config = useRuntimeConfig()
 const { waHref } = useStoreSettings()
+const { trackAction } = useAnalytics()
 
 const form = ref({
   email: '',
@@ -355,6 +356,14 @@ const placeOrder = async () => {
     `Jadwal kirim: ${form.value.pickupDate}`,
     ...(orderNumber ? [``, `Nomor Pesanan: ${orderNumber}`, `Lacak: https://happybouquet.web.id/tracking?order=${orderNumber}`] : []),
   ]
+
+  trackAction('checkout_whatsapp_click', {
+    order_number: orderNumber || 'DIRECT-WA',
+    total_price: totalOrder.value,
+    items_count: cart.items.length,
+    payment_method: selectedPayment.value.name,
+    shipping_method: selectedShipping.value.name,
+  })
 
   window.open(waHref(lines.join('\n')), '_blank')
 

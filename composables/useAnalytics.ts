@@ -1,5 +1,4 @@
-// Telemetri internal — kunci session sama dengan plugins/ga-router.client.ts
-// (storage key sama => session_id sama, tanpa perlu refactor plugin).
+// Telemetri internal — pelacakan aktivitas pengunjung nyata vs bot
 export const useAnalytics = () => {
   const config = useRuntimeConfig()
 
@@ -16,17 +15,29 @@ export const useAnalytics = () => {
     }
   }
 
-  // Event klik kanal order (WhatsApp / Shopee / TikTok) — untuk atribusi channel di dashboard
-  const trackChannelOutbound = (channel: string, productId?: number) => {
+  const getTelemetry = () => {
+    if (!import.meta.client) return {}
+    return {
+      screen_size: `${window.screen?.width || 0}x${window.screen?.height || 0}`,
+      viewport_size: `${window.innerWidth || 0}x${window.innerHeight || 0}`,
+      language: navigator.language || 'id-ID',
+      is_webdriver: Boolean(navigator.webdriver),
+    }
+  }
+
+  // Melacak event tindakan khusus (misal: tambah keranjang, klik checkout WA, cari buket)
+  const trackAction = (eventName: string, eventData?: Record<string, any>) => {
     if (!import.meta.client || !config.public.apiUrl) return
+
     const payload = {
       session_id: getSessionId(),
       url: window.location.pathname,
-      event_type: 'event',
-      event_name: 'channel_outbound',
-      channel,
-      ...(productId != null ? { product_id: productId } : {}),
+      event_type: 'action',
+      event_name: eventName,
+      event_data: eventData || {},
+      ...getTelemetry(),
     }
+
     fetch(`${config.public.apiUrl}/analytics/collect`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -37,5 +48,18 @@ export const useAnalytics = () => {
     })
   }
 
-  return { trackChannelOutbound }
+  // Event klik kanal order (WhatsApp / Shopee / TikTok) — backward compatibility
+  const trackChannelOutbound = (channel: string, productId?: number) => {
+    trackAction('channel_outbound', {
+      channel,
+      ...(productId != null ? { product_id: productId } : {}),
+    })
+  }
+
+  return {
+    getSessionId,
+    getTelemetry,
+    trackAction,
+    trackChannelOutbound,
+  }
 }
