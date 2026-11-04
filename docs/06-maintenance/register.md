@@ -7,7 +7,7 @@ Sumber: audit menyeluruh 2026-10-19 & 2026-10-30. Detail analisis: `docs/04-deli
 ## Terbuka
 | ID | Jenis | Tanggal | Ringkasan | ID terdampak | Dokumen diubah | Status |
 |---|---|---|---|---|---|---|
-| — | — | — | Tidak ada task/bug terbuka | — | — | — |
+| CR-0005 | Fitur | 2026-11-04 | Full-Funnel Web Analytics, Traffic Acquisition & Performance Suite: 4 halaman analitik komprehensif (Realtime Bot Intel [Selesai], Trafik & Akuisisi T14, Konversi & Funnel T15, Kecepatan & Web Vitals T16) | T14-T16 | `docs/06-maintenance/CR-0005.md`, `roadmap.md` | Terbuka |
 
 ## Selesai
 | ID | Tanggal | Ringkasan | Versi | Commit/PR |
@@ -50,7 +50,7 @@ Sumber: audit menyeluruh 2026-10-19 & 2026-10-30. Detail analisis: `docs/04-deli
 | BUG-0027 | 2026-10-19 | Null-guard onImgError handler (t?.src) cegah uncaught exception saat transisi | 0.3.0 | - |
 | BUG-0028 | 2026-10-30 | Security Headers global di nuxt.config.ts (X-Frame-Options SAMEORIGIN, nosniff, Referrer-Policy, Permissions-Policy) | 0.3.0 | - |
 | BUG-0029 | 2026-10-30 | Maintenance bypass cookie kini pakai HMAC SHA256 token (tidak lagi bocorkan raw secret ke cookie client) | 0.3.0 | - |
-| BUG-0030 | 2026-10-30 | Reverse Tabnabbing fix: tambah rel="noopener noreferrer" pada semua link target="_blank" | 0.3.0 | - |
+| BUG-0030 | 2026-10-30 | Reverse Tabnabbing fix: pasang `rel="noopener noreferrer"` pada semua tautan eksternal `target="_blank"` (FooterMain, ProductTrustPromise, contact, links, maintenance, index) | 0.3.0 | - |
 | BUG-0031 | 2026-10-30 | Hapus dummy route pages/admin/index.vue + 301 redirect /admin -> / di routeRules | 0.3.0 | - |
 | BUG-0032 | 2026-10-30 | Dynamic cache key pada useAsyncData detail produk (`product-detail-${id}`) untuk mencegah cache collision | 0.3.0 | - |
 | BUG-0033 | 2026-11-02 | URL gambar produk 404 (`https://happybouquet.web.id/.happybouquet.web.id/apipublic/...`): `apiUrl.replace('/api','')` memotong `https://api.` + `photo_url` relatif tanpa slash. Helper `resolveImageUrl` (useProducts) dipakai di mapProduct, products/index, category/[id]; test baru `test/image-url.test.ts`. Build+test lulus (L2) | 0.3.0 | - |

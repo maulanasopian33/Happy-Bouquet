@@ -137,6 +137,22 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] Filter order berdasarkan channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`, `Direct`, `Reseller`) di `OrderListView.vue`
 - Verifikasi: Build Vite panel lulus + 14/14 unit test Panel lulus
 
+**T14** — Trafik & Akuisisi Pengunjung (CR-0005)
+- [ ] Endpoint backend `GET /api/analytics/traffic` (agregasi tren harian/mingguan, pengelompokan referrer, ekstraksi UTM, distribusi devices/OS/browser)
+- [ ] Panel Admin view `AnalyticsTrafficView.vue` (`/admin/analytics/traffic`) dengan date range picker, tren chart, pie device, dan tabel acquisition
+- Verifikasi: Unit test backend + Build Vite Panel lulus
+
+**T15** — Konversi & Funnel E-Commerce (CR-0005)
+- [ ] Endpoint backend `GET /api/analytics/conversion` (penghitungan 5 tahap corong belanja, drop-off rate, view-to-cart ratio per produk, outbound channel clicks)
+- [ ] Panel Admin view `AnalyticsConversionView.vue` (`/admin/analytics/conversion`) dengan visualisasi stepper funnel & tabel matriks konversi produk
+- Verifikasi: Unit test backend + Build Vite Panel lulus
+
+**T16** — Kecepatan Situs & Core Web Vitals (CR-0005)
+- [ ] Telemetri FE Google Web Vitals (LCP, CLS, INP) + integrasi beacon
+- [ ] Endpoint backend `GET /api/analytics/performance` (rata-rata LCP/CLS/INP, page load speed, bounce rate, dwell time, rasio cache SWR)
+- [ ] Panel Admin view `AnalyticsPerformanceView.vue` (`/admin/analytics/performance`) dengan kartu skor Google Vitals dan UX engagement metrics
+- Verifikasi: Build Nuxt FE + Build Vite Panel lulus
+
 ## 3. Rilis
 
 | Versi | Tanggal | Isi |
