@@ -122,11 +122,58 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     }
 
-    window.addEventListener('beforeunload', sendExitBeacon)
+        window.addEventListener('beforeunload', sendExitBeacon)
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') {
         sendExitBeacon()
       }
     })
+
+    // 3. Web Vitals Observer (LCP, CLS, TTFB)
+    try {
+      // TTFB
+      window.addEventListener('load', () => {
+        const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[]
+        if (navEntries.length > 0) {
+          const ttfb = Math.round(navEntries[0].responseStart - navEntries[0].requestStart)
+          if (ttfb > 0 && config.public.apiUrl) {
+            trackAction('web_vital', { metric: 'TTFB', value: ttfb, unit: 'ms' })
+          }
+        }
+      })
+
+      // LCP (Largest Contentful Paint)
+      if ('PerformanceObserver' in window) {
+        const lcpObserver = new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries()
+          const lastEntry = entries[entries.length - 1]
+          if (lastEntry) {
+            const lcp = Math.round(lastEntry.startTime)
+            trackAction('web_vital', { metric: 'LCP', value: lcp, unit: 'ms' })
+          }
+        })
+        lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true })
+
+        // CLS (Cumulative Layout Shift)
+        let clsValue = 0
+        const clsObserver = new PerformanceObserver((entryList) => {
+          for (const entry of entryList.getEntries() as any[]) {
+            if (!entry.hadRecentInput) {
+              clsValue += entry.value
+            }
+          }
+        })
+        clsObserver.observe({ type: 'layout-shift', buffered: true })
+
+        // Kirim CLS saat sebelum unload
+        window.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'hidden' && clsValue > 0) {
+            trackAction('web_vital', { metric: 'CLS', value: Math.round(clsValue * 1000) / 1000, unit: 'score' })
+          }
+        })
+      }
+    } catch {
+      // Browser tidak mendukung PerformanceObserver
+    }
   }
 })

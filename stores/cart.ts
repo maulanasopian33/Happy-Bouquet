@@ -54,6 +54,21 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     showCart(true)
+
+    // Telemetri E-Commerce: Catat event add_to_cart untuk funnel analisis (CR-0005)
+    if (import.meta.client) {
+      try {
+        const { trackAction } = useAnalytics()
+        trackAction('add_to_cart', {
+          product_id: product.id,
+          name: product.name,
+          price: product.price,
+          quantity: product.quantity || 1,
+        })
+      } catch {
+        // Silent catch untuk test environment
+      }
+    }
   }
 
   const removeItem = (cartItemId: string) => {
