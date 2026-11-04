@@ -1,6 +1,6 @@
 # HappyBouquet - STATE
 
-Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0005: Full Web Analytics Suite Selesai) | Tahap: Selesai Penuh
+Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0007: Full Dynamic CMS Suite Selesai) | Tahap: Selesai Penuh
 
 > Bukan log. Timpa tiap sesi; pertahankan di bawah ~60 baris. Riwayat ada di register, CHANGELOG, dan git.
 
@@ -14,15 +14,14 @@ Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0005: Full Web Analytics Suite
 - 2026-11-04: Menu analitik di Panel Admin dikelompokkan ke grup tersendiri `Analitik Web` (CR-0005).
 - 2026-11-05: Redesign katalog `/products` dengan tema Editorial Noir & Gold (Haute Botanique 2025).
 - 2026-11-05: CR-0006 selesai: Dynamic SEO suite terintegrasi penuh.
-- 2026-11-05: CR-0005 selesai penuh: T14 (Trafik & Akuisisi), T15 (Konversi & Funnel), dan T16 (Kecepatan & Web Vitals) telah diimplementasikan di Backend API dan Panel Admin.
+- 2026-11-05: CR-0007 selesai penuh: Full Dynamic CMS Suite (ongkir checkout, skema DP, rekening bank, counter pencapaian, testimoni, FAQ, dan halaman Tentang Kami dikelola dinamis dari Panel Admin 5 Tab).
 
 ## Dokumen
 | Dokumen | Status | Versi | Diubah |
 |---|---|---|---|
-| 04-delivery/roadmap | Aktif, T1-T17 selesai penuh | 0.7.0 | 2026-11-05 |
-| 06-maintenance/CR-0005.md | Selesai / Arsip | 1.1 | 2026-11-05 |
-| 06-maintenance/CR-0006.md | Selesai / Arsip | 1.0 | 2026-11-05 |
-| 06-maintenance/register | 0 terbuka, 41 selesai | - | 2026-11-05 |
+| 04-delivery/roadmap | Aktif, T1-T18 selesai penuh | 0.8.0 | 2026-11-05 |
+| 06-maintenance/CR-0007.md | Selesai / Arsip | 1.0 | 2026-11-05 |
+| 06-maintenance/register | 0 terbuka, 42 selesai | - | 2026-11-05 |
 | CHANGELOG.md | Aktif | 0.3.0-dev | 2026-11-05 |
 
 ## Task
@@ -30,10 +29,9 @@ Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0005: Full Web Analytics Suite
 |---|---|---|
 | T1-T13 | Selesai | Fondasi, shell noir, tracking, multi-channel, log modern |
 | Realtime Analytics | Selesai | Bot separation & dual-tab dashboard |
-| T14 | Selesai | Trafik & Akuisisi Pengunjung (`/admin/analytics/traffic`) |
-| T15 | Selesai | Konversi & Funnel E-Commerce (`/admin/analytics/conversion`) |
-| T16 | Selesai | Kecepatan & Google Core Web Vitals (`/admin/analytics/performance`) |
+| T14-T16 (CR-0005) | Selesai | Trafik, Konversi Funnel, dan Core Web Vitals dengan ApexCharts |
 | T17 (CR-0006) | Selesai | Dynamic SEO, JSON-LD Schema, sitemap.xml, robots.txt, llms.txt |
+| T18 (CR-0007) | Selesai | Full Dynamic CMS (Ongkir, DP, Bank, Testimoni, Stats, FAQ, About) |
 
 ## Sesi terakhir (1-3 baris, ditimpa)
-- Sesi 2026-11-05: Implementasi Prioritas Utama kesiapan produksi: custom error.vue (404/500 Noir & Gold), granular rate limiting backend (auth 20, analytics 400, general 600 req/15m), CORS production domain fallback, dan database indexes (AnalyticsLogs, PublicOrders, Orders). Test 17/17 lulus.
+- Sesi 2026-11-05: CR-0007 selesai penuh: Seluruh data hardcoded di FE (ongkir, DP, bank, testimoni, trust counter, FAQ, about) kini 100% dinamis terintegrasi ke backend StoreSettings & Panel Admin 5 tab. Test 17/17 lulus.
