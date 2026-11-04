@@ -296,18 +296,14 @@
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig()
+const { waHref, trustBadges, trustStats, testimonials, faqs } = useStoreSettings()
+const apiUrl = config.public.apiUrl
+
 // ===== DYNAMIC SEO & STRUCTURED DATA (CR-0006) =====
 useSeo({
-  faqs: [
-    { q: 'Bagaimana cara merawat bunga agar tetap segar?', a: 'Potong batang miring 45 derajat setiap 2 hari, gunakan air bersih sejuk, dan hindari sinar matahari langsung atau hembusan AC secara konstan. Kami sertakan satu sachet nutrisi bunga gratis di setiap kemasan.' },
-    { q: 'Apakah bisa meminta waktu pengiriman spesifik?', a: 'Bisa. Sampaikan slot waktu yang diinginkan saat pemesanan, atau hubungi Concierge WhatsApp kami untuk pengiriman di waktu menit-presisi pada event mendesak.' },
-    { q: 'Bagaimana prosedur klaim garansi jika bunga layu saat diterima?', a: 'Kirimkan foto buket saat pertama tiba melalui WhatsApp dalam 3 jam setelah paket diterima. Tim kami akan merangkai buket pengganti dan mengirimkannya tanpa biaya.' },
-    { q: 'Metode pembayaran apa saja yang didukung?', a: 'Kami menerima Transfer Bank, QRIS (GoPay, OVO, Dana, ShopeePay), serta COD (Bayar di Tempat) untuk area tertentu.' },
-  ]
+  faqs: faqs.value
 })
-const config = useRuntimeConfig()
-const { waHref } = useStoreSettings()
-const apiUrl = config.public.apiUrl
 
 // ===== DUMMY FALLBACK DATA =====
 const dummyBanners = [
@@ -399,36 +395,6 @@ const filteredBestsellers = computed(() => {
   if (!pattern) return bestsellers.value
   return bestsellers.value.filter((p: any) => pattern.test(String(p.category || '')))
 })
-
-// ===== TESTIMONI (statis, determinis) =====
-const testimonials = [
-  { text: 'Buket mawarnya luar biasa segar dan harum tahan sampai 6 hari di vas! Kartu wax seal-nya premium banget, istri saya sampai terharu.', name: 'Raka Aditya', location: 'Kebayoran Baru, Jakarta Selatan', initials: 'RA', tag: 'Anniversary ke-5' },
-  { text: 'Pesan jam 10 pagi minta dikirim jam 13.00 ke Balairung UI, beneran sampai tepat waktu dengan bunga yang mekar sempurna. Kurir sangat sopan!', name: 'Siti Nurhaliza', location: 'Depok, Jawa Barat', initials: 'SN', tag: 'Wisuda Adik' },
-  { text: 'Florist-nya ramah diajak konsultasi via WhatsApp. Warnanya disesuaikan sama dress wisuda pacar saya. Hasilnya artistik, bukan bunga pasaran.', name: 'Dedi Setiawan', location: 'Bandung Wetan, Bandung', initials: 'DS', tag: 'Custom Gift Box' },
-]
-
-// ===== VALUE PROPS =====
-const trustBadges = [
-  { icon: 'ph:flower-bold', title: '100% Bunga Segar Pilihan', text: 'Dipilih & dirancang ulang tiap hari.' },
-  { icon: 'ph:bolt-bold', title: 'Kirim Hari Ini (Same Day)', text: 'Order sebelum 14:00 WIB, garansi sampai hari ini.' },
-  { icon: 'ph:envelope-bold', title: 'Gratis Kartu Ucapan', text: 'Kartu custom tanpa biaya tambahan.' },
-  { icon: 'ph:shield-check-bold', title: 'Garansi 100% Ganti Baru', text: 'Bunga layu saat diterima? Kami ganti baru.' },
-]
-
-// ===== TRUST STATS =====
-const trustStats = [
-  { value: '500+', label: 'Pelanggan Puas', icon: 'ph:flowers-bold' },
-  { value: '4.9★', label: 'Rating Rata-rata', icon: 'ph:star-fill' },
-  { value: '2h', label: 'Estimasi Kirim', icon: 'ph:clock-fill' },
-]
-
-// ===== FAQ (statis) =====
-const faqs = [
-  { q: 'Bagaimana cara merawat bunga agar tetap segar?', a: 'Potong batang miring 45 derajat setiap 2 hari, gunakan air bersih sejuk, dan hindari sinar matahari langsung atau hembusan AC secara konstan. Kami sertakan satu sachet nutrisi bunga gratis di setiap kemasan.' },
-  { q: 'Apakah bisa meminta waktu pengiriman spesifik?', a: 'Bisa. Sampaikan slot waktu yang diinginkan saat pemesanan, atau hubungi Concierge WhatsApp kami untuk pengiriman di waktu menit-presisi pada event mendesak.' },
-  { q: 'Bagaimana prosedur klaim garansi jika bunga layu saat diterima?', a: 'Kirimkan foto buket saat pertama tiba melalui WhatsApp dalam 3 jam setelah paket diterima. Tim kami akan merangkai buket pengganti dan mengirimkannya tanpa biaya.' },
-  { q: 'Metode pembayaran apa saja yang didukung?', a: 'Kami menerima Transfer Bank, QRIS (GoPay, OVO, Dana, ShopeePay), serta COD (Bayar di Tempat) untuk area tertentu.' },
-]
 
 // ===== FLASH SALE COUNTDOWN (berakhir akhir hari) =====
 const getEndOfDay = () => {

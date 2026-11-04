@@ -101,7 +101,7 @@
             <h2 class="text-xl font-black text-primary tracking-tight border-b border-(--border-color) pb-4">Opsi Pengiriman</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <label 
-                v-for="method in shippingMethods" 
+                v-for="method in shippingOptions" 
                 :key="method.id" 
                 class="relative flex flex-col p-6 rounded-3xl cursor-pointer border-2 transition-all duration-300 overflow-hidden" 
                 :class="selectedShipping?.id === method.id 
@@ -252,7 +252,7 @@ definePageMeta({
 const cart = useCartStore()
 const router = useRouter()
 const config = useRuntimeConfig()
-const { waHref } = useStoreSettings()
+const { waHref, shippingOptions, paymentMethods } = useStoreSettings()
 const { trackAction } = useAnalytics()
 
 const form = ref({
@@ -266,33 +266,18 @@ const form = ref({
 // State untuk proses submit
 const isSubmitting = ref(false)
 
-interface ShippingMethod {
-  id: number
-  name: string
-  description: string
-  cost: number
-}
+const selectedShipping = ref<any>(null)
+const selectedPayment = ref<any>(null)
 
-interface PaymentMethod {
-  id: string
-  name: string
-  rate: number
-}
-
-const shippingMethods: ShippingMethod[] = [
-  { id: 1, name: 'Pengiriman Standar', description: 'Estimasi tiba dalam 3-5 hari kerja.', cost: 15000 },
-  { id: 2, name: 'Pengiriman Express', description: 'Priority shipping, tiba dalam 1-2 hari.', cost: 30000 },
-]
-
-const paymentMethods: PaymentMethod[] = [
-  { id: 'full_payment', name: 'Lunas Sekarang', rate: 1.0 },
-  { id: 'dp_70', name: 'Angsuran DP 70%', rate: 0.7 },
-  { id: 'dp_50', name: 'Angsuran DP 50%', rate: 0.5 },
-  { id: 'cod', name: 'Bayar Di Tempat (COD)', rate: 0 },
-]
-
-const selectedShipping = ref<ShippingMethod>(shippingMethods[0] as ShippingMethod)
-const selectedPayment = ref<PaymentMethod>(paymentMethods[0] as PaymentMethod)
+// Watcher untuk sinkronisasi default pilihan saat data settings tersedia
+watchEffect(() => {
+  if (!selectedShipping.value && shippingOptions.value.length > 0) {
+    selectedShipping.value = shippingOptions.value[0]
+  }
+  if (!selectedPayment.value && paymentMethods.value.length > 0) {
+    selectedPayment.value = paymentMethods.value[0]
+  }
+})
 
 const shippingCost = computed(() => selectedShipping.value?.cost || 0)
 const totalOrder = computed(() => cart.totalPrice + shippingCost.value)

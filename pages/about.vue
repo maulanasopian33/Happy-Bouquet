@@ -38,7 +38,7 @@
               width="800" height="1000" @error="onImgError"
             />
             <div class="absolute -bottom-6 -right-6 z-20 bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-xl border border-rose-100">
-               <p class="text-4xl font-black text-rose-600 leading-none">4+</p>
+               <p class="text-4xl font-black text-rose-600 leading-none">{{ brandStory.years_experience }}</p>
                <p class="text-[9px] font-black uppercase tracking-widest text-muted mt-1 leading-tight">Tahun Merangkai <br> Emosi</p>
             </div>
           </div>
@@ -47,12 +47,12 @@
         <!-- Text Story -->
         <div class="lg:col-span-7 space-y-8 reveal">
           <div class="space-y-4">
-            <h2 class="text-2xl md:text-5xl font-black text-primary tracking-tight">Lebih dari Sekadar <br> Buket Bunga.</h2>
+            <h2 class="text-2xl md:text-5xl font-black text-primary tracking-tight">{{ brandStory.title }}</h2>
             <p class="text-sm md:text-lg text-secondary font-medium leading-relaxed">
-              Didirikan pada tahun 2020 di jantung kota Jakarta, HappyBouquet lahir dari keinginan untuk mengubah cara kita merayakan momen penting. Kami percaya bahwa setiap bunga memiliki bahasa unik, dan tugas kami adalah merangkainya menjadi sebuah puisi visual yang tak terlupakan.
+              {{ brandStory.story_p1 }}
             </p>
             <p class="text-sm md:text-base text-secondary/80 font-medium leading-relaxed">
-              Kami bekerja sama langsung dengan kebun bunga lokal dan internasional terbaik untuk memastikan hanya bunga peraih penghargaan yang sampai di depan pintu Anda.
+              {{ brandStory.story_p2 }}
             </p>
           </div>
           
@@ -73,7 +73,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal">
         <div 
-          v-for="(value, i) in values" 
+          v-for="(value, i) in brandValues" 
           :key="i"
           class="card-premium p-10 space-y-6 group hover:-translate-y-3 transition-all duration-700 text-center flex flex-col items-center"
         >
@@ -122,16 +122,12 @@
 </template>
 
 <script setup lang="ts">
+const { brandStory, brandValues } = useStoreSettings()
+
 const onImgError = (e: Event) => {
   const t = e.target as HTMLImageElement | null
   if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
 }
-
-const values = [
-  { title: 'Kesegaran Mutlak', icon: 'ph:leaf-fill', desc: 'Hanya bunga segar dari kebun terbaik yang kami pilih untuk setiap pesanan Anda.' },
-  { title: 'Desain Artisanal', icon: 'ph:paint-brush-broad-fill', desc: 'Rangkaian kami bukan hasil masal, melainkan kurasi seni dari para florist ahli.' },
-  { title: 'Tepat di Hati', icon: 'ph:heart-fill', desc: 'Setiap pengiriman adalah misi untuk menyampaikan emosi dan senyuman.' },
-]
 
 const stats = [
   { val: '15k+', label: 'Hati Bahagia' },

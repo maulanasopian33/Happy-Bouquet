@@ -123,21 +123,33 @@ const handleSubscribe = () => {
   }
 }
 
-const { settings, waHref } = useStoreSettings()
+const config = useRuntimeConfig()
+const { settings, waHref, bankAccounts } = useStoreSettings()
+
+// Kategori dinamis dari database API
+const { data: catRes } = await useFetch(`${config.public.apiUrl}/categories`)
+const kategori = computed(() => {
+  const list = catRes.value?.data || []
+  if (list.length > 0) {
+    return list.slice(0, 5).map((c) => ({
+      label: c.name || c.NAME,
+      to: `/products?cat=${encodeURIComponent(c.name || c.NAME)}`
+    }))
+  }
+  return [
+    { label: 'Signature Rose Bouquets', to: '/products?cat=buket-bunga' },
+    { label: 'Graduation Special', to: '/products?cat=buket-wisuda' },
+    { label: 'Wellness & Baby Hampers', to: '/products?cat=hampers-dan-gift' },
+    { label: 'Bunga Meja & Vas Keramik', to: '/products' },
+    { label: 'Standing Flower Pernikahan', to: '/products' },
+  ]
+})
 
 const socials = computed(() => [
   { icon: 'ph:instagram-logo-fill', href: settings.value.instagram_url, title: 'Instagram' },
   { icon: 'ph:play-circle-fill', href: settings.value.tiktok_url, title: 'TikTok' },
   { icon: 'ph:chat-circle-dots-fill', href: waHref(), title: 'WhatsApp' },
 ])
-
-const kategori = [
-  { label: 'Signature Rose Bouquets', to: '/products?cat=buket-bunga' },
-  { label: 'Graduation Special', to: '/products?cat=buket-wisuda' },
-  { label: 'Wellness & Baby Hampers', to: '/products?cat=hampers-dan-gift' },
-  { label: 'Bunga Meja & Vas Keramik', to: '/products?cat=koleksi' },
-  { label: 'Standing Flower Pernikahan', to: '/products?cat=koleksi' },
-]
 
 const layanan = [
   { label: 'Bespoke Floral Consultation', to: '/contact' },
@@ -147,5 +159,10 @@ const layanan = [
   { label: 'Pengiriman Korporasi', to: '/contact' },
 ]
 
-const metodeBayar = ['BCA', 'Mandiri', 'QRIS', 'GoPay', 'Visa/Mastercard']
+const metodeBayar = computed(() => {
+  if (bankAccounts.value.length > 0) {
+    return bankAccounts.value.map(b => b.bank_name)
+  }
+  return ['BCA', 'Mandiri', 'QRIS', 'GoPay', 'Visa/Mastercard']
+})
 </script>
