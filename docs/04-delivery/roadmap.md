@@ -137,21 +137,40 @@ Checklist per tahap (jalankan berurutan, centang di sini atau di register):
 - [x] Filter order berdasarkan channel (`Web`, `WhatsApp`, `Shopee`, `TikTok`, `Direct`, `Reseller`) di `OrderListView.vue`
 - Verifikasi: Build Vite panel lulus + 14/14 unit test Panel lulus
 
-**T14** — Trafik & Akuisisi Pengunjung (CR-0005)
-- [ ] Endpoint backend `GET /api/analytics/traffic` (agregasi tren harian/mingguan, pengelompokan referrer, ekstraksi UTM, distribusi devices/OS/browser)
-- [ ] Panel Admin view `AnalyticsTrafficView.vue` (`/admin/analytics/traffic`) dengan date range picker, tren chart, pie device, dan tabel acquisition
+**T14** — selesai 2026-11-05 Trafik & Akuisisi Pengunjung (CR-0005)
+- [x] Endpoint backend `GET /api/analytics/traffic` (agregasi tren harian/mingguan, pengelompokan referrer, ekstraksi UTM, distribusi devices/OS/browser)
+- [x] Panel Admin view `AnalyticsTrafficView.vue` (`/admin/analytics/traffic`) dengan date range picker, tren chart ApexCharts, pie device, dan tabel acquisition
 - Verifikasi: Unit test backend + Build Vite Panel lulus
 
-**T15** — Konversi & Funnel E-Commerce (CR-0005)
-- [ ] Endpoint backend `GET /api/analytics/conversion` (penghitungan 5 tahap corong belanja, drop-off rate, view-to-cart ratio per produk, outbound channel clicks)
-- [ ] Panel Admin view `AnalyticsConversionView.vue` (`/admin/analytics/conversion`) dengan visualisasi stepper funnel & tabel matriks konversi produk
+**T15** — selesai 2026-11-05 Konversi & Funnel E-Commerce (CR-0005)
+- [x] Endpoint backend `GET /api/analytics/conversion` (penghitungan 5 tahap corong belanja, drop-off rate, view-to-cart ratio per produk, outbound channel clicks)
+- [x] Panel Admin view `AnalyticsConversionView.vue` (`/admin/analytics/conversion`) dengan visualisasi stepper funnel & tabel matriks konversi produk
 - Verifikasi: Unit test backend + Build Vite Panel lulus
 
-**T16** — Kecepatan Situs & Core Web Vitals (CR-0005)
-- [ ] Telemetri FE Google Web Vitals (LCP, CLS, INP) + integrasi beacon
-- [ ] Endpoint backend `GET /api/analytics/performance` (rata-rata LCP/CLS/INP, page load speed, bounce rate, dwell time, rasio cache SWR)
-- [ ] Panel Admin view `AnalyticsPerformanceView.vue` (`/admin/analytics/performance`) dengan kartu skor Google Vitals dan UX engagement metrics
+**T16** — selesai 2026-11-05 Kecepatan Situs & Core Web Vitals (CR-0005)
+- [x] Telemetri FE Google Web Vitals (LCP, CLS, INP) + integrasi beacon
+- [x] Endpoint backend `GET /api/analytics/performance` (rata-rata LCP/CLS/INP, page load speed, bounce rate, dwell time, rasio cache SWR)
+- [x] Panel Admin view `AnalyticsPerformanceView.vue` (`/admin/analytics/performance`) dengan kartu skor Google Vitals dan UX engagement metrics
 - Verifikasi: Build Nuxt FE + Build Vite Panel lulus
+
+**T17** — selesai 2026-11-05 Dynamic SEO, JSON-LD Schema & AI Search Engine (CR-0006)
+- [x] Panel Admin tab SEO dengan live Google SERP simulator
+- [x] Composable `useSeo()` menginjeksi meta tags, OpenGraph, dan 4 Schema.org JSON-LD
+- [x] Nitro server routes: `robots.txt.ts`, `sitemap.xml.ts`, `llms.txt.ts`, `llms-full.txt.ts`
+- Verifikasi: Test 17/17 lulus
+
+**T18** — selesai 2026-11-05 Full Dynamic Content Management Suite (CR-0007)
+- [x] Tarif ongkir checkout, opsi DP & rekening bank toko dinamis dari database
+- [x] Konten beranda (testimoni, badges, reputasi) & CMS halaman (About, FAQ, Kebijakan) dinamis
+- [x] Panel Admin StoreSettingView 5 Tab lengkap
+- Verifikasi: Test 17/17 lulus
+
+**T19** — selesai 2026-11-05 Product Customization Suite (CR-0008)
+- [x] Migrasi database & model: `gallery_urls`, `variants`, `specifications`, `stock`, `rating`, `review_count`
+- [x] Panel Admin Form Produk: Multi-image picker, editor varian ukuran & wrapping, stok & spesifikasi
+- [x] Storefront FE PDP: Thumbnail carousel strip, opsi varian dinamis, stok real-time, spesifikasi flora
+- [x] Checkout Ingestion: Menyertakan rincian varian ke order backend
+- Verifikasi: Test 17/17 lulus, vue-tsc lulus
 
 ## 3. Rilis
 

@@ -301,7 +301,11 @@ const placeOrder = async () => {
   // Simpan pesanan ke API (non-blocking — fallback graceful jika gagal)
   try {
     const apiUrl = config.public.apiUrl
-    const items = cart.items.map((i) => ({ name: i.name, qty: i.quantity, price: i.price }))
+    const items = cart.items.map((i) => ({
+      name: i.variants && Object.keys(i.variants).length ? `${i.name} (${Object.values(i.variants).join(', ')})` : i.name,
+      qty: i.quantity,
+      price: i.price,
+    }))
     const paymentType = selectedPayment.value.id.startsWith('dp') ? 'dp' : 'full'
 
     const res: any = await $fetch(`${apiUrl}/orders/public`, {
