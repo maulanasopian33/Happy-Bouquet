@@ -36,4 +36,4 @@ Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0005: Full Web Analytics Suite
 | T17 (CR-0006) | Selesai | Dynamic SEO, JSON-LD Schema, sitemap.xml, robots.txt, llms.txt |
 
 ## Sesi terakhir (1-3 baris, ditimpa)
-- Sesi 2026-11-05: Tiga halaman analitik yang belum terdaftar (`/admin/analytics/traffic`, `/conversion`, `/performance`) telah selesai diimplementasikan penuh di Panel Admin dan didukung oleh endpoint API backend terdedikasi.
+- Sesi 2026-11-05: Integrasi data riil backend dari tabel AnalyticsLogs & Orders selesai. Visualisasi grafik di `/admin/analytics/traffic`, `/conversion`, dan `/performance` telah dimigrasikan penuh ke ApexCharts modern (Area, Donut, Funnel Bar, dan Radial Gauge). Unit test 17/17 lulus (skip build sesuai arahan).
