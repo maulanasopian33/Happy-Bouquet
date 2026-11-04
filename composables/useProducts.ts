@@ -1,5 +1,49 @@
 import { ref } from 'vue'
 
+export interface ProductVariantItem {
+  id: string
+  name: string
+  label?: string
+  stems?: string
+  priceModifier: number
+  priceModifierText?: string
+  diameter?: string
+}
+
+export interface ProductWrappingItem {
+  name: string
+  color: string
+}
+
+export interface ProductAddonItem {
+  id: string
+  name: string
+  price: number
+}
+
+export interface ProductVariants {
+  sizes?: ProductVariantItem[]
+  wrappings?: ProductWrappingItem[]
+  addons?: ProductAddonItem[]
+}
+
+export interface KeyValueSpec {
+  label: string
+  value: string
+}
+
+export interface CareInstructionItem {
+  step: number
+  title: string
+  description: string
+}
+
+export interface ProductSpecifications {
+  composition?: KeyValueSpec[]
+  dimensions?: KeyValueSpec[]
+  careInstructions?: CareInstructionItem[]
+}
+
 export interface Product {
   id: number
   slug: string
@@ -9,10 +53,12 @@ export interface Product {
   image: string
   description: string
   stock: number
-  variants: any[]
+  variants: ProductVariants | any
   rating?: number
   reviewCount?: number
   images: string[]
+  galleryUrls?: string[]
+  specifications?: ProductSpecifications | any
   category?: string
   type?: string
   preorderDuration?: number
@@ -30,6 +76,11 @@ export const resolveImageUrl = (photo: string | undefined | null, apiUrl: string
 
 export const mapProduct = (p: any, apiUrl: string): Product => {
   const imageUrl = resolveImageUrl(p.photo_url, apiUrl)
+  const extraImages = Array.isArray(p.gallery_urls)
+    ? p.gallery_urls.map((img: string) => resolveImageUrl(img, apiUrl)).filter(Boolean)
+    : []
+  const allImages = [imageUrl, ...extraImages.filter((img: string) => img !== imageUrl)]
+
   return {
     id: p.id,
     slug: p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`),
@@ -37,11 +88,13 @@ export const mapProduct = (p: any, apiUrl: string): Product => {
     price: Number(p.price),
     image: imageUrl,
     description: p.description || '',
-    stock: 20, // Default mock stock if API doesn't provide
-    variants: [], // API doesn't seem to have variants yet
-    rating: 4.5,
-    reviewCount: 0,
-    images: [imageUrl],
+    stock: typeof p.stock === 'number' ? p.stock : (Number(p.stock) || 20),
+    variants: p.variants || null,
+    rating: typeof p.rating === 'number' ? p.rating : (Number(p.rating) || 4.9),
+    reviewCount: typeof p.review_count === 'number' ? p.review_count : (Number(p.review_count) || 128),
+    images: allImages.length > 0 ? allImages : [imageUrl],
+    galleryUrls: extraImages,
+    specifications: p.specifications || null,
     category: typeof p.category === 'object' ? (p.category.name || p.category.NAME) : p.category,
     type: p.type,
     preorderDuration: p.preorder_duration,

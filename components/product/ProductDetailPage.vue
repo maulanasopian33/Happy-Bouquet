@@ -173,9 +173,9 @@
                   <div class="flex text-[#d4af37]">
                     <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-4 h-4" />
                   </div>
-                  <span class="font-bold text-[#e5e1e4]">4.9</span>
+                  <span class="font-bold text-[#e5e1e4]">{{ (product.rating || 4.9).toFixed(1) }}</span>
                   <button @click="switchTab('tab-reviews')" class="text-[#b8b2a3] underline hover:text-[#d4af37] transition-colors">
-                    (1.428 Ulasan Terverifikasi)
+                    ({{ (product.reviewCount || 128).toLocaleString('id-ID') }} Ulasan Terverifikasi)
                   </button>
                 </div>
                 <span class="text-[#353437]">•</span>
@@ -202,6 +202,18 @@
                     {{ discountBadge }}
                   </span>
                   <span class="text-xs text-[#b8b2a3]">Sudah Termasuk PPN 11%</span>
+                </div>
+                <!-- Status Stok -->
+                <div class="flex items-center gap-2 mt-2 text-xs">
+                  <span v-if="(product.stock ?? 20) > 10" class="text-emerald-400 flex items-center gap-1">
+                    <Icon name="ph:check-circle-fill" class="w-3.5 h-3.5" /> Stok Tersedia ({{ product.stock ?? 20 }} unit)
+                  </span>
+                  <span v-else-if="(product.stock ?? 20) > 0" class="text-amber-400 flex items-center gap-1 font-semibold">
+                    <Icon name="ph:warning-circle-fill" class="w-3.5 h-3.5" /> Stok Terbatas — Sisa {{ product.stock }} unit
+                  </span>
+                  <span v-else class="text-rose-400 flex items-center gap-1 font-semibold">
+                    <Icon name="ph:x-circle-fill" class="w-3.5 h-3.5" /> Stok Habis
+                  </span>
                 </div>
               </div>
 
@@ -515,21 +527,13 @@
                 <Icon name="ph:flower-lotus-fill" class="w-5 h-5 text-[#d4af37]" /> Komposisi Flora & Dedaunan
               </h3>
               <ul class="flex flex-col gap-3 text-xs text-[#b8b2a3]">
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Bunga Utama:</span>
-                  <span>{{ product.name }} (Grade AAA Pilihan)</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Bunga Aksen:</span>
-                  <span>Baby's Breath Putih Kering Premium (Million Star)</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Dedaunan Aromatik:</span>
-                  <span>Eucalyptus Cinerea & Italian Ruscus Hijau</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Nutrisi & Hidrasi:</span>
-                  <span>Florist Water Sponge dengan Floral Food</span>
+                <li
+                  v-for="(comp, cIdx) in compositionSpecs"
+                  :key="cIdx"
+                  class="flex items-center justify-between py-2 border-b border-[#353437]/40"
+                >
+                  <span class="text-[#e5e1e4] font-medium">{{ comp.label }}:</span>
+                  <span>{{ comp.value }}</span>
                 </li>
               </ul>
             </div>
@@ -539,21 +543,13 @@
                 <Icon name="ph:ruler-bold" class="w-5 h-5 text-[#d4af37]" /> Dimensi & Material Packaging
               </h3>
               <ul class="flex flex-col gap-3 text-xs text-[#b8b2a3]">
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Tinggi Total:</span>
-                  <span>± 55 cm (Hingga ujung wrapping luar)</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Diameter Buket:</span>
-                  <span>± 45 cm (Kubah bervolume penuh)</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Material Pembungkus:</span>
-                  <span>Matte Korean Waterproof Paper 120gsm</span>
-                </li>
-                <li class="flex items-center justify-between py-2 border-b border-[#353437]/40">
-                  <span class="text-[#e5e1e4] font-medium">Finishing Aksen:</span>
-                  <span>Pita Satin Champagne Gold & Stempel Lilin Segel</span>
+                <li
+                  v-for="(dim, dIdx) in dimensionSpecs"
+                  :key="dIdx"
+                  class="flex items-center justify-between py-2 border-b border-[#353437]/40"
+                >
+                  <span class="text-[#e5e1e4] font-medium">{{ dim.label }}:</span>
+                  <span>{{ dim.value }}</span>
                 </li>
               </ul>
             </div>
@@ -561,27 +557,17 @@
 
           <!-- Tab Content 3: Petunjuk Perawatan (Flower Care) -->
           <div v-show="activeTabId === 'tab-care'" class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-            <div class="p-6 rounded-2xl bg-[#1f1f21] border border-[#353437] flex flex-col gap-3 shadow-md">
-              <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 text-[#d4af37] flex items-center justify-center font-bold text-sm">1</div>
-              <h4 class="font-serif text-base text-[#e5e1e4] font-bold">Potong Tangkai 45°</h4>
+            <div
+              v-for="(care, cIdx) in careInstructions"
+              :key="cIdx"
+              class="p-6 rounded-2xl bg-[#1f1f21] border border-[#353437] flex flex-col gap-3 shadow-md"
+            >
+              <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 text-[#d4af37] flex items-center justify-center font-bold text-sm">
+                {{ care.step || cIdx + 1 }}
+              </div>
+              <h4 class="font-serif text-base text-[#e5e1e4] font-bold">{{ care.title }}</h4>
               <p class="text-xs text-[#b8b2a3] leading-relaxed">
-                Jika dipindahkan ke dalam vas, potong ujung tangkai 1-2 cm secara miring 45 derajat menggunakan gunting tajam di bawah air mengalir agar pori batang tetap terbuka menyerap nutrisi.
-              </p>
-            </div>
-
-            <div class="p-6 rounded-2xl bg-[#1f1f21] border border-[#353437] flex flex-col gap-3 shadow-md">
-              <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 text-[#d4af37] flex items-center justify-center font-bold text-sm">2</div>
-              <h4 class="font-serif text-base text-[#e5e1e4] font-bold">Ganti Air Bersih</h4>
-              <p class="text-xs text-[#b8b2a3] leading-relaxed">
-                Ganti air dalam vas setiap 2 hari sekali. Campurkan nutrisi bunga yang kami sertakan di dalam amplop untuk mencegah timbulnya bakteri pada air.
-              </p>
-            </div>
-
-            <div class="p-6 rounded-2xl bg-[#1f1f21] border border-[#353437] flex flex-col gap-3 shadow-md">
-              <div class="w-10 h-10 rounded-full bg-[#d4af37]/20 text-[#d4af37] flex items-center justify-center font-bold text-sm">3</div>
-              <h4 class="font-serif text-base text-[#e5e1e4] font-bold">Suhu & Sirkulasi</h4>
-              <p class="text-xs text-[#b8b2a3] leading-relaxed">
-                Jauhkan rangkaian bunga dari paparan sinar matahari langsung, kipas angin kencang, dan hembusan langsung AC. Tempatkan di ruangan sejuk dengan suhu 18°C - 24°C.
+                {{ care.description }}
               </p>
             </div>
           </div>
@@ -590,11 +576,11 @@
           <div v-show="activeTabId === 'tab-reviews'" class="flex flex-col gap-6 animate-fade-in" id="reviews">
             <div class="p-6 rounded-2xl bg-[#18181a] border border-[#353437] grid grid-cols-1 md:grid-cols-12 gap-6 items-center shadow-md">
               <div class="md:col-span-4 flex flex-col items-center justify-center text-center p-4 border-b md:border-b-0 md:border-r border-[#353437]/40">
-                <span class="font-serif text-5xl text-[#d4af37] font-bold">4.9</span>
+                <span class="font-serif text-5xl text-[#d4af37] font-bold">{{ (product.rating || 4.9).toFixed(1) }}</span>
                 <div class="flex text-[#d4af37] my-2">
                   <Icon v-for="s in 5" :key="s" name="ph:star-fill" class="w-5 h-5" />
                 </div>
-                <span class="text-xs text-[#b8b2a3]">Berdasarkan 1.428 ulasan pembeli</span>
+                <span class="text-xs text-[#b8b2a3]">Berdasarkan {{ (product.reviewCount || 128).toLocaleString('id-ID') }} ulasan pembeli</span>
               </div>
 
               <div class="md:col-span-8 flex flex-col gap-2">
@@ -794,21 +780,75 @@ const currentMainImage = computed(() => {
 })
 
 // 2. Opsi Tangkai / Ukuran
-const sizeOptions = [
+const defaultSizes = [
   { id: 'standard', stems: '20 Tangkai', name: 'Standard', priceModifier: 0, priceModifierText: 'Sesuai Katalog', diameter: 'Diameter ~45cm', label: '20 Tangkai (Standard)' },
   { id: 'grand', stems: '35 Tangkai', name: 'Grand Luxe', priceModifier: 250000, priceModifierText: '+Rp 250.000', diameter: 'Diameter ~60cm', label: '35 Tangkai (Grand Luxe)' },
   { id: 'sovereign', stems: '50 Tangkai', name: 'Sovereign', priceModifier: 550000, priceModifierText: '+Rp 550.000', diameter: 'Diameter ~75cm', label: '50 Tangkai (Sovereign)' },
 ]
-const selectedSize = ref(sizeOptions[0])
+
+const sizeOptions = computed(() => {
+  const custom = props.product?.variants?.sizes
+  if (Array.isArray(custom) && custom.length > 0) {
+    return custom.map((s: any, idx: number) => {
+      const pMod = Number(s.priceModifier || 0)
+      return {
+        id: s.id || `size-${idx}`,
+        stems: s.stems || s.name || `Pilihan ${idx + 1}`,
+        name: s.name || `Varian ${idx + 1}`,
+        priceModifier: pMod,
+        priceModifierText: pMod === 0 ? 'Sesuai Katalog' : `+${formatCurrency(pMod)}`,
+        diameter: s.diameter || '',
+        label: s.label || `${s.stems || s.name} (${s.name})`
+      }
+    })
+  }
+  return defaultSizes
+})
+
+const userSelectedSize = ref<any>(null)
+const selectedSize = computed({
+  get: () => {
+    if (userSelectedSize.value && sizeOptions.value.some((s: any) => s.id === userSelectedSize.value.id)) {
+      return userSelectedSize.value
+    }
+    return sizeOptions.value[0] || defaultSizes[0]
+  },
+  set: (val: any) => {
+    userSelectedSize.value = val
+  }
+})
 
 // 3. Opsi Warna Wrapping
-const wrappingOptions = [
+const defaultWrappings = [
   { name: 'Classic Matte Noir', color: '#171719' },
   { name: 'Pure Pearl White', color: '#ebe7df' },
   { name: 'Emerald Forest', color: '#1b3b2b' },
   { name: 'Royal Champagne Gold', color: '#c5a059' },
 ]
-const selectedWrapping = ref(wrappingOptions[0])
+
+const wrappingOptions = computed(() => {
+  const custom = props.product?.variants?.wrappings
+  if (Array.isArray(custom) && custom.length > 0) {
+    return custom.map((w: any) => ({
+      name: w.name || 'Warna Custom',
+      color: w.color || '#d4af37'
+    }))
+  }
+  return defaultWrappings
+})
+
+const userSelectedWrapping = ref<any>(null)
+const selectedWrapping = computed({
+  get: () => {
+    if (userSelectedWrapping.value && wrappingOptions.value.some((w: any) => w.name === userSelectedWrapping.value.name)) {
+      return userSelectedWrapping.value
+    }
+    return wrappingOptions.value[0] || defaultWrappings[0]
+  },
+  set: (val: any) => {
+    userSelectedWrapping.value = val
+  }
+})
 
 // 4. Opsi Pelengkap (Addons)
 const addons = ref({
@@ -855,13 +895,51 @@ const discountBadge = computed(() => {
   return `Hemat ${formatCurrency(diff)} (${pct}%)`
 })
 
-// 8. Tabs Data
-const tabList = [
+// 8. Dynamic Tabs & Specs
+const defaultComposition = computed(() => [
+  { label: 'Bunga Utama', value: `${props.product?.name || 'Mawar'} (Grade AAA Pilihan)` },
+  { label: 'Bunga Aksen', value: "Baby's Breath Putih Kering Premium (Million Star)" },
+  { label: 'Dedaunan Aromatik', value: 'Eucalyptus Cinerea & Italian Ruscus Hijau' },
+  { label: 'Nutrisi & Hidrasi', value: 'Florist Water Sponge dengan Floral Food' },
+])
+
+const compositionSpecs = computed(() => {
+  const specs = props.product?.specifications?.composition
+  if (Array.isArray(specs) && specs.length > 0) return specs
+  return defaultComposition.value
+})
+
+const defaultDimensions = [
+  { label: 'Tinggi Total', value: '± 55 cm (Hingga ujung wrapping luar)' },
+  { label: 'Diameter Buket', value: '± 45 cm (Kubah bervolume penuh)' },
+  { label: 'Material Pembungkus', value: 'Matte Korean Waterproof Paper 120gsm' },
+  { label: 'Finishing Aksen', value: 'Pita Satin Champagne Gold & Stempel Lilin Segel' },
+]
+
+const dimensionSpecs = computed(() => {
+  const specs = props.product?.specifications?.dimensions
+  if (Array.isArray(specs) && specs.length > 0) return specs
+  return defaultDimensions
+})
+
+const defaultCare = [
+  { step: 1, title: 'Potong Tangkai 45°', description: 'Jika dipindahkan ke dalam vas, potong ujung tangkai 1-2 cm secara miring 45 derajat menggunakan gunting tajam di bawah air mengalir agar pori batang tetap terbuka menyerap nutrisi.' },
+  { step: 2, title: 'Ganti Air Bersih', description: 'Ganti air dalam vas setiap 2 hari sekali. Campurkan nutrisi bunga yang kami sertakan di dalam amplop untuk mencegah timbulnya bakteri pada air.' },
+  { step: 3, title: 'Suhu & Sirkulasi', description: 'Jauhkan rangkaian bunga dari paparan sinar matahari langsung, kipas angin kencang, dan hembusan langsung AC. Tempatkan di ruangan sejuk dengan suhu 18°C - 24°C.' },
+]
+
+const careInstructions = computed(() => {
+  const care = props.product?.specifications?.careInstructions
+  if (Array.isArray(care) && care.length > 0) return care
+  return defaultCare
+})
+
+const tabList = computed(() => [
   { id: 'tab-story', label: 'Kisah & Filosofi Rangkaian' },
   { id: 'tab-specs', label: 'Spesifikasi & Anatomi Bunga' },
   { id: 'tab-care', label: 'Petunjuk Perawatan (Flower Care)' },
-  { id: 'tab-reviews', label: 'Ulasan Pembeli (1.428)' },
-]
+  { id: 'tab-reviews', label: `Ulasan Pembeli (${(props.product?.reviewCount || 128).toLocaleString('id-ID')})` },
+])
 const activeTabId = ref('tab-story')
 const switchTab = (tabId: string) => {
   activeTabId.value = tabId
