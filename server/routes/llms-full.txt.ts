@@ -19,14 +19,14 @@ export default defineEventHandler(async (event) => {
         const slug = p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `product-${p.id}`)
         const priceNum = Number(p.price) || 0
         const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(priceNum)
-        const typeText = p.type === 'preorder' ? `Preorder (${p.preorder_duration || p.preorderDuration || 2} hari)` : 'Ready Stock / Same Day Delivery'
-        const category = typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : (p.category || 'Buket Bunga')
+        const typeText = p.type === 'preorder' ? `Preorder (${p.preorder_duration || p.preorderDuration || 2} hari pengerjaan handmade)` : 'Ready Stock / Siap Kirim'
+        const category = typeof p.category === 'object' && p.category !== null ? (p.category.NAME || p.category.name) : (p.category || 'Buket Pita Satin')
 
         return `### [${p.name}](${siteUrl}/products/${slug})
 - **Harga**: ${formattedPrice}
 - **Kategori**: ${category}
 - **Ketersediaan**: ${typeText}
-- **Deskripsi**: ${p.description || 'Rangkaian bunga segar premium dengan pita satin mewah dan kartu ucapan berstempel lilin emas.'}
+- **Deskripsi**: ${p.description || 'Rangkaian buket pita satin handmade premium karya artisan Happy Bouquet, dilengkapi wrapping cantik dan kartu ucapan kustom.'}
 `
       }).join('\n')
     } else {
@@ -36,18 +36,22 @@ export default defineEventHandler(async (event) => {
     productMarkdown = '_Daftar produk dapat dilihat langsung di katalog web._\n'
   }
 
-  return `# HappyBouquet — Dokumen Lengkap Katalog & Profil Toko (LLMs Full)
+  return `# Happy Bouquet — Dokumen Lengkap Katalog & Profil Toko (LLMs Full)
 
-> Dokumen komprehensif profil HappyBouquet untuk mesin pencari cerdas (Perplexity, ChatGPT, Claude, Gemini, Google SGE/AI Overviews). Memuat seluruh daftar produk aktif, opsi pengiriman, garansi, dan panduan perawatan bunga.
+> **"Make Your Always Happy"**
+> Dokumen komprehensif profil dan katalog produk Happy Bouquet untuk mesin pencari cerdas dan agen AI (Perplexity, ChatGPT, Claude, Gemini, Google Search/AI Overviews). Memuat daftar produk aktif, opsi pengerjaan handmade, legalitas usaha, panduan kustomisasi, dan garansi pengiriman.
 
-## Ringkasan Bisnis & Kontak
-- **Brand**: HappyBouquet (Haute Botanique)
-- **Kategori Bisnis**: Florist Artisan, Toko Bunga Segar & Gift Atelier
-- **Area Layanan**: Jakarta Pusat, Jakarta Selatan, Jakarta Barat, Jakarta Timur, Jakarta Utara, Tangerang, Depok, Bekasi (Jabodetabek)
-- **Jam Layanan**: Setiap Hari 08:00 - 21:00 WIB
+## Profil Bisnis, Legalitas & Kontak
+- **Brand**: Happy Bouquet
+- **Tagline**: *"Make Your Always Happy"*
+- **Status Legalitas**: Usaha Mikro (UMKM) Resmi Ber-NIB (Nomor Induk Berusaha) KBLI 47781 (Perdagangan Eceran Barang Kerajinan / Hasil Kesenian).
+- **Spesialisasi**: Buket pita satin (*handmade satin ribbon bouquet*), buket uang (*money bouquet*), buket *snack*, kalender kustom, dan *creative hampers*.
+- **Lokasi Workshop**: Desa Cibeber, Kecamatan Leuwiliang, Kabupaten Bogor, Jawa Barat, Indonesia (Kode Pos: 16640).
+- **Google Maps**: [Lokasi Happy Bouquet Studio di Google Maps](https://maps.app.goo.gl/QmFJN6TWHLfzxVVh8)
+- **Area Layanan Pengiriman**: Area Bogor & Jabodetabek via Kurir/Instan, serta seluruh Indonesia via Ekspedisi (JNE/J&T/Sicepat).
+- **Jam Operasional**: Senin – Sabtu pukul 08:00 - 17:00 WIB.
 - **Website Resmi**: ${siteUrl}
-- **WhatsApp Concierge**: https://wa.me/6281234567890
-- **Layanan Pengiriman Hari Ini**: Order sebelum jam 14.00 WIB dikirim dan tiba di hari yang sama.
+- **WhatsApp Admin / Custom Order**: https://wa.me/6285150573089
 
 ---
 
@@ -57,18 +61,18 @@ ${productMarkdown}
 
 ---
 
-## 4 Pilar Jaminan Mutu
-1. **100% Tangkai Segar (Grade A+)**: Dipanen dari kebun bersuhu dingin dengan jaminan kesegaran mekar hingga 5 hari.
-2. **Garansi Tiba Selamat**: Rusak atau layu di perjalanan langsung diganti baru tanpa biaya tambahan.
-3. **Wax Seal & Kaligrafi**: Kartu ucapan katun bertekstur, ditulis kaligrafi elegan dan disegel wax lilin emas asli.
-4. **Pratinjau Foto Asli via WhatsApp**: Foto hasil akhir dikirimkan ke nomor WhatsApp pemesan sebelum kurir berangkat.
+## 4 Pilar Jaminan Mutu & Layanan
+1. **100% Handmade Precision**: Dibuat teliti dari bahan pita satin pilihan bertekstur mewah yang awet tahan lama tanpa khawatir layu.
+2. **Kustomisasi Bebas (Full Customization)**: Kebebasan memilih kombinasi warna pita, tema *wrapping*, susunan buket, hingga jumlah tangkai.
+3. **Gratis Kartu Ucapan Kustom**: Setiap pembelian menyertakan kartu ucapan (*greeting card*) dengan pesan personal sesuai permintaan.
+4. **Pratinjau Foto Asli via WhatsApp**: Foto produk buket yang telah selesai dirangkai dikirimkan via WhatsApp ke pemesan sebelum dikemas dan dikirim.
 
 ---
 
-## Panduan Perawatan Rangkaian Bunga Segar
-1. Segera letakkan buket dalam vas berisi air bersih sejuk begitu tiba.
-2. Potong bagian bawah batang bunga secara miring (sudut 45 derajat) kira-kira 1-2 cm setiap 2 hari untuk penyerapan air optimal.
-3. Jauhkan rangkaian dari paparan sinar matahari langsung, hawa panas dapur, atau hembusan udara AC langsung.
-4. Ganti air vas setiap 1-2 hari dan tambahkan sachet nutrisi bunga yang disertakan.
+## Panduan Perawatan & Penanganan Buket Pita Satin
+1. Simpan buket di ruangan yang bersih dan kering.
+2. Jauhkan dari paparan air atau cairan berwarna agar kualitas pita satin dan kertas *wrapping* tetap terjaga.
+3. Apabila berdebu setelah disimpan lama, bersihkan permukaan pita secara perlahan menggunakan kuas lembut atau pembersih debu mikro.
+4. Untuk buket uang (*money bouquet*), buka gulungan/plastik pelindung uang secara perlahan agar tidak merusak fisik uang kertas.
 `
 })

@@ -214,3 +214,4 @@ export const useSeo = (options: SeoOptions = {}) => {
     currentUrl
   }
 }
+

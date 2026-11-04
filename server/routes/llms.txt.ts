@@ -6,7 +6,7 @@ export default defineEventHandler((event) => {
   const proto = getRequestHeader(event, 'x-forwarded-proto') || 'https'
   const siteUrl = `${proto}://${host}`
 
-  return `# Happy Bouquet — Professional Handmade Ribbon Bouquet & Creative Gift Studio
+  return `# Happy Bouquet — Make Your Always Happy
 
 > **"Make Your Always Happy"**
 > Happy Bouquet adalah entitas usaha mikro (UMKM) resmi ber-NIB (*Nomor Induk Berusaha*) yang bergerak di bidang kerajinan kreatif dan studio buket kustom (*artisan gift studio*). Berbasis di Leuwiliang, Kabupaten Bogor, kami menghadirkan buket pita satin (*handmade satin ribbon bouquet*) abadi, buket uang (*money bouquet*), buket *snack*, serta hadiah personal berkualitas tinggi untuk momen wisuda, *anniversary*, dan selebrasi spesial.
@@ -32,8 +32,8 @@ export default defineEventHandler((event) => {
 
 ## Lokasi Studio & Kontak
 - **Alamat Workshop**: Desa Cibeber, Kecamatan Leuwiliang, Kabupaten Bogor, Jawa Barat, Indonesia (Kode Pos: 16640).
-- **Google Maps**: [Lokasi Happy Bouquet Studio di Google Maps](https://maps.google.com/?q=Happy+Bouquet+Leuwiliang+Bogor)
-- **Konsultasi & Pesanan Kustom (WhatsApp)**: Hubungi Admin via WhatsApp di https://wa.me/6281234567890 untuk konsultasi desain, request jumlah tangkai, atau pesanan darurat.
+- **Google Maps**: [Lokasi Happy Bouquet Studio di Google Maps](https://maps.app.goo.gl/QmFJN6TWHLfzxVVh8)
+- **Konsultasi & Pesanan Kustom (WhatsApp)**: Hubungi Admin via WhatsApp di https://wa.me/6285150573089 untuk konsultasi desain, request jumlah tangkai, atau pesanan darurat.
 - **Jam Operasional**: Senin – Sabtu, pukul 08:00 – 17:00 WIB.
 
 ## Tautan Dokumen Pendukung
