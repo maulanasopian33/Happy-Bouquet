@@ -74,12 +74,25 @@ export const resolveImageUrl = (photo: string | undefined | null, apiUrl: string
   return `${new URL(apiUrl).origin}/${photo.replace(/^\/+/, '')}`
 }
 
+export const safeJsonParse = (val: any) => {
+  if (!val) return null
+  if (typeof val === 'object') return val
+  try {
+    return JSON.parse(val)
+  } catch {
+    return val
+  }
+}
+
 export const mapProduct = (p: any, apiUrl: string): Product => {
   const imageUrl = resolveImageUrl(p.photo_url, apiUrl)
-  const extraImages = Array.isArray(p.gallery_urls)
-    ? p.gallery_urls.map((img: string) => resolveImageUrl(img, apiUrl)).filter(Boolean)
+  const rawGallery = safeJsonParse(p.gallery_urls)
+  const extraImages = Array.isArray(rawGallery)
+    ? rawGallery.map((img: string) => resolveImageUrl(img, apiUrl)).filter(Boolean)
     : []
   const allImages = [imageUrl, ...extraImages.filter((img: string) => img !== imageUrl)]
+  const parsedVariants = safeJsonParse(p.variants)
+  const parsedSpecs = safeJsonParse(p.specifications)
 
   return {
     id: p.id,
@@ -89,12 +102,12 @@ export const mapProduct = (p: any, apiUrl: string): Product => {
     image: imageUrl,
     description: p.description || '',
     stock: typeof p.stock === 'number' ? p.stock : (Number(p.stock) || 20),
-    variants: p.variants || null,
+    variants: parsedVariants || null,
     rating: typeof p.rating === 'number' ? p.rating : (Number(p.rating) || 4.9),
     reviewCount: typeof p.review_count === 'number' ? p.review_count : (Number(p.review_count) || 128),
     images: allImages.length > 0 ? allImages : [imageUrl],
     galleryUrls: extraImages,
-    specifications: p.specifications || null,
+    specifications: parsedSpecs || null,
     category: typeof p.category === 'object' ? (p.category.name || p.category.NAME) : p.category,
     type: p.type,
     preorderDuration: p.preorder_duration,
