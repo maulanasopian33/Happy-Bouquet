@@ -36,4 +36,4 @@ Diperbarui: 2026-11-05 | Versi app: 0.3.0-dev (CR-0007: Full Dynamic CMS Suite S
 | T19 (CR-0008) | Selesai | Product Customization Suite (Multi-Image, Varian, Stok, Spesifikasi) |
 
 ## Sesi terakhir (1-3 baris, ditimpa)
-- Sesi 2026-11-05: Integrasi penuh detail produk dinamis: Backend migration & models untuk gallery_urls, variants, specifications, stock, rating, review_count. Panel admin form & detail mendukung multi-image library, varian ukuran/tangkai & wrapping, stok dan spesifikasi. FE storefront /products/[slug] merender data dinamis dengan fallback elegan. Test 17/17 lulus, vue-tsc lulus.
+- Sesi 2026-11-05: Integrasi penuh detail produk dinamis (CR-0008) & seluruh halaman pendukung (shipping, terms, returns, links) terintegrasi ke StoreSettings. Produk uji test-produk aktif di DB. Test 17/17 lulus, vue-tsc lulus. Deployment siap.
