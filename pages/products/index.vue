@@ -943,14 +943,13 @@
 import { useCartStore } from '~/stores/cart'
 import { useWishlistStore } from '~/stores/wishlist'
 
-// ===== SEO & HEAD =====
-useHead({
-  title: 'Koleksi Rangkaian Bunga & Buket Mewah — Haute Botanique | HappyBouquet',
-  meta: [
-    {
-      name: 'description',
-      content: 'Katalog buket bunga mewah, mawar impor Ekuador, bloom box velvet, dan rangkaian bunga segar artisan untuk wisuda, anniversary, dan momen spesial.'
-    }
+// ===== DYNAMIC SEO & SCHEMA.ORG (CR-0006) =====
+useSeo({
+  title: 'Koleksi Rangkaian Bunga & Buket Mewah — Haute Botanique',
+  description: 'Jelajahi buket mawar Ekuador, buket wisuda, bloom box velvet, dan vas keramik artisan dengan garansi bunga segar dan pengiriman Same Day Jakarta.',
+  breadcrumbs: [
+    { name: 'Beranda', path: '/' },
+    { name: 'Katalog Koleksi', path: '/products' }
   ]
 })
 

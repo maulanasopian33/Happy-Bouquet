@@ -296,16 +296,13 @@
 </template>
 
 <script setup lang="ts">
-// ===== SEO =====
-useHead({
-  title: 'HappyBouquet — Buket Premium Jakarta | Rangkaian Bunga Segar',
-  meta: [
-    { name: 'description', content: 'Toko buket bunga premium Jakarta. Buket wisuda, anniversary, birthday & custom order. Pengiriman hari ini! Order sebelum pukul 14.00.' },
-    { property: 'og:title', content: 'HappyBouquet — Buket Premium Jakarta' },
-    { property: 'og:description', content: 'Buket bunga premium hand-made, dikirim segar ke pintumu. Wisuda, Anniversary, Birthday, Custom Order.' },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:locale', content: 'id_ID' },
-    { name: 'twitter:card', content: 'summary_large_image' },
+// ===== DYNAMIC SEO & STRUCTURED DATA (CR-0006) =====
+useSeo({
+  faqs: [
+    { q: 'Bagaimana cara merawat bunga agar tetap segar?', a: 'Potong batang miring 45 derajat setiap 2 hari, gunakan air bersih sejuk, dan hindari sinar matahari langsung atau hembusan AC secara konstan. Kami sertakan satu sachet nutrisi bunga gratis di setiap kemasan.' },
+    { q: 'Apakah bisa meminta waktu pengiriman spesifik?', a: 'Bisa. Sampaikan slot waktu yang diinginkan saat pemesanan, atau hubungi Concierge WhatsApp kami untuk pengiriman di waktu menit-presisi pada event mendesak.' },
+    { q: 'Bagaimana prosedur klaim garansi jika bunga layu saat diterima?', a: 'Kirimkan foto buket saat pertama tiba melalui WhatsApp dalam 3 jam setelah paket diterima. Tim kami akan merangkai buket pengganti dan mengirimkannya tanpa biaya.' },
+    { q: 'Metode pembayaran apa saja yang didukung?', a: 'Kami menerima Transfer Bank, QRIS (GoPay, OVO, Dana, ShopeePay), serta COD (Bayar di Tempat) untuk area tertentu.' },
   ]
 })
 const config = useRuntimeConfig()

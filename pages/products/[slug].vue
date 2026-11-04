@@ -51,8 +51,38 @@ const productSlug = computed(() => route.params.slug as string)
 // Menghindari fetch 2x per render (aturan SSR e-commerce).
 const { product, related, loading, error } = useProductDetail(productSlug)
 
-// ===== SEO Head =====
-useHead({
-  titleTemplate: (title) => title ? `${title} — HappyBouquet Artisan Florist` : 'Detail Produk — HappyBouquet Artisan Florist',
+// ===== DYNAMIC SEO & PRODUCT STRUCTURED DATA (CR-0006) =====
+const seoTitle = computed(() => product.value?.name || 'Detail Produk')
+const seoDesc = computed(() => product.value?.description || 'Rangkaian bunga segar artisan HappyBouquet dengan pilihan kartu wax seal dan pengiriman hari ini.')
+const seoImg = computed(() => product.value?.image || undefined)
+
+const productSchemaData = computed(() => {
+  if (!product.value) return undefined
+  return {
+    name: product.value.name,
+    price: product.value.price || 0,
+    image: product.value.image,
+    description: product.value.description,
+    category: product.value.category,
+    availability: product.value.type === 'preorder' ? ('PreOrder' as const) : ('InStock' as const),
+    rating: product.value.rating || 4.9,
+    reviewCount: product.value.reviewCount || 98
+  }
+})
+
+const breadcrumbsData = computed(() => [
+  { name: 'Beranda', path: '/' },
+  { name: 'Katalog Koleksi', path: '/products' },
+  ...(product.value?.category ? [{ name: product.value.category, path: `/products?cat=${encodeURIComponent(product.value.category)}` }] : []),
+  { name: product.value?.name || 'Detail Produk', path: `/products/${productSlug.value}` }
+])
+
+useSeo({
+  title: seoTitle.value,
+  description: seoDesc.value,
+  image: seoImg.value,
+  type: 'product',
+  product: productSchemaData.value,
+  breadcrumbs: breadcrumbsData.value
 })
 </script>

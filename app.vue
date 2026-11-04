@@ -2,18 +2,16 @@
 const config = useRuntimeConfig()
 const isMaintenance = config.public.maintenance?.enabled
 
-useHead({
-  meta: [
-    // Force noindex if maintenance mode is enabled globally
-    ...(isMaintenance ? [{ name: 'robots', content: 'noindex, nofollow' }] : [])
-  ]
+// Inisialisasi dynamic SEO global dari database settings
+useSeo({
+  robots: isMaintenance ? 'noindex, nofollow' : undefined
 })
 </script>
 
 <template>
   <div>
     <NuxtLayout>
-      <NuxtPage/>
+      <NuxtPage />
     </NuxtLayout>
     
     <!-- Developer Testing Badge -->
