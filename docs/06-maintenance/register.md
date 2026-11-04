@@ -5,13 +5,12 @@ Baca hanya bagian "Terbuka" saat memulai sesi. Pindahkan baris selesai ke "Seles
 Sumber: audit menyeluruh 2026-10-19 & 2026-10-30. Detail analisis: `docs/04-delivery/roadmap.md`.
 
 ## Terbuka
-| ID | Jenis | Tanggal | Ringkasan | ID terdampak | Dokumen diubah | Status |
-|---|---|---|---|---|---|---|
-| CR-0005 | Fitur | 2026-11-04 | Full-Funnel Web Analytics, Traffic Acquisition & Performance Suite: 4 halaman analitik komprehensif (Realtime Bot Intel [Selesai], Trafik & Akuisisi T14, Konversi & Funnel T15, Kecepatan & Web Vitals T16) | T14-T16 | `docs/06-maintenance/CR-0005.md`, `roadmap.md` | Terbuka |
+*Tidak ada isu terbuka saat ini.*
 
 ## Selesai
 | ID | Tanggal | Ringkasan | Versi | Commit/PR |
 |---|---|---|---|---|
+| CR-0005 | 2026-11-05 | Full-Funnel Web Analytics Suite (T14-T16 selesai penuh): backend API controller & routes (`/api/analytics/traffic`, `/conversion`, `/performance`), Panel Admin views & router lengkap (`/admin/analytics/traffic`, `/conversion`, `/performance`) dengan visual funnel 5 tahap, tren harian, akuisisi UTM, matriks konversi produk, dan Google Core Web Vitals | 0.3.0 | — |
 | CR-0006 | 2026-11-05 | Dynamic SEO Suite, Structured Data JSON-LD, Dynamic Sitemap, Robots.txt & LLM AI Engine: backend StoreSetting & Zod diperluas, panel StoreSettingView dengan tab SEO & live SERP/WhatsApp simulator, FE composable useSeo() terintegrasi di app.vue/home/katalog/PDP, nitro server routes robots.txt, sitemap.xml, llms.txt & llms-full.txt. Test 17/17 lulus | 0.3.0 | — |
 | CR-0004 | 2026-11-04 | Multi-Channel Order Ingestion, Real-Time Order Tracking & Storefront Sync (T10-T13 selesai penuh): FE checkout auto-record `POST /api/orders/public` (`channel:'Web'`) + WA template nomor order; tracking riil `GET /api/orders/track/:orderNumber` (sanitized); Panel Admin SSE realtime toast pesanan baru + filter channel pesanan di `OrderListView.vue` | 0.3.0 | — |
 | BUG-0038 | 2026-11-03 | Breadcrumb PDP `pages/products/[slug].vue` belum ikut `design/home/code.html` — kini full-width bar `bg-(--bg-section)`: jejak 4 level (Beranda / Koleksi Produk / kategori → `?cat=` / nama produk) + pill status (dot ping + Ready Stock/Preorder, data API tanpa mengarang angka stok). Fetch dipindah jadi kepemilikan halaman saja — `ProductDetailPage` terima props (`product/related/loading/error`); sebelumnya page & komponen sama-sama memanggil `useProductDetail` → `useAsyncData` jalan 2× per render (dedupe 'cancel' = fetch pertama dibatalkan). Terbukti: `sadas` 200 + nama di breadcrumb, slug tak ada 200, 1× fetch, test 17/17 | 0.3.0 | — |
