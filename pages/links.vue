@@ -20,8 +20,8 @@
         </div>
 
         <div class="space-y-1">
-          <h1 class="text-xl font-black text-primary tracking-tight">HappyBouquet Central</h1>
-          <p class="text-sm font-bold text-rose-600 uppercase tracking-widest leading-none">@{{ settings.instagram_url.split('/').pop() }}</p>
+          <h1 class="text-xl font-black text-primary tracking-tight">{{ settings.brand_name || 'HappyBouquet' }} Central</h1>
+          <p class="text-sm font-bold text-rose-600 uppercase tracking-widest leading-none">@{{ (settings.instagram_url || '').split('/').filter(Boolean).pop() || 'happybouquet' }}</p>
         </div>
         
         <p class="text-xs font-medium text-secondary leading-relaxed max-w-[280px] mx-auto opacity-80">

@@ -18,7 +18,7 @@
            <div class="space-y-6">
               <h2 class="text-2xl font-black text-primary tracking-tight">Perjanjian Layanan</h2>
               <p class="text-sm md:text-base text-secondary leading-relaxed font-medium">
-                Selamat datang di HappyBouquet. Dengan mengakses situs web ini dan melakukan pembelian, Anda menyetujui ketentuan berikut. Kami berkomitmen untuk memberikan transparansi penuh tentang hak dan kewajiban Anda sebagai anggota komunitas bunga kami.
+                Selamat datang di {{ settings.brand_name || 'HappyBouquet' }}. Dengan mengakses situs web ini dan melakukan pembelian, Anda menyetujui ketentuan berikut. Kami berkomitmen untuk memberikan transparansi penuh tentang hak dan kewajiban Anda sebagai pelanggan kami.
               </p>
            </div>
 
@@ -50,7 +50,12 @@
 </template>
 
 <script setup lang="ts">
-const terms = [
+import { computed } from 'vue'
+import { useStoreSettings } from '~/composables/useStoreSettings'
+
+const { settings } = useStoreSettings()
+
+const defaultTerms = [
   { 
     title: 'Keaslian & Variabilitas Produk', 
     content: 'Setiap buket bunga adalah karya tangan unik. Kami berupaya keras untuk mencocokkan desain dengan foto katalog.\n\n• Musiman: Jika bunga tertentu tidak tersedia, kami akan menggantinya dengan nilai yang setara atau lebih tinggi.\n• Visual: Warna bunga dapat sedikit berbeda karena pencahayaan atau resolusi layar Anda.' 
@@ -65,12 +70,18 @@ const terms = [
   },
   { 
     title: 'Hak Kekayaan Intelektual', 
-    content: 'Seluruh konten dalam situs web HappyBouquet (foto, teks, logo, desain) adalah milik eksklusif kami.\n\n• Larangan: Dilarang keras menggandakan atau menyebarluaskan konten tanpa izin tertulis.\n• Lisensi: Penggunaan logo kami oleh pihak ketiga hanya diperbolehkan untuk keperluan rujukan media resmi.' 
+    content: 'Seluruh konten dalam situs web (foto, teks, logo, desain) adalah milik eksklusif kami.\n\n• Larangan: Dilarang keras menggandakan atau menyebarluaskan konten tanpa izin tertulis.\n• Lisensi: Penggunaan logo kami oleh pihak ketiga hanya diperbolehkan untuk keperluan rujukan media resmi.' 
   }
 ]
 
+const terms = computed(() => {
+  const dynamic = settings.value?.page_terms_content
+  if (Array.isArray(dynamic) && dynamic.length > 0) return dynamic
+  return defaultTerms
+})
+
 useHead({
-  title: 'Ketentuan Layanan - HappyBouquet'
+  title: computed(() => `Ketentuan Layanan - ${settings.value?.brand_name || 'HappyBouquet'}`)
 })
 </script>
 

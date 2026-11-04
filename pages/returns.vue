@@ -101,7 +101,14 @@
                    </div>
                 </div>
 
-                <button class="btn-premium w-full py-4 text-xs tracking-widest font-black uppercase mt-4">Hubungi Kami (WhatsApp)</button>
+                <a
+                  :href="waHref('Halo, saya ingin mengajukan klaim garansi atau pengembalian pesanan.')"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-premium w-full py-4 text-xs tracking-widest font-black uppercase mt-4 text-center block"
+                >
+                  Hubungi Kami (WhatsApp)
+                </a>
              </div>
           </div>
        </div>
@@ -129,6 +136,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useStoreSettings } from '~/composables/useStoreSettings'
+
+const { settings, waHref } = useStoreSettings()
+
 const policySteps = [
   { title: 'Foto Bukti', icon: 'ph:camera-bold', desc: 'Ambil foto buket yang diterima dalam kondisi belum dibuka/dirusak jika ada kerusakan.' },
   { title: 'Kirim Chat', icon: 'ph:chat-teardrop-dots-bold', desc: 'Hubungi tim via WhatsApp dengan menyertakan Nomor Pesanan dan foto bukti.' },
@@ -144,10 +156,10 @@ const eligibility = [
   { reason: 'Tidak Ada yang Menerima', label: 'Tidak Berlaku', ok: false },
 ]
 
-const refundMethods = [
+const refundMethods = computed(() => [
   { label: 'Bank Transfer / E-Wallet', time: '1-3 Hari Kerja', icon: 'ph:bank-bold' },
-  { label: 'HappyBouquet Credit / Voucher', time: 'Instan (Tersedia Langsung)', icon: 'ph:ticket-fill' },
-]
+  { label: `${settings.value?.brand_name || 'HappyBouquet'} Credit / Voucher`, time: 'Instan (Tersedia Langsung)', icon: 'ph:ticket-fill' },
+])
 
 const refundFaqs = [
   { q: 'Bagaimana jika kurir terlambat?', a: 'Jika pengiriman terlambat lebih dari 2 jam dari batas slot waktu yang dipilih karena kendala operasional kami, kami akan memberikan voucher kompensasi atau diskon 20%.' },
@@ -155,7 +167,7 @@ const refundFaqs = [
 ]
 
 useHead({
-  title: 'Kebijakan Pengembalian - HappyBouquet'
+  title: computed(() => `Kebijakan Pengembalian - ${settings.value?.brand_name || 'HappyBouquet'}`)
 })
 </script>
 

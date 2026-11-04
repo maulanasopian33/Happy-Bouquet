@@ -117,6 +117,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+import { useStoreSettings } from '~/composables/useStoreSettings'
+
+const { settings } = useStoreSettings()
+
 const onImgError = (e: Event) => {
   const t = e.target as HTMLImageElement | null
   if (t?.src && !t.src.endsWith('/default.png')) t.src = '/default.png'
@@ -124,11 +129,25 @@ const onImgError = (e: Event) => {
 
 const activeFaq = ref<number | null>(null)
 
-const shippingMethods = [
+const defaultShippingMethods = [
   { name: 'Instant Delivery', icon: 'ph:clock-countdown-bold', desc: 'Cocok untuk kejutan mendadak dan momen krusial.', time: '1-3 Jam', price: 'Mulai Rp 35rb' },
   { name: 'Same Day Premium', icon: 'ph:truck-bold', desc: 'Pesan hari ini sebelum jam 14:00, bunga sampai hari ini juga.', time: 'Hari yang sama', price: 'Mulai Rp 20rb' },
   { name: 'Standard Service', icon: 'ph:package-bold', desc: 'Pengiriman terjadwal untuk hari spesial yang telah direncanakan.', time: 'Terjadwal', price: 'Gratis (Min. 500rb)' },
 ]
+
+const shippingMethods = computed(() => {
+  const opts = settings.value?.shipping_options
+  if (Array.isArray(opts) && opts.length > 0) {
+    return opts.filter((o: any) => o.is_active !== false).map((o: any) => ({
+      name: o.name,
+      icon: o.name.toLowerCase().includes('express') || o.name.toLowerCase().includes('instant') ? 'ph:clock-countdown-bold' : 'ph:truck-bold',
+      desc: o.description || 'Pengiriman buket dengan penanganan khusus.',
+      time: o.eta || 'Estimasi 1-3 hari',
+      price: o.cost ? `Rp ${Number(o.cost).toLocaleString('id-ID')}` : 'Gratis'
+    }))
+  }
+  return defaultShippingMethods
+})
 
 const packagingFeatures = [
   { title: 'Hydration Pack', desc: 'Batang bunga dilengkapi wadah air nutrisi agar tetap segar selama 24 jam di jalan.' },
