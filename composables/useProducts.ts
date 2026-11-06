@@ -119,16 +119,6 @@ export const useProducts = () => {
   const config = useRuntimeConfig()
   const apiUrl = config.public.apiUrl
 
-  const findProduct = async (id: number): Promise<Product | undefined> => {
-    try {
-      const res: any = await $fetch(`${apiUrl}/products/${id}`)
-      return res.data ? mapProduct(res.data, apiUrl) : undefined
-    } catch (e) {
-      console.error('Failed to fetch product by ID', e)
-      return undefined
-    }
-  }
-
   const findProductBySlug = async (slug: string): Promise<Product | undefined> => {
     if (!slug || slug === 'undefined') {
       console.warn('findProductBySlug called with invalid slug:', slug)
@@ -143,5 +133,5 @@ export const useProducts = () => {
     }
   }
 
-  return { findProduct, findProductBySlug }
+  return { findProductBySlug }
 }

@@ -3,7 +3,7 @@ import type { Product } from './useProducts'
 import { useProducts, mapProduct } from './useProducts'
 
 export const useProductDetail = (productIdentifier: Ref<string | number> | string | number) => {
-  const { findProduct, findProductBySlug } = useProducts()
+  const { findProductBySlug } = useProducts()
   const config = useRuntimeConfig()
   const identifier = computed(() => unref(productIdentifier))
 
@@ -22,13 +22,15 @@ export const useProductDetail = (productIdentifier: Ref<string | number> | strin
         $fetch(`${config.public.apiUrl}/products?active=true`)
           .then((res: any) => (res.data || []).map((p: any) => mapProduct(p, config.public.apiUrl)))
           .catch(() => [] as Product[]),
-        isNumericId ? findProduct(Number(id)) : findProductBySlug(String(id)),
+        isNumericId ? Promise.resolve(undefined) : findProductBySlug(String(id)),
       ])
-      if (!found) throw createError({ statusCode: 404, statusMessage: 'Produk tidak ditemukan.' })
+      // Link lama berbasis ID numerik dicari dari daftar produk aktif (endpoint by-ID sudah dihapus).
+      const product = found ?? allActive.find((p: Product) => String(p.id) === String(id))
+      if (!product) throw createError({ statusCode: 404, statusMessage: 'Produk tidak ditemukan.' })
       const related = allActive
-        .filter((p: Product) => p.category === found.category && p.id !== found.id)
+        .filter((p: Product) => p.category === product.category && p.id !== product.id)
         .slice(0, 4)
-      return { product: found, related }
+      return { product, related }
     },
     { watch: [identifier] }
   )
